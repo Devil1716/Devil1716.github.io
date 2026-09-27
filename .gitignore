@@ -1,0 +1,11 @@
+__pycache__/
+loop_frames/
+tex/
+*.blend
+*.blend1
+logo_b64.txt
+ganeshotsava*.png
+battlestation_preview_draft.png
+retro_computer_clean.glb
+build_battlestation.py
+render_cinematic_loop.py

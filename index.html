@@ -1,0 +1,3743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevilOS Trinity — Devil1716 (DaRkAngeL)</title>
+<link rel="icon" href="logo.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+<style>
+/* ============ BASE & RESETS ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;user-select:none;-webkit-user-select:none}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Segoe UI',Roboto,'Fira Sans',Helvetica,Arial,sans-serif;background:#050508;color:#fff;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+img{display:block}
+a{color:inherit}
+::selection{background:rgba(56,189,248,0.35);color:#fff}
+*:focus{outline:none}
+*:focus-visible{outline:1.5px solid rgba(255,255,255,0.35);outline-offset:2px}
+
+:root{
+  --devil-red:#E11D48;
+  --devil-red-hover:#F43F5E;
+  --devil-glow:rgba(225,29,72,0.35);
+  --cyan:#38BDF8;
+  --amber:#D97706;
+  --amber-light:#F59E0B;
+  --mac-blue:#007AFF;
+  --win-blue:#0078D4;
+  --bg-main:#FAF9F5;
+  --bg-card:#FFFFFF;
+  --bg-sub:#F3EFE6;
+  --border-color:#E6DFD3;
+  --text-main:#1C1917;
+  --text-muted:#6B5E52;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --mac-ease:cubic-bezier(0.16,1,0.3,1);
+  --sys-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono-font:"Fira Code","SF Mono","SFMono-Regular",Menlo,Consolas,"Ubuntu Mono",monospace;
+  --sys-brightness:1;
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.3)}
+.mono{font-family:var(--mono-font)}
+
+/* ============ BOOT SCREEN & CINEMATIC SEQUENCE ============ */
+#boot{position:fixed;inset:0;background:#06060c;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;overflow:hidden}
+#boot.on{display:flex}#boot.off{opacity:0;pointer-events:none;transition:opacity .8s cubic-bezier(0.16,1,0.3,1);transform:none}
+#boot.from-screen{background:transparent}
+#boot.from-screen .boot-space-bg{opacity:0;animation:bootBgIn 1.15s ease .35s forwards}
+#boot.from-screen .boot-iris{animation:bootIris 1.35s cubic-bezier(.4,0,.2,1) forwards}
+#boot.from-screen .boot-loader-container.active{animation:fadeIn .55s ease .85s both}
+@keyframes bootBgIn{to{opacity:1}}
+@keyframes bootIris{0%{opacity:.15;transform:scale(.12)}40%{opacity:1;transform:scale(.7)}100%{opacity:1;transform:scale(2.8)}}
+.boot-iris{position:absolute;inset:-8%;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 46%, rgba(150,255,190,.95) 0%, rgba(34,197,94,.55) 18%, rgba(6,6,12,.35) 42%, #05050a 68%)}
+.boot-space-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(56,189,248,0.08),transparent 60%),radial-gradient(circle at 80% 80%,rgba(225,29,72,0.08),transparent 50%),#05050a;z-index:0}
+
+/* Initial Boot Card */
+.boot-box{position:relative;z-index:1;border:1px solid rgba(255,255,255,.12);padding:44px 56px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.8);border-radius:28px;background:rgba(16,16,24,.82);backdrop-filter:blur(32px);transition:opacity .3s ease, transform .3s ease}
+.boot-logo{width:168px;height:168px;margin:0 auto 12px;filter:drop-shadow(0 8px 24px var(--devil-glow));animation:logoPulse 3s infinite ease-in-out}
+@keyframes logoPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 8px 24px rgba(225,29,72,.3))}50%{transform:scale(1.05);filter:drop-shadow(0 12px 32px rgba(225,29,72,.5))}}
+.boot-logo img{width:100%;height:100%;object-fit:contain}
+.px{font-family:'Archivo',sans-serif;color:#ffffff;font-size:26px;letter-spacing:-.02em;line-height:1.3;font-weight:800;text-transform:uppercase}
+.px span{color:var(--devil-red)}
+.px.small{font-family:var(--mono-font);font-size:11px;color:var(--cyan);letter-spacing:3px;margin-top:8px;text-transform:uppercase;font-weight:600}
+#start-btn{margin-top:0;background:linear-gradient(135deg,#007AFF,#0051A8);color:#FFF;padding:14px 34px;border:0;font-family:var(--sys-font);font-size:13px;font-weight:700;border-radius:14px;transition:.2s var(--mac-ease);letter-spacing:.5px;box-shadow:0 8px 28px rgba(0,122,255,.35)}
+#start-btn:hover{transform:scale(1.04);box-shadow:0 12px 36px rgba(0,122,255,.55);background:linear-gradient(135deg,#1A88FF,#0062CC)}
+.tagline{position:relative;z-index:1;margin-top:28px;font-family:var(--sys-font);color:rgba(255,255,255,.6);font-size:13px;text-align:center;max-width:48ch;line-height:1.6}
+.tagline b{color:#fff}
+
+/* Live Cinematic Boot Loader */
+.boot-loader-container{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;z-index:2;text-align:center;
+}
+.boot-loader-container.active{display:flex;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.boot-loader-logo{
+  position:relative;width:148px;height:148px;margin-bottom:28px;
+}
+.boot-loader-logo img{
+  width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 0 24px rgba(56,189,248,.4));
+  animation:bootPulse 2s infinite ease-in-out;
+}
+@keyframes bootPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.boot-progress-track{
+  width:240px;height:4px;border-radius:2px;background:rgba(255,255,255,.14);
+  overflow:hidden;position:relative;box-shadow:0 0 10px rgba(0,0,0,.5);
+}
+.boot-progress-bar{
+  height:100%;width:0%;background:linear-gradient(90deg,#38BDF8,#818CF8);
+  border-radius:2px;box-shadow:0 0 12px rgba(56,189,248,.7);
+  transition:width .22s ease-out;
+}
+.boot-log-ticker{
+  margin-top:16px;font-family:var(--mono-font);font-size:11px;
+  color:rgba(255,255,255,.75);letter-spacing:.03em;height:18px;
+}
+.boot-skip-btn{
+  margin-top:24px;font-family:var(--mono-font);font-size:10px;
+  color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  transition:color .15s;
+}
+.boot-skip-btn:hover{color:rgba(255,255,255,.8)}
+.scanlines{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.75))}
+
+/* ============ 3D STAGE & WORKSTATION ============ */
+#stage3d{position:fixed;inset:0;display:none;background:#0d0e12;z-index:400;cursor:grab}
+#stage3d:active{cursor:grabbing}
+#stage3d.on{display:block}
+#stage3d.monitor-ready{cursor:pointer}
+#stage3d.entering-os .stage-caption{opacity:0;transition:opacity .45s ease;pointer-events:none}
+.stage-caption{
+  position:absolute;left:50%;bottom:64px;transform:translateX(-50%);
+  z-index:500;pointer-events:none;white-space:nowrap;
+  font-family:var(--sys-font);font-size:12px;letter-spacing:.02em;
+  color:rgba(255,255,255,.82);
+  background:rgba(12,14,20,.55);border:1px solid rgba(255,255,255,.12);
+  padding:7px 14px;border-radius:999px;backdrop-filter:blur(16px);
+}
+#gl{width:100%;height:100%;display:block}
+#stage3d-loading{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:14px;z-index:450;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,rgba(28,22,18,.92),rgba(10,11,14,.96));
+  transition:opacity .45s ease;
+}
+#stage3d-loading.hide{opacity:0}
+#stage3d-loading .load-title{
+  font-family:var(--sys-font);font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,236,210,.78);
+}
+#stage3d-loading .load-bar{
+  width:180px;height:2px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);
+}
+#stage3d-loading .load-bar>i{
+  display:block;height:100%;width:35%;border-radius:inherit;background:#38bdf8;
+  animation:loadSlide 1.1s ease-in-out infinite;
+}
+@keyframes loadSlide{0%{transform:translateX(-120%)}100%{transform:translateX(320%)}}
+#flash{position:fixed;inset:0;background:#FFFFFF;opacity:0;pointer-events:none;z-index:9000;transition:opacity .45s}
+#flash.on{opacity:1;transition:opacity .1s}
+
+/* ============ MODE PILL ============ */
+.mode-pill{position:fixed;right:18px;bottom:18px;z-index:1200;display:none;background:rgba(20,20,30,.8);border:1px solid rgba(255,255,255,.18);border-radius:999px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.5);backdrop-filter:blur(24px) saturate(1.8)}
+.mode-pill.on{display:flex}
+.mode-pill button{background:transparent;border:0;color:rgba(255,255,255,.7);font-family:var(--sys-font);font-size:11px;letter-spacing:.05em;padding:8px 16px;transition:.2s;font-weight:500}
+.mode-pill button.on{background:#007AFF;color:#FFF;font-weight:700}
+.mode-pill button:hover:not(.on){color:#FFF;background:rgba(255,255,255,.1)}
+
+/* ============ EDITORIAL SITE ============ */
+#site{position:fixed;inset:0;display:none;background:#FAF9F5;color:#1C1917;z-index:500;overflow:hidden}
+#site.on{display:block}
+#bin{position:absolute;inset:0;z-index:0;opacity:.15}
+.s-scroll{position:absolute;inset:0;overflow-y:auto;z-index:1;scrollbar-width:none}
+.s-scroll::-webkit-scrollbar{display:none}
+.s-top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,4vw,60px);font-family:var(--mono-font);font-size:10px;letter-spacing:.13em;text-transform:uppercase;background:linear-gradient(#FAF9F5 72%,rgba(250,249,245,.82) 82%,transparent);pointer-events:none}
+.s-top b{font-weight:700;color:var(--text-main)}
+.s-top a{color:inherit;text-decoration:none;pointer-events:auto;border-bottom:1px solid transparent;padding-bottom:4px;transition:.2s}.s-top a:hover{color:#007AFF;border-color:#007AFF}
+.s-nav{display:flex;gap:20px;align-items:center}.s-status{display:flex;align-items:center;gap:8px}.s-status i{width:7px;height:7px;border-radius:50%;display:inline-block;background:#10B981;box-shadow:0 0 0 4px rgba(16,185,129,.15)}
+.s-main{position:relative;padding:15vh clamp(20px,7vw,110px) 12vh;max-width:1340px;margin:auto}
+.s-landing{min-height:72vh;display:grid;grid-template-columns:minmax(0,1.24fr) minmax(230px,.56fr);gap:clamp(26px,7vw,100px);align-items:end}
+.s-eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono-font);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin-bottom:1.5rem}.s-eyebrow::before{content:'';width:32px;height:1px;background:#007AFF}
+.s-hero{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:clamp(1.55rem,3.6vw,3.05rem);letter-spacing:.01em;line-height:1.2;color:var(--text-main);max-width:17ch}
+.s-name{font-family:'Archivo',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(3.5rem,10vw,8.8rem);letter-spacing:-.055em;line-height:.82;margin-top:1.8rem;color:#1C1917}
+.s-name i{font-style:normal;color:transparent;-webkit-text-stroke:2px #1C1917}
+.s-sub{margin-top:2.2rem;font-family:var(--mono-font);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);font-weight:700;line-height:1.7}
+.s-cta-row{display:flex;align-items:center;gap:20px;margin-top:2.4rem}.s-cta{background:var(--text-main);border:1px solid var(--text-main);color:#fff;text-decoration:none;padding:14px 19px;border-radius:8px;font-family:var(--mono-font);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 9px 20px rgba(28,25,23,.13);transition:.2s var(--ease)}.s-cta:hover{transform:translateY(-2px);background:#007AFF;border-color:#007AFF;box-shadow:0 12px 26px rgba(0,122,255,.25)}.s-quiet-link{font-family:var(--mono-font);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:1px solid #007AFF;padding-bottom:4px}.s-quiet-link:hover{color:#007AFF}
+.s-aside{border-top:1px solid var(--border-color);padding-top:16px;padding-bottom:8px}.s-aside p{font-family:'Fraunces',serif;font-size:clamp(1.05rem,1.8vw,1.35rem);line-height:1.45;color:#3a322c}.s-aside small{display:block;font-family:var(--mono-font);font-size:10px;letter-spacing:.12em;color:#007AFF;font-weight:700;text-transform:uppercase;margin-top:20px}.s-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:2.2rem}.s-stat{background:rgba(255,255,255,.78);border:1px solid var(--border-color);border-radius:10px;padding:12px 10px;min-width:0}.s-stat b{font-family:'Archivo',sans-serif;font-size:1.35rem;display:block;letter-spacing:-.04em}.s-stat span{font-family:var(--mono-font);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);display:block;margin-top:4px;line-height:1.35}
+.s-sec{margin-top:14vh}.s-sec h2 .count{font-family:var(--mono-font);color:#007AFF;font-size:.48em;margin-right:10px;vertical-align:middle}
+.s-sec h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(1.4rem,2.6vw,2rem);margin-bottom:2.2rem;color:#1C1917}
+.about-copy{display:grid;grid-template-columns:1fr 1fr;gap:14px}.s-sec .about-copy p{max-width:64ch;font-size:clamp(1rem,1.45vw,1.18rem);line-height:1.8;margin:0;background:#FFFFFF;padding:20px 25px;border-left:3px solid #007AFF;border-radius:10px;color:#2E2824;box-shadow:0 4px 20px rgba(0,0,0,.03);border:1px solid var(--border-color);border-left-width:3px}
+.w-row{display:grid;grid-template-columns:44px 1fr auto;justify-content:space-between;align-items:center;gap:16px;padding:22px 20px;background:#FFFFFF;border:1px solid var(--border-color);margin-bottom:12px;border-radius:12px;cursor:pointer;transition:all .25s var(--ease);text-decoration:none;color:inherit;box-shadow:0 2px 10px rgba(0,0,0,.02)}
+.w-no{font-family:var(--mono-font);color:#007AFF;font-weight:700;font-size:10px;letter-spacing:.08em}
+.w-row h3{font-family:'Archivo',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(1.1rem,2.4vw,1.7rem);letter-spacing:.03em;color:#1C1917}
+.w-row .m{font-family:var(--mono-font);font-size:11px;letter-spacing:.12em;color:#007AFF;font-weight:700}
+.w-row:hover{border-color:#007AFF;transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,122,255,.1)}
+.w-row:hover h3{color:#007AFF}
+.s-mail{display:inline-block;margin-top:1rem;font-family:'Fraunces',serif;font-weight:400;font-style:italic;font-size:clamp(1.5rem,4.8vw,3.6rem);text-decoration:none;border-bottom:2px solid #007AFF;padding-bottom:6px;color:#1C1917;transition:.2s}
+.s-mail:hover{color:#007AFF}
+.s-links{margin-top:2.8rem;display:flex;gap:2.6rem;font-family:var(--mono-font);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.s-links a{text-decoration:none;border-bottom:1.5px solid #007AFF;color:#1C1917;transition:.2s}
+.s-links a:hover{color:#007AFF}
+.s-foot{margin-top:14vh;font-family:var(--mono-font);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+#s-preview{position:fixed;z-index:6;width:min(32vw,400px);aspect-ratio:16/10;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .3s;border:2px solid #007AFF;background:#FFFFFF;border-radius:12px;box-shadow:0 16px 45px rgba(0,0,0,.12)}
+#s-preview.on{opacity:1}
+#s-preview img{width:100%;height:100%;object-fit:cover}
+
+/* ========================================================================= */
+/* ==================== DEVILOS: THE TRINITY HYBRID OS ===================== */
+/* ========================================================================= */
+#desktop{
+  position:fixed;inset:0;display:none;z-index:500;overflow:hidden;
+  font-family:var(--sys-font);
+  filter:brightness(var(--sys-brightness));
+}
+#desktop.on{display:block}
+
+/* Deep Space Wallpapers Engine */
+.wallpaper-layer{
+  position:absolute;inset:0;z-index:1;background-size:cover;background-position:center;
+  transition:background-image .6s ease, filter .3s ease;
+}
+.wp-space-orion{background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')}
+.wp-space-webb{background-image:url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2070&auto=format&fit=crop')}
+.wp-space-blackhole{background-image:url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2022&auto=format&fit=crop')}
+.wp-space-supernova{background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2069&auto=format&fit=crop')}
+.wp-space-galaxy{background-image:url('https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=2070&auto=format&fit=crop')}
+.wp-space-void{background:radial-gradient(circle at 50% 50%,#181024 0%,#05040a 100%)}
+
+/* Starfield Particle Canvas */
+#star-canvas{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.65}
+
+/* Top Menu Bar (Mac Glass + Linux Stats + Windows Controls) */
+#topbar{
+  position:absolute;top:0;left:0;right:0;height:30px;z-index:9000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 12px 0 10px;
+  background:rgba(15,15,22,.65);
+  backdrop-filter:blur(36px) saturate(200%);
+  -webkit-backdrop-filter:blur(36px) saturate(200%);
+  border-bottom:1px solid rgba(255,255,255,.14);
+  color:#ffffff;font-size:12.5px;font-weight:450;
+  letter-spacing:-.01em;user-select:none;
+}
+.tb-left{display:flex;align-items:center;height:100%;gap:3px}
+.tb-item{
+  display:flex;align-items:center;height:24px;padding:0 8px;border-radius:6px;
+  cursor:default;transition:background .12s ease;font-size:12.5px;color:rgba(255,255,255,.92);
+}
+.tb-item:hover, .tb-item.open{background:rgba(255,255,255,.14);color:#fff}
+.tb-app-name{font-weight:700;color:#fff;display:flex;align-items:center;gap:6px}
+
+/* Trinity Devil OS Logo Button */
+.os-logo-btn{
+  display:flex;align-items:center;justify-content:center;
+  height:26px;padding:0 7px;border-radius:6px;gap:6px;
+}
+.os-logo-btn img{
+  width:20px;height:20px;object-fit:contain;
+  filter:drop-shadow(0 2px 8px var(--devil-glow));
+  transition:transform .15s;
+}
+.os-logo-btn:hover img{transform:scale(1.12)}
+
+/* Linux Tiling WM Switcher */
+.tb-tiling-btn{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  color:#fff;font-family:var(--mono-font);font-size:10.5px;font-weight:600;
+  padding:2px 8px;border-radius:5px;display:flex;align-items:center;gap:5px;
+  margin-left:8px;transition:all .15s;
+}
+.tb-tiling-btn:hover, .tb-tiling-btn.active{
+  background:rgba(56,189,248,.2);border-color:#38BDF8;box-shadow:0 0 10px rgba(56,189,248,.3);color:#fff;
+}
+
+.tb-right{display:flex;align-items:center;gap:3px;height:100%}
+.tb-stat-btn{
+  display:flex;align-items:center;gap:6px;height:24px;padding:0 7px;border-radius:6px;
+  cursor:default;font-size:12px;color:rgba(255,255,255,.92);transition:background .12s ease;
+}
+.tb-stat-btn:hover, .tb-stat-btn.open{background:rgba(255,255,255,.14);color:#fff}
+.tb-stat-btn svg{width:14px;height:14px;fill:currentColor}
+#tb-clock{font-weight:600;padding:0 9px;font-size:12px;letter-spacing:-.01em}
+
+/* Live Linux Telemetry Meters in Top Bar */
+.tb-telemetry{
+  display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:2px 8px;font-family:var(--mono-font);font-size:10px;
+}
+.tb-telem-item{display:flex;align-items:center;gap:4px}
+.tb-telem-item span{color:rgba(255,255,255,.6)}
+.tb-telem-item b{color:#34D399}
+
+/* ============ TRINITY START MENU / HYBRID HUB ============ */
+#start-menu{
+  position:absolute;top:34px;left:8px;width:420px;
+  background:rgba(20,20,30,.88);
+  backdrop-filter:blur(40px) saturate(200%);
+  -webkit-backdrop-filter:blur(40px) saturate(200%);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:18px;padding:16px;
+  box-shadow:0 28px 70px rgba(0,0,0,.7);
+  display:none;flex-direction:column;gap:14px;z-index:9100;
+  animation:dropdownIn .15s cubic-bezier(.16,1,.3,1);
+}
+#start-menu.on{display:flex}
+.sm-user-banner{
+  display:flex;align-items:center;gap:12px;padding:12px;
+  background:linear-gradient(135deg,rgba(56,189,248,.15),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.12);border-radius:14px;
+}
+.sm-user-avatar{width:46px;height:46px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1.5px solid rgba(255,255,255,.25);display:grid;place-items:center}
+.sm-user-avatar img{width:100%;height:100%;object-fit:contain}
+.sm-user-info b{font-size:15px;font-weight:700;display:block}
+.sm-user-info span{font-size:11px;color:rgba(255,255,255,.7);display:block;font-family:var(--mono-font);margin-top:2px}
+.sm-sec-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.sm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sm-app-btn{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:10px 6px;color:#fff;transition:all .15s;
+}
+.sm-app-btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.25);transform:translateY(-2px)}
+.sm-app-btn img{width:32px;height:32px;object-fit:contain}
+.sm-app-btn span{font-size:11px;font-weight:500;text-align:center}
+.sm-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:10px;border-top:1px solid rgba(255,255,255,.1);
+}
+.sm-power-btn{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  color:#fff;padding:6px 12px;border-radius:8px;font-size:11.5px;display:flex;align-items:center;gap:6px;transition:.15s;
+}
+.sm-power-btn:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25)}
+
+/* Standard App Dropdown */
+.mac-dropdown{
+  position:absolute;top:32px;left:8px;min-width:220px;
+  background:rgba(24,24,34,.88);
+  backdrop-filter:blur(36px) saturate(190%);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:10px;padding:4px;
+  box-shadow:0 18px 45px rgba(0,0,0,.5);
+  display:none;flex-direction:column;z-index:9100;
+  animation:dropdownIn .12s cubic-bezier(.16,1,.3,1);
+}
+.mac-dropdown.on{display:flex}
+@keyframes dropdownIn{from{opacity:0;transform:scale(.98) translateY(-4px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.menu-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:5px 10px;border-radius:6px;font-size:12.5px;color:rgba(255,255,255,.92);
+  cursor:default;transition:background .08s;
+}
+.menu-row:hover:not(.disabled){background:#007AFF;color:#fff}
+.menu-row.disabled{color:rgba(255,255,255,.36);cursor:default}
+.menu-row .shortcut{font-size:11px;color:rgba(255,255,255,.5);margin-left:14px;font-family:var(--mono-font)}
+.menu-row:hover:not(.disabled) .shortcut{color:#fff}
+.menu-sep{height:1px;background:rgba(255,255,255,.12);margin:4px 3px}
+
+/* Spotlight Search */
+#spotlight{
+  position:absolute;top:18%;left:50%;transform:translateX(-50%) scale(.96);
+  width:min(660px,92vw);background:rgba(22,22,32,.88);
+  backdrop-filter:blur(36px) saturate(200%);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.7);
+  z-index:9500;display:none;opacity:0;transition:opacity .15s, transform .15s var(--mac-ease);
+}
+#spotlight.on{display:block;opacity:1;transform:translateX(-50%) scale(1)}
+.spot-bar{display:flex;align-items:center;padding:14px 18px;gap:12px;border-bottom:1px solid rgba(255,255,255,.12)}
+.spot-bar svg{width:22px;height:22px;fill:rgba(255,255,255,.6)}
+.spot-bar input{flex:1;background:transparent;border:0;outline:0;font-size:18px;font-weight:400;color:#fff;font-family:var(--sys-font)}
+.spot-bar input::placeholder{color:rgba(255,255,255,.35)}
+.spot-results{max-height:380px;overflow-y:auto;padding:8px}
+.spot-section-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;padding:6px 12px 4px}
+.spot-item{
+  display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:8px;
+  cursor:default;color:#fff;transition:background .1s;
+}
+.spot-item:hover, .spot-item.active{background:#007AFF;color:#fff}
+.spot-item .s-icon{width:30px;height:30px;display:grid;place-items:center;flex-shrink:0}
+.spot-item .s-icon img{width:26px;height:26px;object-fit:contain}
+.spot-item .s-title{font-size:13.5px;font-weight:600}
+.spot-item .s-desc{font-size:11.5px;color:rgba(255,255,255,.6);margin-top:1px}
+.spot-calc-res{font-size:24px;font-weight:700;color:#34D399;padding:12px 14px}
+
+/* Control Center */
+#control-center{
+  position:absolute;top:34px;right:10px;width:320px;
+  background:rgba(22,22,32,.88);
+  backdrop-filter:blur(36px) saturate(200%);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:18px;padding:14px;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+  display:none;flex-direction:column;gap:12px;
+  z-index:9200;animation:dropdownIn .15s cubic-bezier(.16,1,.3,1);
+}
+#control-center.on{display:flex}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cc-card{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:10px;display:flex;align-items:center;gap:10px;
+  cursor:default;transition:background .15s;
+}
+.cc-card:hover{background:rgba(255,255,255,.15)}
+.cc-card.active{background:rgba(0,122,255,.25);border-color:rgba(0,122,255,.5)}
+.cc-card-icon{
+  width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.12);
+  display:grid;place-items:center;flex-shrink:0;transition:background .15s;
+}
+.cc-card.active .cc-card-icon{background:#007AFF;color:#fff}
+.cc-card-icon svg{width:16px;height:16px;fill:#fff}
+.cc-card-text b{display:block;font-size:12px;font-weight:600}
+.cc-card-text span{display:block;font-size:10px;color:rgba(255,255,255,.55);margin-top:1px}
+.cc-slider-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 14px}
+.cc-slider-card label{display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:8px;color:rgba(255,255,255,.8)}
+.cc-slider{
+  width:100%;height:22px;border-radius:11px;background:rgba(255,255,255,.2);
+  outline:0;position:relative;cursor:pointer;-webkit-appearance:none;overflow:hidden;
+}
+.cc-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:0;height:0;box-shadow:-1000px 0 0 1000px #007AFF;
+}
+.cc-music{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:12px;
+}
+.cc-music img{width:40px;height:40px;border-radius:8px;object-fit:cover}
+.cc-music-info{flex:1;min-width:0}
+.cc-music-info b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cc-music-info span{display:block;font-size:10.5px;color:rgba(255,255,255,.6);margin-top:2px}
+.cc-play-btn{width:30px;height:30px;border-radius:50%;border:0;background:#007AFF;color:#fff;display:grid;place-items:center;font-size:13px}
+.cc-play-btn:hover{background:#0062CC}
+
+/* Notification Center & Widgets */
+#widget-panel{
+  position:absolute;top:34px;right:10px;bottom:80px;width:340px;
+  background:rgba(20,20,30,.88);
+  backdrop-filter:blur(36px) saturate(200%);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:20px;padding:16px;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+  display:none;flex-direction:column;gap:14px;
+  overflow-y:auto;z-index:9150;animation:slideInRight .2s var(--mac-ease);
+}
+#widget-panel.on{display:flex}
+@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.widget{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px}
+.w-clock-box{display:flex;align-items:center;justify-content:space-between}
+.w-clock-face{width:56px;height:56px;border-radius:50%;border:2px solid rgba(255,255,255,.4);position:relative}
+.w-clock-hand{position:absolute;bottom:50%;left:50%;transform-origin:bottom;background:#fff;border-radius:2px}
+.w-clock-h{width:3px;height:16px;margin-left:-1.5px}
+.w-clock-m{width:2px;height:22px;margin-left:-1px;background:var(--cyan)}
+.w-clock-s{width:1px;height:24px;margin-left:-0.5px;background:#38BDF8}
+.w-weather{display:flex;align-items:center;justify-content:space-between}
+.w-weather b{font-size:32px;font-weight:300}
+
+/* Desktop Icons Layer with Refined Subtle Highlight */
+#desktop-icons{
+  position:absolute;top:44px;right:18px;bottom:90px;
+  display:flex;flex-direction:column;flex-wrap:wrap-reverse;
+  align-content:flex-start;gap:18px;z-index:100;
+}
+.desk-item{
+  width:84px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:transparent;border:1px solid transparent;color:#fff;cursor:default;outline:0;
+  padding:5px 4px;border-radius:8px;transition:background .15s, border-color .15s;
+}
+.desk-item:hover{background:rgba(255,255,255,.06)}
+.desk-item.selected{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.25)}
+.desk-item-icon{width:52px;height:52px;display:grid;place-items:center;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+.desk-item-icon img{width:100%;height:100%;object-fit:contain}
+.desk-item-lbl{
+  font-size:11px;font-weight:600;text-align:center;line-height:1.25;
+  text-shadow:0 1px 4px rgba(0,0,0,.9);word-break:break-word;padding:2px 6px;border-radius:4px;
+}
+.desk-item.selected .desk-item-lbl{background:#007AFF;text-shadow:none}
+
+/* Marquee Selection Rectangle */
+#selection-box{
+  position:absolute;display:none;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.25);border-radius:4px;pointer-events:none;z-index:150;
+}
+
+/* ============ DOCK ============ */
+#dock-container{
+  position:absolute;left:0;right:0;bottom:10px;z-index:8000;
+  display:flex;justify-content:center;pointer-events:none;
+}
+#dock{
+  display:flex;align-items:flex-end;gap:8px;padding:6px 10px 8px;
+  background:rgba(20,20,30,.55);
+  backdrop-filter:blur(36px) saturate(200%);
+  -webkit-backdrop-filter:blur(36px) saturate(200%);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:22px;
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
+  pointer-events:auto;
+}
+.dock-btn{
+  position:relative;width:52px;height:52px;display:grid;place-items:center;
+  background:transparent;border:0;border-radius:12px;outline:0;
+  transform-origin:bottom center;
+  transition:transform .12s var(--mac-ease);
+}
+.dock-icon{
+  width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));
+  pointer-events:none;
+}
+.dock-btn.running::after{
+  content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);
+  width:4px;height:4px;border-radius:50%;background:#ffffff;box-shadow:0 0 6px rgba(255,255,255,.8);
+}
+.dock-btn .dock-tooltip{
+  position:absolute;top:-36px;left:50%;transform:translateX(-50%);
+  background:rgba(20,20,30,.9);backdrop-filter:blur(16px);
+  color:#fff;font-size:11px;font-weight:600;padding:4px 10px;
+  border-radius:6px;border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 4px 14px rgba(0,0,0,.4);
+  pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;
+}
+.dock-btn:hover .dock-tooltip{opacity:1}
+.dock-sep{width:1px;height:42px;background:rgba(255,255,255,.2);margin:0 2px 4px}
+
+@keyframes dockBounce{
+  0%,100%{transform:translateY(0)}
+  30%{transform:translateY(-22px) scale(1.05)}
+  60%{transform:translateY(-10px)}
+  80%{transform:translateY(-4px)}
+}
+.dock-btn.bouncing{animation:dockBounce .75s var(--mac-ease)}
+
+/* ============ WINDOW MANAGEMENT & SNAP LAYOUTS ============ */
+#windows{position:absolute;inset:30px 0 0 0;z-index:200;pointer-events:none}
+.win{
+  position:absolute;min-width:320px;min-height:200px;
+  background:rgba(22,22,32,.92);
+  backdrop-filter:blur(40px) saturate(190%);
+  -webkit-backdrop-filter:blur(40px) saturate(190%);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 20px 60px rgba(0,0,0,.55),0 2px 8px rgba(0,0,0,.35);
+  pointer-events:auto;animation:winOpen .2s cubic-bezier(.16,1,.3,1);
+  transition:box-shadow .2s ease, border-color .2s ease;
+}
+@keyframes winOpen{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+.win.focused{
+  border-color:rgba(255,255,255,.28);
+  box-shadow:0 28px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.12);
+}
+.win.maximized{
+  left:0!important;top:0!important;width:100%!important;height:100%!important;
+  border-radius:0;border:0;
+}
+
+/* Window Chrome & Titlebar */
+.win-tbar{
+  height:38px;background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.02));
+  display:flex;align-items:center;padding:0 12px;gap:12px;user-select:none;flex-shrink:0;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.win-traffic-lights{display:flex;align-items:center;gap:7px;position:relative}
+.traffic-btn{
+  width:12px;height:12px;border-radius:50%;border:0;outline:0;
+  display:grid;place-items:center;font-size:9px;color:rgba(0,0,0,.7);
+  transition:filter .1s;cursor:default;
+}
+.traffic-btn svg{width:7px;height:7px;opacity:0;transition:opacity .15s}
+.win-traffic-lights:hover .traffic-btn svg{opacity:1}
+.traffic-close{background:#FF5F56;border:1px solid #E0443E}
+.traffic-min{background:#FFBD2E;border:1px solid #DEA123}
+.traffic-max{background:#27C93F;border:1px solid #1AAB29}
+.win:not(.focused) .traffic-btn{background:#4E4E54;border-color:#3E3E42}
+
+/* Windows 11 Snap Assist Flyout */
+.snap-flyout{
+  position:absolute;top:24px;left:20px;
+  background:rgba(24,24,34,.95);backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px;
+  box-shadow:0 14px 40px rgba(0,0,0,.6);display:none;grid-template-columns:1fr 1fr;gap:8px;z-index:9999;
+}
+.snap-flyout.show{display:grid}
+.snap-layout-box{
+  width:54px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:4px;
+  display:flex;padding:2px;gap:2px;cursor:pointer;transition:all .15s;
+}
+.snap-layout-box:hover{border-color:#38BDF8;background:rgba(56,189,248,.15)}
+.snap-seg{background:rgba(255,255,255,.3);border-radius:2px;transition:background .15s}
+.snap-layout-box:hover .snap-seg{background:rgba(56,189,248,.6)}
+
+.win-title{
+  flex:1;text-align:center;font-size:13px;font-weight:600;
+  color:rgba(255,255,255,.88);letter-spacing:-.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.win-title-icon{width:16px;height:16px;object-fit:contain}
+.win:not(.focused) .win-title{color:rgba(255,255,255,.45)}
+.win-body{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column}
+
+/* Resize Handles */
+.win-resize{position:absolute;z-index:99}
+.win-resize.n{top:0;left:6px;right:6px;height:5px;cursor:ns-resize}
+.win-resize.s{bottom:0;left:6px;right:6px;height:5px;cursor:ns-resize}
+.win-resize.w{left:0;top:6px;bottom:6px;width:5px;cursor:ew-resize}
+.win-resize.e{right:0;top:6px;bottom:6px;width:5px;cursor:ew-resize}
+.win-resize.nw{top:0;left:0;width:8px;height:8px;cursor:nwse-resize}
+.win-resize.ne{top:0;right:0;width:8px;height:8px;cursor:nesw-resize}
+.win-resize.sw{bottom:0;left:0;width:8px;height:8px;cursor:nesw-resize}
+.win-resize.se{bottom:0;right:0;width:8px;height:8px;cursor:nwse-resize}
+
+/* ============ APPS STYLING ============ */
+.finder-app{display:grid;grid-template-rows:44px 1fr 24px;height:100%;color:#fff;background:rgba(22,22,32,.95)}
+.finder-toolbar{display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.1)}
+.finder-nav-btns{display:flex;gap:6px}
+.finder-nav-btn{width:26px;height:24px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);display:grid;place-items:center}
+.finder-view-modes{display:flex;background:rgba(255,255,255,.08);border-radius:6px;padding:2px}
+.finder-view-btn{padding:3px 8px;border:0;background:transparent;color:rgba(255,255,255,.7);border-radius:4px;font-size:11px}
+.finder-view-btn.active{background:rgba(255,255,255,.2);color:#fff}
+.finder-search{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:4px 10px;color:#fff;font-size:12px;outline:0;width:140px}
+.finder-content{display:grid;grid-template-columns:170px 1fr;height:100%;overflow:hidden}
+.finder-sidebar{background:rgba(0,0,0,.25);border-right:1px solid rgba(255,255,255,.1);padding:10px 8px;overflow-y:auto}
+.finder-side-group{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;padding:6px 8px 3px;letter-spacing:.05em}
+.finder-side-item{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;font-size:12px;color:rgba(255,255,255,.85);cursor:default;width:100%;border:0;background:transparent;text-align:left}
+.finder-side-item img{width:16px;height:16px;object-fit:contain}
+.finder-side-item:hover{background:rgba(255,255,255,.08)}
+.finder-side-item.active{background:#007AFF;color:#fff}
+.finder-main{padding:14px;overflow-y:auto}
+.finder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:14px}
+.finder-file{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 4px;border-radius:8px;cursor:default;text-align:center;border:0;background:transparent;color:inherit;font:inherit;width:100%}
+.finder-file:hover{background:rgba(255,255,255,.08)}
+.finder-file.active{background:rgba(255,255,255,.14)}
+.finder-file.active span{background:#007AFF;padding:1px 5px;border-radius:3px}
+.finder-file img{width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))}
+.finder-file span{font-size:11px;max-width:80px;word-break:break-word;line-height:1.2}
+.finder-statusbar{display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:11px;color:rgba(255,255,255,.45);border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.2)}
+
+/* 2. Linux Zsh Terminal */
+.term-app{height:100%;background:#0c0c12;color:#e6edf3;font-family:var(--mono-font);font-size:13px;line-height:1.5;padding:12px 14px;overflow-y:auto}
+.term-log{white-space:pre-wrap;word-break:break-word}
+.term-line{display:flex;align-items:center;gap:8px;margin-top:4px}
+.term-prompt{color:#38BDF8;font-weight:700}
+.term-input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-family:inherit;font-size:inherit}
+
+/* 3. Safari Browser */
+.safari-app{display:grid;grid-template-rows:36px 42px 1fr;height:100%;background:#ffffff;color:#1c1917}
+.safari-tabs{background:#1e1e28;display:flex;align-items:flex-end;padding:0 8px;gap:4px}
+.safari-tab{background:#2d2d3c;color:#fff;font-size:11.5px;font-weight:500;padding:6px 14px;border-radius:8px 8px 0 0;display:flex;align-items:center;gap:8px}
+.safari-tab img{width:14px;height:14px}
+.safari-toolbar{background:#282836;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px;padding:0 12px;color:#fff}
+.safari-url-bar{flex:1;background:rgba(255,255,255,.12);border-radius:8px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.8);text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;cursor:text}
+.safari-body{overflow-y:auto;background:linear-gradient(135deg,#f8fafc,#edf2f7);padding:32px 28px}
+.safari-start-title{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:20px;color:#1e293b}
+.safari-favs{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:16px;margin-bottom:30px}
+.safari-fav-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;border-radius:12px;background:#ffffff;box-shadow:0 4px 14px rgba(0,0,0,.06);cursor:pointer;transition:transform .15s;border:0}
+.safari-fav-item:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.safari-fav-icon{width:46px;height:46px;border-radius:10px;display:grid;place-items:center}
+.safari-fav-icon img{width:36px;height:36px;object-fit:contain}
+.safari-fav-lbl{font-size:11px;font-weight:600;color:#334155}
+
+/* 4. Visual Studio Code */
+.vscode-app{display:grid;grid-template-columns:44px 180px 1fr;height:100%;background:#1e1e1e;color:#cccccc;font-family:var(--mono-font)}
+.vscode-activity{background:#333333;display:flex;flex-direction:column;align-items:center;gap:16px;padding:12px 0}
+.vscode-activity svg{width:22px;height:22px;fill:#858585;cursor:pointer}
+.vscode-activity svg.active{fill:#38BDF8}
+.vscode-files{background:#252526;border-right:1px solid #191919;padding:10px 0;font-size:12px;overflow-y:auto}
+.vscode-file-item{padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;color:#969696}
+.vscode-file-item img{width:14px;height:14px;object-fit:contain}
+.vscode-file-item.active, .vscode-file-item:hover{background:#37373d;color:#ffffff}
+.vscode-editor{display:flex;flex-direction:column;height:100%;overflow:hidden}
+.vscode-tabs{background:#2d2d2d;display:flex;border-bottom:1px solid #1e1e1e}
+.vscode-tab{background:#1e1e1e;color:#ffffff;padding:8px 16px;font-size:12px;border-right:1px solid #252526;display:flex;align-items:center;gap:8px}
+.vscode-tab img{width:14px;height:14px;object-fit:contain}
+.vscode-code{flex:1;padding:14px;font-size:12.5px;line-height:1.6;overflow-y:auto;color:#d4d4d4}
+.vscode-status{height:22px;background:#007ACC;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:space-between;padding:0 10px}
+
+/* 5. System Settings */
+.settings-app{display:grid;grid-template-columns:200px 1fr;height:100%;background:rgba(24,24,34,.95);color:#fff}
+.settings-sidebar{background:rgba(0,0,0,.25);border-right:1px solid rgba(255,255,255,.1);padding:14px 10px}
+.settings-user-card{display:flex;align-items:center;gap:10px;padding:8px;background:rgba(255,255,255,.08);border-radius:10px;margin-bottom:14px}
+.settings-user-card img{width:36px;height:36px;border-radius:10px;object-fit:cover}
+.settings-side-item{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:7px;font-size:12.5px;color:rgba(255,255,255,.8);cursor:default;width:100%;border:0;background:transparent;text-align:left}
+.settings-side-item img{width:18px;height:18px;object-fit:contain}
+.settings-side-item:hover{background:rgba(255,255,255,.08)}
+.settings-side-item.active{background:#007AFF;color:#fff}
+.settings-pane{padding:24px;overflow-y:auto}
+.wp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.wp-thumb{aspect-ratio:16/10;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:transform .15s, border-color .15s;overflow:hidden;position:relative;background-size:cover;background-position:center}
+.wp-thumb:hover{transform:scale(1.03)}
+.wp-thumb.active{border-color:#38BDF8;box-shadow:0 0 16px rgba(56,189,248,.4)}
+.wp-thumb span{position:absolute;bottom:4px;left:6px;font-size:10px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.9);background:rgba(0,0,0,.6);padding:2px 6px;border-radius:4px}
+
+/* 6. Notes */
+.notes-app{display:grid;grid-template-columns:150px 170px 1fr;height:100%;background:rgba(24,24,34,.95);color:#fff}
+.notes-col1{background:rgba(0,0,0,.25);border-right:1px solid rgba(255,255,255,.1);padding:10px 8px}
+.notes-col2{background:rgba(0,0,0,.15);border-right:1px solid rgba(255,255,255,.1);overflow-y:auto}
+.note-card{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
+.note-card.active{background:rgba(255,255,255,.1);border-left:3px solid #38BDF8}
+.note-card b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note-card p{font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.notes-editor{padding:20px 24px;overflow-y:auto}
+.notes-editor h2{font-size:20px;font-weight:700;margin-bottom:12px}
+.notes-editor p{font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.85);margin-bottom:12px}
+
+/* 7. Calculator */
+.calc-app{display:flex;flex-direction:column;height:100%;background:#1c1c1e;padding:12px}
+.calc-screen{height:60px;display:flex;align-items:flex-end;justify-content:flex-end;font-size:36px;font-weight:300;color:#fff;padding:0 8px;margin-bottom:10px}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.calc-btn{height:44px;border-radius:22px;border:0;font-size:16px;font-weight:500;display:grid;place-items:center;color:#fff;background:#333333;transition:filter .1s}
+.calc-btn:hover{filter:brightness(1.2)}
+.calc-btn.fn{background:#a5a5a5;color:#000000}
+.calc-btn.op{background:#F59E0B;color:#ffffff}
+.calc-btn.zero{grid-column:span 2;border-radius:22px;padding-left:18px;justify-content:flex-start}
+
+/* 8. Music */
+.music-app{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:linear-gradient(135deg,#1e1024,#0d0b1a);padding:24px;text-align:center}
+.music-art{width:160px;height:160px;border-radius:14px;box-shadow:0 12px 35px rgba(0,0,0,.7);margin-bottom:18px;object-fit:cover}
+.music-eq{display:flex;gap:4px;align-items:flex-end;height:24px;margin-top:14px}
+.music-eq i{width:4px;background:#38BDF8;height:30%;border-radius:2px;animation:eqDance .8s infinite ease-in-out}
+.music-eq i:nth-child(2){animation-delay:.15s}.music-eq i:nth-child(3){animation-delay:.3s}.music-eq i:nth-child(4){animation-delay:.45s}
+@keyframes eqDance{50%{height:100%}}
+.music-eq.paused i{animation-play-state:paused;height:18%}
+.music-controls{display:flex;gap:8px;margin-top:16px}
+.music-controls button{border:0;border-radius:999px;padding:8px 14px;background:#007AFF;color:#fff;font-size:12px;font-weight:600}
+.music-controls button.ghost{background:rgba(255,255,255,.12)}
+.music-list{width:min(280px,100%);margin-top:14px}
+.music-list button{width:100%;text-align:left;background:transparent;border:0;color:rgba(255,255,255,.7);padding:7px 8px;border-radius:8px;font-size:12px}
+.music-list button.on{color:#fff;background:rgba(255,255,255,.1)}
+
+.mail-app{display:grid;grid-template-columns:250px 1fr;height:100%;background:rgba(16,16,24,.97);color:#fff}
+.mail-list{border-right:1px solid rgba(255,255,255,.1);overflow:auto}
+.mail-item{display:block;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.08);color:#fff;padding:12px 14px;cursor:pointer}
+.mail-item.active,.mail-item:hover{background:rgba(0,122,255,.2)}
+.mail-item b{display:block;font-size:13px}
+.mail-item em{font-style:normal;font-size:12px;color:rgba(255,255,255,.72)}
+.mail-item span{display:block;font-size:11px;color:rgba(255,255,255,.45);margin-top:3px}
+.mail-read{padding:22px 26px;overflow:auto}
+.mail-read h3{font-size:20px;margin:6px 0 12px;letter-spacing:-.02em}
+.mail-read p{font-size:13.5px;line-height:1.65;color:rgba(255,255,255,.84);white-space:pre-wrap}
+.mail-compose{margin-top:16px;background:#007AFF;color:#fff;border:0;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600}
+
+.cal-app{height:100%;overflow:auto;padding:18px 20px;background:rgba(16,16,24,.97);color:#fff}
+.cal-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-dow{text-align:center;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);padding:4px 0}
+.cal-cell{min-height:54px;border-radius:8px;background:rgba(255,255,255,.04);padding:6px;font-size:12px}
+.cal-cell.out{opacity:.28}
+.cal-cell.today{background:#007AFF;color:#fff}
+.cal-cell small{display:block;margin-top:4px;font-size:10px;color:#7dd3fc;line-height:1.3}
+.cal-cell.today small{color:#fff}
+
+.photo-app{display:grid;grid-template-columns:1fr 200px;height:100%;background:#0c0c12;color:#fff}
+.photo-stage{display:grid;place-items:center;padding:18px;min-width:0}
+.photo-stage img{max-width:100%;max-height:calc(100% - 28px);object-fit:contain;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.45)}
+.photo-stage figcaption{margin-top:8px;font-size:12px;color:rgba(255,255,255,.65);text-align:center}
+.photo-strip{overflow:auto;border-left:1px solid rgba(255,255,255,.1);padding:10px;display:flex;flex-direction:column;gap:8px}
+.photo-strip button{border:2px solid transparent;padding:0;border-radius:8px;overflow:hidden;background:#000;cursor:pointer}
+.photo-strip button.on{border-color:#38BDF8}
+.photo-strip img{width:100%;height:64px;object-fit:cover;display:block}
+
+.map-app{position:relative;height:100%;overflow:hidden;background:radial-gradient(circle at 28% 36%,#16304a,#070910 68%)}
+.map-node{position:absolute;transform:translate(-50%,-50%);background:rgba(8,12,22,.82);border:1px solid rgba(56,189,248,.4);color:#fff;border-radius:12px;padding:8px 12px;cursor:pointer;text-align:left;backdrop-filter:blur(10px)}
+.map-node b{display:block;font-size:13px}
+.map-node span{font-size:10.5px;color:rgba(255,255,255,.62)}
+.map-node:hover{border-color:#fff}
+
+.store-app{height:100%;overflow:auto;padding:20px 22px;background:rgba(14,14,20,.97);color:#fff}
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:14px}
+.store-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px}
+.store-card img{width:40px;height:40px;object-fit:contain}
+.store-card b{display:block;margin-top:8px}
+.store-card p{font-size:12px;color:rgba(255,255,255,.6);margin:4px 0 10px;line-height:1.4}
+.store-card button{background:#007AFF;color:#fff;border:0;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600}
+.games-app{display:grid;grid-template-columns:180px 1fr;height:100%;background:#090b10;color:#fff}
+.games-side{border-right:1px solid rgba(255,255,255,.1);padding:14px 12px;display:flex;flex-direction:column;gap:8px}
+.games-side button{text-align:left;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:8px 10px;font-size:13px}
+.games-side button.on{background:#007AFF;border-color:#007AFF}
+.games-help{font-size:11.5px;line-height:1.45;color:rgba(255,255,255,.62)}
+.games-meta{font-family:var(--mono-font);font-size:12px;color:#7dd3fc}
+.games-stage{position:relative;display:grid;place-items:center;min-width:0;padding:16px}
+.games-stage canvas{width:min(100%,420px);height:auto;background:#07080c;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.35);touch-action:none}
+.mem-grid{display:grid;grid-template-columns:repeat(4,76px);gap:8px}
+.mem-card{height:76px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#172033;color:transparent;font-size:22px;font-weight:700}
+.mem-card.up,.mem-card.done{color:#fff}
+.mem-card.up{background:#0369a1}
+.mem-card.done{background:#166534}
+.game-banner{position:absolute;left:16px;right:16px;bottom:22px;text-align:center;font-size:13px;color:rgba(255,255,255,.85)}
+
+.finder-list{display:flex;flex-direction:column;gap:2px}
+.finder-row{display:grid;grid-template-columns:22px 1fr 110px 64px;gap:8px;align-items:center;width:100%;padding:6px 8px;border:0;border-radius:6px;background:transparent;color:#fff;text-align:left;font-size:12px;cursor:default}
+.finder-row:hover{background:rgba(255,255,255,.1)}
+.finder-row img{width:16px;height:16px;object-fit:contain}
+.finder-nav-btn:disabled{opacity:.35}
+
+#task-view{position:fixed;inset:0;z-index:8400;display:none;background:rgba(4,6,12,.62);backdrop-filter:blur(18px);align-items:center;justify-content:center;padding:90px 28px 110px}
+#task-view.on{display:flex}
+.task-grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:920px}
+.task-card{width:200px;background:rgba(20,22,32,.92);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:14px;color:#fff;text-align:left}
+.task-card img{width:28px;height:28px;object-fit:contain}
+.task-card b{display:block;margin-top:8px;font-size:13px}
+.task-card span{display:block;margin-top:3px;font-size:11px;color:rgba(255,255,255,.55)}
+.task-empty{color:rgba(255,255,255,.75);font-size:14px}
+
+/* 9. Lock Screen */
+#lock-screen{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(45px);background:rgba(10,10,18,.75)}
+#lock-screen.on{display:flex}
+.lock-clock{font-size:72px;font-weight:200;letter-spacing:-.02em;margin-bottom:6px}
+.lock-date{font-size:18px;font-weight:400;color:rgba(255,255,255,.8);margin-bottom:36px}
+.lock-user{display:flex;flex-direction:column;align-items:center;gap:14px}
+.lock-avatar{width:88px;height:88px;border-radius:24px;border:1px solid rgba(255,255,255,.2);padding:6px;background:rgba(255,255,255,.08);box-shadow:0 0 20px rgba(0,0,0,.5);display:grid;place-items:center}
+.lock-avatar img{width:100%;height:100%;object-fit:contain}
+.lock-name{font-size:20px;font-weight:700}
+.lock-input-box{display:flex;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;gap:8px}
+.lock-input-box input{background:transparent;border:0;outline:0;color:#fff;font-size:13px;width:150px;text-align:center}
+.lock-unlock-btn{background:#007AFF;border:0;color:#fff;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px}
+
+/* Launchpad */
+#launchpad{position:absolute;inset:30px 0 0 0;z-index:8500;backdrop-filter:blur(40px) saturate(180%);background:rgba(15,15,24,.75);display:none;flex-direction:column;align-items:center;padding:40px 20px}
+#launchpad.on{display:flex}
+.lp-search{width:min(340px,80vw);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 16px;color:#fff;outline:0;font-size:13px;margin-bottom:40px}
+.lp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:36px 48px;max-width:800px}
+.lp-item{display:flex;flex-direction:column;align-items:center;gap:10px;border:0;background:transparent;color:#fff;cursor:pointer}
+.lp-item:hover .lp-icon{transform:scale(1.12)}
+.lp-icon{width:64px;height:64px;transition:transform .15s}
+.lp-icon img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
+.lp-lbl{font-size:12.5px;font-weight:600}
+
+/* Toast Hint */
+#hint{position:fixed;left:50%;bottom:24px;transform:translate(-50%,180%);z-index:9990;background:rgba(24,24,34,.95);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:10px 24px;font-size:12.5px;box-shadow:0 12px 35px rgba(0,0,0,.6);backdrop-filter:blur(20px);transition:transform .4s var(--mac-ease);pointer-events:none}
+#hint.show{transform:translate(-50%,0)}
+#hint b{color:#38BDF8}
+</style>
+</head>
+<body>
+
+<!-- BOOT SCREEN & CINEMATIC SEQUENCE (Optional via Reboot) -->
+<div id="boot">
+  <div class="boot-space-bg"></div>
+
+  <!-- Initial Boot Card -->
+  <div class="boot-box" id="boot-init-card">
+    <div class="boot-logo">
+      <img src="logo.png?v=2" alt="DevilOS">
+    </div>
+    <p class="px">DEVIL<span>OS</span> TRINITY</p>
+    <p class="px small">HYBRID WORKSTATION · WINDOWS + MAC + LINUX</p>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:28px">
+      <button id="start-btn">ENTER 3D STUDIO</button>
+      <button id="quick-os-btn" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:14px 28px;border-radius:14px;font-size:13px;font-weight:700;letter-spacing:.5px;transition:.2s">QUICK DESKTOP</button>
+    </div>
+  </div>
+  <p class="tagline" id="boot-tagline">The convergence of <b>macOS Glass Aesthetics</b>, <b>Windows 11 Snap Power</b>, and <b>Linux Tiling Terminal Mastery</b> in Deep Space.</p>
+
+  <!-- Live Cinematic Boot Loader -->
+  <div class="boot-loader-container" id="boot-loader">
+    <div class="boot-loader-logo">
+      <img src="logo.png?v=2" alt="DevilOS">
+    </div>
+    <div class="boot-progress-track">
+      <div class="boot-progress-bar" id="boot-progress-bar"></div>
+    </div>
+    <div class="boot-log-ticker" id="boot-log-ticker">Initializing Hybrid Architecture...</div>
+    <div class="boot-skip-btn" id="boot-skip-btn">Press SPACE or Click anywhere to skip ›</div>
+  </div>
+
+  <div class="boot-iris" id="boot-iris"></div>
+  <div class="scanlines"></div>
+</div>
+
+<div id="stage3d" class="on" role="region" aria-label="3D retro computer">
+  <canvas id="gl"></canvas>
+  <div id="stage3d-loading" aria-live="polite">
+    <div class="load-title">Loading retro computer</div>
+    <div class="load-bar"><i></i></div>
+  </div>
+
+  <div class="stage-caption">Drag to orbit · Scroll to zoom · Click the computer to enter DevilOS</div>
+</div>
+<div id="flash"></div>
+
+<!-- ============ MODE PILL SWITCHER ============ -->
+<div class="mode-pill on" id="mode-pill">
+  <button class="on" data-mode="3d">3D STUDIO</button>
+  <button data-mode="os">DEVILOS</button>
+  <button data-mode="site">PORTFOLIO</button>
+</div>
+
+<!-- ============ BRIGHT ELEGANT EDITORIAL SITE ============ -->
+<div id="site">
+  <canvas id="bin"></canvas>
+  <div class="s-top"><span><b>©2026</b> — DEVIL1716 STUDIO</span><div class="s-nav"><a href="#work">Selected work</a><a href="#contact">Contact</a><span class="s-status"><i></i>Available for collaboration</span></div></div>
+  <div class="s-scroll" id="s-scroll">
+    <main class="s-main">
+      <section class="s-landing">
+        <div>
+          <p class="s-eyebrow">Independent engineer · Systems Architect</p>
+          <h1 class="s-hero" id="s-hero">Software Engineer & Systems Architect</h1>
+          <div class="s-name" id="s-name">DEVIL<br><i>1716</i></div>
+          <p class="s-sub">Portfolio · DarkAngel Studio v4.0<br>Scroll to inspect selected builds ↓</p>
+          <div class="s-cta-row"><a class="s-cta" href="#work">Browse selected work <span>↓</span></a><button type="button" class="s-cta" id="s-enter-studio" style="border:0;cursor:pointer">Enter 3D Studio <span>↗</span></button><a class="s-quiet-link" href="mailto:sharan071718@gmail.com">Start a conversation ↗</a></div>
+        </div>
+        <aside class="s-aside">
+          <p>I turn complex systems problems into reliable, high-performance software—from mesh networking protocols and TDMS telemetry tools to interactive creative computing.</p>
+          <small>Currently exploring / systems + creative code</small>
+          <button type="button" id="s-studio-card" style="display:block;width:100%;margin-top:18px;padding:0;border:0;background:transparent;cursor:pointer;text-align:left">
+            <img src="retro_computer_closeup.png" alt="Retro computer" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block;box-shadow:0 18px 40px rgba(0,0,0,.18)">
+            <div style="margin-top:10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.55">Three.js · Tripo PBR</div>
+            <div style="margin-top:4px;font-size:15px;font-weight:600">Retro computer — click to explore</div>
+          </button>
+          <div class="s-stats"><div class="s-stat"><b>100+</b><span>Open-source repos</span></div><div class="s-stat"><b id="s-repo-count">7</b><span>Featured builds</span></div><div class="s-stat"><b>∞</b><span>Curiosity</span></div></div>
+        </aside>
+      </section>
+
+      <section class="s-sec"><h2 data-decode><span class="count">01</span>About the practice</h2>
+        <div class="about-copy"><p id="s-about-1">I build software that balances robust low-level performance with elegant user experience. From Android Bluetooth mesh networks to scalable cloud systems and interactive web apps.</p>
+        <p id="s-about-2">Passionate about low-level networking, systems architecture, Python automation, and modern web applications.</p></div>
+      </section>
+
+      <section class="s-sec" id="work"><h2 data-decode><span class="count">02</span>Selected repositories</h2><div id="s-work"></div></section>
+
+      <section class="s-sec" id="contact"><h2 data-decode><span class="count">03</span>Get in touch</h2>
+        <a class="s-mail" id="s-mail" href="mailto:sharan071718@gmail.com">sharan071718@gmail.com</a>
+        <div class="s-links">
+          <a href="https://github.com/Devil1716" target="_blank" rel="noopener">github ↗</a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin ↗</a>
+          <a href="https://x.com/" target="_blank" rel="noopener">x ↗</a>
+        </div>
+        <p class="s-foot">Rendered in DevilOS Trinity · Tripo PBR computer · Three.js · Web Audio API</p>
+      </section>
+    </main>
+  </div>
+  <div id="s-preview"><img id="s-prev-img" alt=""></div>
+</div>
+
+<!-- ========================================================================= */
+/* ==================== DEVILOS TRINITY WORKSPACE ========================== */
+/* ========================================================================= -->
+<div id="desktop">
+  <!-- Deep Space Wallpaper -->
+  <div class="wallpaper-layer wp-space-orion" id="wallpaper"></div>
+  <canvas id="star-canvas"></canvas>
+
+  <!-- Top Bar (Mac Glass + Linux Stats + Windows Controls) -->
+  <header id="topbar">
+    <div class="tb-left">
+      <!-- Exit to the 3D studio -->
+      <button class="tb-item" id="btn-back-3d" style="background:rgba(56,189,248,.18);border:1px solid rgba(56,189,248,.4);color:#38bdf8;font-weight:700;margin-right:6px;border-radius:6px;gap:5px" title="Return to the 3D studio (ESC)">
+        <span>↩</span> <span>3D Studio</span>
+      </button>
+      <!-- Devil OS Start Hub Icon -->
+      <div class="tb-item os-logo-btn" id="btn-start-menu" title="DevilOS Trinity Hub (Win/Super Key)">
+        <img src="logo.png?v=2" alt="DevilOS">
+        <span style="font-weight:700;letter-spacing:-.02em">Devil<span style="color:var(--devil-red)">OS</span></span>
+      </div>
+      <div class="tb-item tb-app-name" id="active-app-name">Finder</div>
+      <div class="tb-item" data-menu="file">File</div>
+      <div class="tb-item" data-menu="edit">Edit</div>
+      <div class="tb-item" data-menu="view">View</div>
+      <div class="tb-item" data-menu="tools">Tools</div>
+      <div class="tb-item" data-menu="window">Window</div>
+      <div class="tb-item" data-menu="help">Help</div>
+
+      <!-- Linux Tiling WM Switcher -->
+      <button class="tb-tiling-btn" id="btn-toggle-tiling" title="Toggle Linux Hyprland/i3 Auto-Tiling Mode (Super+T)">
+        <span>⊞</span> <span id="tiling-state-lbl">Tile Windows</span>
+      </button>
+    </div>
+
+    <div class="tb-right">
+      <!-- Linux Live System Metrics -->
+      <div class="tb-telemetry" title="Linux 6.10-devil Telemetry">
+        <div class="tb-telem-item"><span>CPU</span><b id="tb-cpu-val">12%</b></div>
+        <div class="tb-telem-item"><span>RAM</span><b id="tb-ram-val">8.4G</b></div>
+      </div>
+
+      <!-- Quick Controls -->
+      <div class="tb-stat-btn" id="btn-task-switch" title="Task View / Windows Switcher (Alt+Tab)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </div>
+      <div class="tb-stat-btn" id="btn-spotlight" title="Spotlight / Rofi Search (⌘Space / Ctrl+Space)">
+        <svg viewBox="0 0 24 24"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="tb-stat-btn" id="btn-control-center" title="Control Center & Quick Settings">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="7" r="2" fill="currentColor"/><rect x="3" y="14" width="18" height="6" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="17" r="2" fill="currentColor"/></svg>
+      </div>
+      <div class="tb-stat-btn" id="tb-clock" title="Widgets & Notifications">Wed Aug 26 9:18 PM</div>
+    </div>
+  </header>
+
+  <!-- Trinity Start Menu / Hub -->
+  <div id="start-menu">
+    <div class="sm-user-banner">
+      <div class="sm-user-avatar">
+        <img src="logo.png?v=2" alt="Devil1716">
+      </div>
+      <div class="sm-user-info">
+        <b>Devil1716 (DaRkAngeL)</b>
+        <span>DevilOS Trinity · Linux 6.10 / Darwin 24</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="sm-sec-title">Pinned Applications</div>
+      <div class="sm-grid">
+        <button class="sm-app-btn" data-app="terminal"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png" alt=""><span>Terminal</span></button>
+        <button class="sm-app-btn" data-app="code"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png" alt=""><span>VS Code</span></button>
+        <button class="sm-app-btn" data-app="finder"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt=""><span>Files</span></button>
+        <button class="sm-app-btn" data-app="safari"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/safari/256.png" alt=""><span>Browser</span></button>
+        <button class="sm-app-btn" data-app="notes"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt=""><span>Notes</span></button>
+        <button class="sm-app-btn" data-app="calculator"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png" alt=""><span>Calculator</span></button>
+        <button class="sm-app-btn" data-app="music"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png" alt=""><span>Music</span></button>
+        <button class="sm-app-btn" data-app="games"><img src="logo.png?v=2" alt="" style="display:none"><span>Games</span></button>
+        <button class="sm-app-btn" data-app="settings"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png" alt=""><span>Settings</span></button>
+      </div>
+    </div>
+
+    <div class="sm-footer">
+      <button class="sm-power-btn" data-action="about"><img src="logo.png?v=2" style="width:14px;height:14px" alt=""> About DevilOS</button>
+      <div style="display:flex;gap:6px">
+        <button class="sm-power-btn" data-action="lock">🔒 Lock</button>
+        <button class="sm-power-btn" data-action="restart">⟳ Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Standard App Dropdown -->
+  <div class="mac-dropdown" id="menu-generic">
+    <div class="menu-row" data-action="new-window">New Terminal Window<span class="shortcut">⌘N / Ctrl+N</span></div>
+    <div class="menu-row" data-action="close-window">Close Active Window<span class="shortcut">⌘W / Alt+F4</span></div>
+    <div class="menu-sep"></div>
+    <div class="menu-row" data-action="toggle-tile">Toggle Linux Tiling<span class="shortcut">Super+T</span></div>
+    <div class="menu-row" data-action="find">Spotlight Search<span class="shortcut">⌘Space</span></div>
+    <div class="menu-sep"></div>
+    <div class="menu-row" data-action="quit">Quit App<span class="shortcut">⌘Q</span></div>
+  </div>
+
+  <!-- Spotlight / Rofi Search -->
+  <div id="spotlight">
+    <div class="spot-bar">
+      <svg viewBox="0 0 24 24"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="text" id="spot-input" placeholder="Type a command, calculation, or search projects..." autocomplete="off" spellcheck="false">
+    </div>
+    <div class="spot-results" id="spot-results"></div>
+  </div>
+
+  <!-- Control Center Panel -->
+  <div id="control-center">
+    <div class="cc-grid">
+      <div class="cc-card active" id="cc-wifi"><div class="cc-card-icon"><svg viewBox="0 0 24 24"><path d="M12 18a2 2 0 100 4 2 2 0 000-4zM2 8.82a15 15 0 0120 0M5 12.18a11 11 0 0114 0" fill="none" stroke="#fff" stroke-width="2"/></svg></div><div class="cc-card-text"><b>Wi-Fi 6E</b><span>Cosmic-5G</span></div></div>
+      <div class="cc-card active" id="cc-bt"><div class="cc-card-icon"><svg viewBox="0 0 24 24"><path d="M6.5 6.5l11 11L12 23V1l5.5 5.5-11 11" fill="none" stroke="#fff" stroke-width="2"/></svg></div><div class="cc-card-text"><b>Bluetooth</b><span>AirPods Pro</span></div></div>
+      <div class="cc-card" id="cc-airdrop"><div class="cc-card-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 7l-5-5-5 5" fill="none" stroke="#fff" stroke-width="2"/></svg></div><div class="cc-card-text"><b>Mesh Relay</b><span>Active</span></div></div>
+      <div class="cc-card" id="cc-dnd"><div class="cc-card-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="#fff"/></svg></div><div class="cc-card-text"><b>Zen Mode</b><span>Off</span></div></div>
+    </div>
+    <div class="cc-slider-card">
+      <label><span>Display Brightness</span><span id="cc-bright-val">100%</span></label>
+      <input type="range" class="cc-slider" id="cc-bright-slider" min="30" max="100" value="100">
+    </div>
+    <div class="cc-slider-card">
+      <label><span>Sound Volume</span><span id="cc-sound-val">85%</span></label>
+      <input type="range" class="cc-slider" id="cc-sound-slider" min="0" max="100" value="85">
+    </div>
+    <div class="cc-music">
+      <img src="https://picsum.photos/seed/warm-studio-lofi/100/100" alt="">
+      <div class="cc-music-info">
+        <b data-music-title>Interstellar Beats</b>
+        <span data-music-artist>Devil1716</span>
+      </div>
+      <button class="cc-play-btn" id="cc-music-btn">▶</button>
+    </div>
+  </div>
+
+  <!-- Notification Center & Widgets -->
+  <div id="widget-panel">
+    <div class="widget">
+      <div class="w-clock-box">
+        <div><h4 style="font-size:18px;font-weight:700">Devil Station</h4><p style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px">Deep Space Observatory</p></div>
+        <div class="w-clock-face">
+          <div class="w-clock-hand w-clock-h" id="w-clk-h"></div>
+          <div class="w-clock-hand w-clock-m" id="w-clk-m"></div>
+          <div class="w-clock-hand w-clock-s" id="w-clk-s"></div>
+        </div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="w-weather">
+        <div><p style="font-size:11px;font-weight:700;color:var(--cyan)">COSMIC CONDITIONS</p><h3 style="font-size:16px;margin-top:2px">Aurora Shockwave</h3></div>
+        <b style="color:#38BDF8">-270°</b>
+      </div>
+    </div>
+    <div class="widget">
+      <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:8px">DEVILOS HYBRID TELEMETRY</p>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Ryzen 9 / M3 Max Hybrid</span><span style="color:#34D399" id="w-cpu-load">12% Load</span></div>
+      <div style="height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden"><div id="w-cpu-bar" style="width:12%;height:100%;background:#38BDF8"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:10px;margin-bottom:6px"><span>Unified RAM (Linux Cache)</span><span id="w-ram-label">8.4 GB / 36 GB</span></div>
+      <div style="height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden"><div id="w-ram-bar" style="width:23%;height:100%;background:#818CF8"></div></div>
+    </div>
+  </div>
+
+  <!-- Desktop Icons Grid with Refined Subtle Highlight -->
+  <div id="desktop-icons">
+    <button class="desk-item" data-app="finder">
+      <div class="desk-item-icon">
+        <img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt="Files">
+      </div>
+      <span class="desk-item-lbl">Space Root HD</span>
+    </button>
+    <button class="desk-item" data-app="notes">
+      <div class="desk-item-icon">
+        <img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt="Notes">
+      </div>
+      <span class="desk-item-lbl">System Architecture</span>
+    </button>
+    <button class="desk-item" data-app="code">
+      <div class="desk-item-icon">
+        <img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png" alt="VS Code">
+      </div>
+      <span class="desk-item-lbl">Code Workspace</span>
+    </button>
+    <button class="desk-item" data-app="games">
+      <div class="desk-item-icon">
+        <img src="logo.png?v=2" alt="Games" id="desk-games-icon">
+      </div>
+      <span class="desk-item-lbl">Games</span>
+    </button>
+    <button class="desk-item" data-app="terminal">
+      <div class="desk-item-icon">
+        <img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png" alt="Terminal">
+      </div>
+      <span class="desk-item-lbl">Zsh Terminal</span>
+    </button>
+  </div>
+
+  <!-- Marquee Selection Box -->
+  <div id="selection-box"></div>
+
+  <!-- Window Canvas Workspace -->
+  <div id="windows"></div>
+
+  <!-- Fullscreen Launchpad Overlay -->
+  <div id="launchpad">
+    <input type="text" class="lp-search" id="lp-search" placeholder="Search Apps & Tools..." autocomplete="off">
+    <div class="lp-grid" id="lp-grid"></div>
+  </div>
+
+  <!-- macOS / Windows Hybrid Dock -->
+  <div id="dock-container">
+    <div id="dock">
+      <!-- 1. Start Hub -->
+      <button class="dock-btn" data-app="start-hub">
+        <img class="dock-icon" src="logo.png?v=2" alt="DevilOS Start">
+        <span class="dock-tooltip">DevilOS Start Menu</span>
+      </button>
+      <div class="dock-sep"></div>
+      <!-- 2. Finder -->
+      <button class="dock-btn running" data-app="finder">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt="Finder">
+        <span class="dock-tooltip">Finder</span>
+      </button>
+      <!-- 3. Launchpad -->
+      <button class="dock-btn" data-app="launchpad">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/launchpad/256.png" alt="Launchpad">
+        <span class="dock-tooltip">Launchpad</span>
+      </button>
+      <!-- 4. Safari -->
+      <button class="dock-btn" data-app="safari">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/safari/256.png" alt="Safari">
+        <span class="dock-tooltip">Safari Browser</span>
+      </button>
+      <!-- 5. Notes -->
+      <button class="dock-btn" data-app="notes">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt="Notes">
+        <span class="dock-tooltip">Architecture Notes</span>
+      </button>
+      <!-- 6. Terminal -->
+      <button class="dock-btn running" data-app="terminal">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png" alt="Terminal">
+        <span class="dock-tooltip">Zsh / Linux Terminal</span>
+      </button>
+      <!-- 7. VS Code -->
+      <button class="dock-btn" data-app="code">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png" alt="Visual Studio Code">
+        <span class="dock-tooltip">Visual Studio Code</span>
+      </button>
+      <!-- 8. Calculator -->
+      <button class="dock-btn" data-app="calculator">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png" alt="Calculator">
+        <span class="dock-tooltip">Calculator</span>
+      </button>
+      <!-- 9. Music -->
+      <button class="dock-btn" data-app="music">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png" alt="Music">
+        <span class="dock-tooltip">Space Music</span>
+      </button>
+      <!-- 10. Settings -->
+      <button class="dock-btn" data-app="settings">
+        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png" alt="System Settings">
+        <span class="dock-tooltip">System Settings</span>
+      </button>
+
+      <button class="dock-btn" data-app="games">
+        <img class="dock-icon" id="dock-games-icon" src="logo.png?v=2" alt="Games">
+        <span class="dock-tooltip">Games</span>
+      </button>
+
+      <div class="dock-sep"></div>
+      <button class="dock-btn" data-app="trash">
+        <svg class="dock-icon" viewBox="0 0 64 64"><rect x="14" y="16" width="36" height="42" rx="6" fill="#CBD5E1" stroke="#94A3B8" stroke-width="2"/><line x1="22" y1="24" x2="22" y2="48" stroke="#94A3B8" stroke-width="2.5"/><line x1="32" y1="24" x2="32" y2="48" stroke="#94A3B8" stroke-width="2.5"/><line x1="42" y1="24" x2="42" y2="48" stroke="#94A3B8" stroke-width="2.5"/><rect x="10" y="10" width="44" height="6" rx="3" fill="#E2E8F0"/></svg>
+        <span class="dock-tooltip">Trash</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+  <div id="task-view" aria-hidden="true">
+    <div class="task-grid" id="task-view-grid"></div>
+  </div>
+
+  <!-- Lock Screen -->
+<div id="lock-screen">
+  <div class="lock-clock" id="lock-clk">9:18</div>
+  <div class="lock-date" id="lock-dt">Wednesday, August 26</div>
+  <div class="lock-user">
+    <div class="lock-avatar">
+      <img src="logo.png?v=2" alt="Devil1716">
+    </div>
+    <span class="lock-name">Devil1716 (DaRkAngeL)</span>
+    <div class="lock-input-box">
+      <input type="password" id="lock-pass" placeholder="Enter Password" autofocus>
+      <button class="lock-unlock-btn" id="lock-unlock-btn">→</button>
+    </div>
+  </div>
+</div>
+
+<div id="hint"></div>
+
+<script>
+/* ============ CONFIG — DEVIL1716 PORTFOLIO DATA ============ */
+const CONFIG = {
+  name:     'Devil1716',
+  handle:   'DaRkAngeL',
+  role:     'Software Engineer & Systems Architect',
+  user:     'devil',
+  host:     'arch-macbook',
+  email:    'sharan071718@gmail.com',
+  github:   'https://github.com/Devil1716',
+  linkedin: 'https://linkedin.com/',
+  x:        'https://x.com/',
+  work: [
+    ['retro-computer', 'Three.js · Tripo PBR retro computer, the portfolio hero model', '#3d-studio'],
+    ['bluetooth-manet-android', 'Java · Android Bluetooth MANET mesh relay & TTL forwarding', 'https://github.com/Devil1716/bluetooth-manet-android'],
+    ['CognyxOS', 'Python · Engineering foundation & platform architecture', 'https://github.com/Devil1716/CognyxOS'],
+    ['HackerRank-Orchestrator', 'Python · Challenge submission & testing orchestrator', 'https://github.com/Devil1716/HackerRank-Orchestrator'],
+    ['drapesense', 'JavaScript · Apparel & drape sensing platform', 'https://github.com/Devil1716/drapesense'],
+    ['nitdms', 'Python · Reader for National Instrument LabVIEW TDMS files', 'https://github.com/Devil1716/nitdms'],
+    ['dsu', 'C++ · High-performance Disjoint Set Union library', 'https://github.com/Devil1716/dsu'],
+    ['chalk', 'TypeScript · Terminal string styling done right', 'https://github.com/Devil1716/chalk']
+  ]
+};
+
+/* Official Real Icon URLs */
+const ICONS = {
+  finder:      'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png',
+  launchpad:   'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/launchpad/256.png',
+  safari:      'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/safari/256.png',
+  notes:       'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png',
+  terminal:    'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png',
+  vscode:      'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png',
+  calculator:  'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png',
+  music:       'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png',
+  settings:    'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png',
+  mail:        'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/mail/256.png',
+  appstore:    'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/appstore/256.png',
+  calendar:    'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calendar/256.png',
+  photos:      'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/photos/256.png',
+  maps:        'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/maps/256.png',
+  github:      'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff"><path d="M12 .5A11.5 11.5 0 0 0 .5 12.3c0 5.2 3.4 9.6 8.1 11.2.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.4 6 .4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12.3 11.5 11.5 0 0 0 12 .5z"/></svg>'),
+  githubDark:  'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff"><path d="M12 .5A11.5 11.5 0 0 0 .5 12.3c0 5.2 3.4 9.6 8.1 11.2.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.4 6 .4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12.3 11.5 11.5 0 0 0 12 .5z"/></svg>'),
+  spotify:     'https://cdn.simpleicons.org/spotify/1DB954',
+  java:        'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+  python:      'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+  cpp:         'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg',
+  typescript:  'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+  games: 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#111827"/><rect x="8" y="22" width="48" height="24" rx="12" fill="#38bdf8"/><rect x="18" y="30" width="12" height="4" rx="1" fill="#0f172a"/><rect x="22" y="26" width="4" height="12" rx="1" fill="#0f172a"/><circle cx="42" cy="31" r="2.5" fill="#0f172a"/><circle cx="48" cy="37" r="2.5" fill="#0f172a"/></svg>')
+};
+document.querySelectorAll('#dock-games-icon,#desk-games-icon,.sm-app-btn[data-app="games"] img').forEach(img=>{ img.src=ICONS.games; img.style.display=''; });
+
+/* Audio Keypress & Startup Chime Synthesis */
+let audioCtx;
+function getAudio(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+let uiGain=0.85;
+function playKeyClick(freq=440, type='sine', dur=0.03){
+  if(uiGain<=0.01) return;
+  try {
+    const ctx = getAudio();
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq + (Math.random()*20-10), ctx.currentTime);
+    gain.gain.setValueAtTime(0.04*uiGain, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + dur);
+  } catch(e){}
+}
+
+function playStartupChime(){
+  try {
+    const ctx = getAudio();
+    const now = ctx.currentTime;
+    const chord = [130.81, 196.00, 261.63, 329.63, 392.00, 523.25, 659.25];
+    chord.forEach((freq, idx) => {
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.045 / (idx * 0.45 + 1), now + 0.14);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.6);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 2.6);
+    });
+  } catch(e){}
+}
+
+const $ = s => document.querySelector(s);
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+let toastT;
+function toast(m,ms=3600){
+  const h=$('#hint'); h.innerHTML=m; h.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>h.classList.remove('show'),ms);
+}
+
+/* ---------- Mode Switching ---------- */
+let mode='3d', sceneVisible=true;
+function setPill(m){ document.querySelectorAll('.mode-pill button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m)); }
+function goMode(m, opts){
+  const useFlash=!opts || opts.flash!==false;
+  const swap=()=>{
+    mode=m;
+    $('#stage3d').classList.toggle('on',m==='3d');
+    $('#stage3d').classList.toggle('entering-os', false);
+    $('#site').classList.toggle('on',m==='site');
+    $('#desktop').classList.toggle('on',m==='os');
+    $('#mode-pill').classList.toggle('on',true);
+    sceneVisible=(m==='3d');
+    if(m==='site') startSite();
+    if(m==='os') seedOS();
+    if(m==='3d') init3D();
+    setPill(m);
+    if(useFlash) setTimeout(()=>$('#flash').classList.remove('on'),120);
+  };
+  if(useFlash){
+    $('#flash').classList.add('on');
+    setTimeout(swap, 240);
+  } else swap();
+}
+document.querySelectorAll('.mode-pill button').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.mode!==mode) goMode(b.dataset.mode); }));
+
+const urlParams=new URLSearchParams(window.location.search);
+const initMode=urlParams.get('mode');
+if(initMode && ['3d','site','os'].includes(initMode)){
+  const b=$('#boot'); if(b){ b.classList.add('off'); b.classList.remove('on'); }
+  if(initMode==='3d'){ $('#stage3d').classList.add('on'); mode='3d'; sceneVisible=true; init3D(); setPill('3d'); }
+  else { goMode(initMode); }
+}
+
+/* ---------- Boot Screen Controls ---------- */
+$('#start-btn').addEventListener('click',()=>{
+  playKeyClick(480, 'triangle', 0.08);
+  const b=$('#boot'); b.classList.add('off'); setTimeout(()=>b.classList.remove('on'),650);
+  $('#stage3d').classList.add('on'); mode='3d'; sceneVisible=true; init3D();
+});
+
+$('#quick-os-btn').addEventListener('click',()=>{
+  playKeyClick(520, 'triangle', 0.08);
+  startBootAnimation(()=>{
+    goMode('os');
+  });
+});
+
+function startBootAnimation(onComplete){
+  const boot=$('#boot');
+  boot.classList.remove('off');
+  boot.classList.add('on');
+  const fromScreen=boot.classList.contains('from-screen');
+  const initCard=$('#boot-init-card'), tagline=$('#boot-tagline'), loader=$('#boot-loader');
+  const bar=$('#boot-progress-bar'), ticker=$('#boot-log-ticker');
+
+  initCard.style.opacity='0';
+  initCard.style.transform='scale(0.95)';
+  if(tagline) tagline.style.opacity='0';
+
+  setTimeout(()=>{
+    initCard.style.display='none';
+    if(tagline) tagline.style.display='none';
+    loader.classList.add('active');
+
+    // Trigger startup harmonic chime
+    playStartupChime();
+
+    const bootSteps=[
+      { pct: 15, msg: '[BIOS] Initializing NVMe Space Storage & Drivers...' },
+      { pct: 38, msg: '[KERNEL] Loading Linux 6.10-devil / Darwin 24 Hybrid Core...' },
+      { pct: 64, msg: '[COMPOSITOR] Starting Hyprland Engine & Metal 3 Pipeline...' },
+      { pct: 86, msg: '[SERVICES] Launching Windows Snap Assist & Zsh Shell...' },
+      { pct: 100, msg: '[READY] Materializing Space Desktop Environment...' }
+    ];
+
+    let stepIdx=0;
+    let finished=false;
+
+    function finish(){
+      if(finished) return;
+      finished=true;
+      bar.style.width='100%';
+      ticker.textContent='[READY] DevilOS Trinity Online.';
+      setTimeout(()=>{
+        const b=$('#boot');
+        b.classList.add('off');
+        setTimeout(()=>{
+          b.classList.remove('on','from-screen');
+          loader.classList.remove('active');
+          initCard.style.display='';
+          initCard.style.opacity='1';
+          initCard.style.transform='scale(1)';
+          if(tagline){ tagline.style.display=''; tagline.style.opacity='1'; }
+        }, 650);
+        if(onComplete) onComplete();
+      }, 350);
+    }
+
+    function runStep(){
+      if(finished) return;
+      if(stepIdx < bootSteps.length){
+        const s = bootSteps[stepIdx];
+        bar.style.width = s.pct + '%';
+        ticker.textContent = s.msg;
+        stepIdx++;
+        const delay = stepIdx === bootSteps.length ? 450 : (240 + Math.random() * 200);
+        setTimeout(runStep, delay);
+      } else {
+        finish();
+      }
+    }
+
+    $('#boot-skip-btn').onclick = e => { e.stopPropagation(); finish(); };
+    $('#boot').onclick = finish;
+    addEventListener('keydown', function onKey(e){
+      if(e.key===' ' || e.key==='Enter'){
+        removeEventListener('keydown', onKey);
+        finish();
+      }
+    });
+
+    runStep();
+  }, fromScreen ? 780 : 300);
+}
+
+/* ========================================================================= */
+/* ============ HERO MODEL — TRIPO PBR RETRO COMPUTER ====================== */
+/* ========================================================================= */
+let three=null;
+async function init3D(){
+  if(three) return;
+  let THREE, GLTFLoader, MeshoptDecoder, RoomEnvironment;
+  try {
+    THREE=await import('three');
+    const gltfMod=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js');
+    const meshoptMod=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/meshopt_decoder.module.js');
+    const roomMod=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js');
+    GLTFLoader=gltfMod.GLTFLoader;
+    MeshoptDecoder=meshoptMod.MeshoptDecoder;
+    RoomEnvironment=roomMod.RoomEnvironment;
+  } catch(err){
+    console.error('Three.js load error:',err); goMode('os'); return;
+  }
+
+  try {
+    const canvas=$('#gl');
+    const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1, 1));
+    renderer.shadowMap.enabled=false;
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure=1.08;
+    renderer.outputColorSpace=THREE.SRGBColorSpace;
+
+    const scene=new THREE.Scene();
+    scene.background=new THREE.Color(0x0c0d12);
+
+    const pmrem=new THREE.PMREMGenerator(renderer);
+    scene.environment=pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    pmrem.dispose();
+
+    const camera=new THREE.PerspectiveCamera(32, innerWidth/innerHeight, 0.02, 40);
+
+    const hemi=new THREE.HemisphereLight(0xfff4e8, 0x1a1c24, 0.42);
+    scene.add(hemi);
+
+    const key=new THREE.DirectionalLight(0xfff1df, 2.35);
+    scene.add(key, key.target);
+
+    const fill=new THREE.DirectionalLight(0xc5d4e8, 0.45);
+    scene.add(fill);
+
+    const rim=new THREE.PointLight(0x38bdf8, 8, 6, 2);
+    scene.add(rim);
+
+    const screenGlow=new THREE.PointLight(0x4ade80, 2.2, 2.4, 2);
+    scene.add(screenGlow);
+
+    const loader=new GLTFLoader();
+    loader.setMeshoptDecoder(MeshoptDecoder);
+    const loadingEl=$('#stage3d-loading');
+    const loadTitle=loadingEl && loadingEl.querySelector('.load-title');
+    // Same bytes as tripo_pbr_model_696d94ea-a35a-41db-8f11-8263fa64ef0b_meshopt.glb
+    const HERO_GLB='retro_computer.glb?v=full';
+    const gltf=await new Promise((resolve,reject)=>{
+      loader.load(HERO_GLB, resolve, (ev)=>{
+        if(loadTitle && ev.total) loadTitle.textContent='Loading retro computer '+Math.round(100*ev.loaded/ev.total)+'%';
+      }, reject);
+    });
+
+    const modelRoot=gltf.scene;
+    const interactables=[];
+    modelRoot.traverse(obj=>{
+      if(!obj.isMesh) return;
+      const mats=Array.isArray(obj.material)?obj.material:[obj.material];
+      mats.forEach(m=>{
+        if(!m) return;
+        m.envMapIntensity=1.05;
+        if(m.normalScale) m.normalScale.set(0.8, 0.8);
+      });
+      obj.userData={type:'screen', name:'Retro Computer'};
+      interactables.push(obj);
+    });
+
+    const fitted=new THREE.Box3().setFromObject(modelRoot);
+    const fittedSize=fitted.getSize(new THREE.Vector3());
+    const fittedCenter=fitted.getCenter(new THREE.Vector3());
+    modelRoot.position.sub(fittedCenter);
+    modelRoot.position.y+=fittedSize.y*0.5;
+    scene.add(modelRoot);
+
+    const box=new THREE.Box3().setFromObject(modelRoot);
+    const size=box.getSize(new THREE.Vector3());
+    const look=box.getCenter(new THREE.Vector3());
+    const maxDim=Math.max(size.x, size.y, size.z);
+    const fitDist=(maxDim*0.58)/Math.tan(THREE.MathUtils.degToRad(camera.fov*0.5));
+    let homeRadius=fitDist*1.42;
+    const screenRadius=fitDist*0.46;
+    const minRadius=fitDist*0.38;
+    const maxRadius=fitDist*2.6;
+
+    key.position.set(-maxDim*1.1, maxDim*2.15, maxDim*1.25);
+    key.target.position.copy(look);
+    fill.position.set(maxDim*1.4, maxDim*0.7, -maxDim*0.4);
+    rim.position.set(maxDim*0.2, look.y+size.y*0.15, -maxDim*1.15);
+    rim.distance=maxDim*6;
+    screenGlow.position.set(0, look.y+size.y*0.12, maxDim*0.85);
+    screenGlow.distance=maxDim*3.2;
+
+    camera.near=Math.max(0.01, maxDim/80);
+    camera.far=Math.max(30, maxDim*30);
+    camera.updateProjectionMatrix();
+
+    const HOME={yaw:0.78, pitch:0.32};
+    const SCREEN={yaw:0.18, pitch:0.06};
+    let yaw=HOME.yaw, pitch=HOME.pitch, radius=homeRadius;
+    let targetYaw=yaw, targetPitch=pitch, targetRadius=radius;
+    let camFocus='room';
+    let isNight=true;
+    let isDragging=false, dragged=false, dragStartX=0, dragStartY=0;
+    let idleHold=1.2;
+    let mouseVec=new THREE.Vector2(-2,-2);
+    const raycaster=new THREE.Raycaster();
+    const camPos=new THREE.Vector3();
+    const camLook=new THREE.Vector3().copy(look);
+
+    function spherical(y,p,r){
+      const cp=Math.cos(p);
+      return new THREE.Vector3(
+        look.x+Math.sin(y)*cp*r,
+        look.y+Math.sin(p)*r,
+        look.z+Math.cos(y)*cp*r
+      );
+    }
+
+    function findScreenPortal(){
+      let mesh=null;
+      modelRoot.traverse(o=>{ if(o.isMesh && !mesh) mesh=o; });
+      const fallback=()=>{
+        const center=look.clone();
+        center.y+=size.y*0.16;
+        const normal=spherical(HOME.yaw, 0.08, 1).sub(look);
+        normal.y=0;
+        if(normal.lengthSq()<1e-6) normal.set(0,0,1);
+        normal.normalize();
+        return {center, normal, span:size.y*0.2};
+      };
+      if(!mesh || !mesh.geometry.attributes.normal) return fallback();
+      const geo=mesh.geometry, pos=geo.attributes.position, nrm=geo.attributes.normal, index=geo.index;
+      if(!index) return fallback();
+      modelRoot.updateWorldMatrix(true, true);
+      const normalMatrix=new THREE.Matrix3().getNormalMatrix(mesh.matrixWorld);
+      const worldBox=new THREE.Box3().setFromObject(mesh);
+      const worldSize=worldBox.getSize(new THREE.Vector3());
+      const yCut=worldBox.min.y+worldSize.y*0.5;
+      const view=spherical(HOME.yaw, 0.08, 1).sub(look);
+      view.y=0;
+      view.normalize();
+      const buckets=Array.from({length:16}, ()=>({n:0, nx:0, ny:0, nz:0, x:0, y:0, z:0}));
+      const va=new THREE.Vector3(), vb=new THREE.Vector3(), vc=new THREE.Vector3(), nn=new THREE.Vector3();
+      const triCount=index.count/3;
+      const step=Math.max(1, Math.floor(triCount/60000));
+      for(let t=0;t<triCount;t+=step){
+        const ia=index.getX(t*3), ib=index.getX(t*3+1), ic=index.getX(t*3+2);
+        va.fromBufferAttribute(pos, ia).applyMatrix4(mesh.matrixWorld);
+        vb.fromBufferAttribute(pos, ib).applyMatrix4(mesh.matrixWorld);
+        vc.fromBufferAttribute(pos, ic).applyMatrix4(mesh.matrixWorld);
+        const cy=(va.y+vb.y+vc.y)/3;
+        if(cy<yCut) continue;
+        nn.fromBufferAttribute(nrm, ia).applyMatrix3(normalMatrix);
+        if(nn.lengthSq()<1e-8) continue;
+        nn.normalize();
+        if(Math.abs(nn.y)>0.4 || nn.dot(view)<0.45) continue;
+        const key=((Math.round(Math.atan2(nn.x, nn.z)/(Math.PI/8)))+16)%16;
+        const b=buckets[key];
+        b.n++;
+        b.nx+=nn.x; b.ny+=nn.y; b.nz+=nn.z;
+        b.x+=(va.x+vb.x+vc.x)/3; b.y+=cy; b.z+=(va.z+vb.z+vc.z)/3;
+      }
+      let best=null;
+      buckets.forEach(b=>{ if(b.n>30 && (!best || b.n>best.n)) best=b; });
+      if(!best) return fallback();
+      const center=new THREE.Vector3(best.x/best.n, best.y/best.n, best.z/best.n);
+      const normal=new THREE.Vector3(best.nx, best.ny, best.nz).normalize();
+      return {center, normal, span:Math.max(worldSize.y*0.16, 0.08)};
+    }
+    const portal=findScreenPortal();
+    const screenCenter=portal.center;
+    const screenNormal=portal.normal;
+    const approach=screenCenter.clone().addScaledVector(screenNormal, portal.span*1.05);
+    const inside=screenCenter.clone().addScaledVector(screenNormal, -portal.span*0.72);
+    const throughLook=screenCenter.clone().addScaledVector(screenNormal, -portal.span*0.9);
+    screenGlow.position.copy(screenCenter).addScaledVector(screenNormal, portal.span*0.08);
+
+    function nearestYaw(desired){
+      const tau=Math.PI*2;
+      let d=desired-targetYaw;
+      d=((d%tau)+tau)%tau;
+      if(d>Math.PI) d-=tau;
+      return targetYaw+d;
+    }
+    function focusCamera(target){
+      camFocus=target;
+      if(target==='screen'){
+        targetYaw=nearestYaw(SCREEN.yaw); targetPitch=SCREEN.pitch; targetRadius=screenRadius;
+      } else {
+        targetYaw=nearestYaw(HOME.yaw); targetPitch=HOME.pitch; targetRadius=homeRadius;
+      }
+    }
+
+    function applyGrade(){
+      if(isNight){
+        scene.background.setHex(0x0c0d12);
+        key.intensity=2.35; hemi.intensity=0.45; fill.intensity=0.38; rim.intensity=4.5; screenGlow.intensity=0.55;
+        renderer.toneMappingExposure=1.08;
+      } else {
+        scene.background.setHex(0xcfc8bc);
+        key.intensity=3.2; hemi.intensity=0.9; fill.intensity=0.7; rim.intensity=1.4; screenGlow.intensity=0.2;
+        renderer.toneMappingExposure=1.14;
+      }
+    }
+
+    function toggleDayNight(force){
+      isNight=(force!==undefined)?force:!isNight;
+      applyGrade();
+      const dnBtn=$('#hud-daynight-btn'), dnIcon=$('#hud-dn-icon'), dnText=$('#hud-dn-text');
+      if(isNight){
+        if(dnIcon) dnIcon.textContent='☀️'; if(dnText) dnText.textContent='Day Mode';
+        if(dnBtn) dnBtn.classList.add('active');
+        toast('After-hours <b>studio</b> 🌙');
+      } else {
+        if(dnIcon) dnIcon.textContent='🌙'; if(dnText) dnText.textContent='Night Mode';
+        if(dnBtn) dnBtn.classList.remove('active');
+        toast('Daylight <b>studio</b> ☀️');
+      }
+      playKeyClick(680,'sine',0.04);
+    }
+
+    const lofiChords=[[174.61,220,261.63,329.63],[164.81,196,246.94,293.66],[146.83,174.61,220,261.63],[130.81,164.81,196,246.94]];
+    let lofiPlaying=false, lofiTimer=null, lofiChordIdx=0;
+    function playNextLoFiChord(){
+      if(!lofiPlaying) return;
+      try{
+        const ctx=getAudio(), now=ctx.currentTime, chord=lofiChords[lofiChordIdx];
+        lofiChordIdx=(lofiChordIdx+1)%lofiChords.length;
+        chord.forEach((freq,idx)=>{
+          const osc=ctx.createOscillator(), gain=ctx.createGain(), filter=ctx.createBiquadFilter();
+          osc.type='sine'; osc.frequency.setValueAtTime(freq, now);
+          filter.type='lowpass'; filter.frequency.setValueAtTime(800, now);
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.exponentialRampToValueAtTime(0.02/(idx*0.35+1), now+0.35);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now+3.2);
+          osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+          osc.start(now); osc.stop(now+3.3);
+        });
+        lofiTimer=setTimeout(playNextLoFiChord, 2800);
+      }catch(e){}
+    }
+    function toggleLoFiBeats(){
+      lofiPlaying=!lofiPlaying;
+      const lofiBtn=$('#hud-lofi-btn'), lofiText=$('#hud-lofi-text');
+      if(lofiPlaying){ if(lofiBtn) lofiBtn.classList.add('active'); if(lofiText) lofiText.textContent='Lo-Fi: ON'; playNextLoFiChord(); toast('🎵 <b>Lo-Fi</b> playing'); }
+      else { if(lofiBtn) lofiBtn.classList.remove('active'); if(lofiText) lofiText.textContent='Lo-Fi Beats'; clearTimeout(lofiTimer); toast('Lo-Fi paused'); }
+      playKeyClick(440,'triangle',0.05);
+    }
+
+    let enteringOS=false;
+    let dive=null;
+    const smoothstep=t=>t*t*(3-2*t);
+    function enterDevilOSGlide(){
+      if(enteringOS) return;
+      enteringOS=true;
+      $('#stage3d').classList.add('entering-os');
+      camFocus='dive';
+      dive={
+        t0:performance.now(),
+        dur:2800,
+        from:camera.position.clone(),
+        fromLook:camLook.clone(),
+        fired:false
+      };
+      camera.near=Math.max(0.001, portal.span*0.015);
+      camera.updateProjectionMatrix();
+      playKeyClick(520,'triangle',0.08);
+    }
+    function openBootFromScreen(){
+      const boot=$('#boot');
+      boot.classList.remove('off');
+      boot.classList.add('on','from-screen');
+      startBootAnimation(()=>{
+        enteringOS=false;
+        dive=null;
+        camFocus='room';
+        goMode('os', {flash:false});
+      });
+    }
+
+    applyGrade();
+
+    addEventListener('pointermove',e=>{
+      mouseVec.x=(e.clientX/innerWidth)*2-1;
+      mouseVec.y=-(e.clientY/innerHeight)*2+1;
+      if(isDragging && camFocus==='room'){
+        const dx=e.clientX-dragStartX, dy=e.clientY-dragStartY;
+        if(Math.abs(dx)+Math.abs(dy)>3) dragged=true;
+        targetYaw-=dx*0.005;
+        targetPitch=clamp(targetPitch+dy*0.0035, -0.15, 1.05);
+        dragStartX=e.clientX; dragStartY=e.clientY;
+        idleHold=3.2;
+      }
+    });
+    canvas.addEventListener('pointerdown',e=>{
+      if(e.button!==0) return;
+      isDragging=true; dragged=false; dragStartX=e.clientX; dragStartY=e.clientY;
+    });
+    addEventListener('pointerup',()=>{ isDragging=false; });
+    canvas.addEventListener('wheel',e=>{
+      if(mode!=='3d' || camFocus!=='room') return;
+      e.preventDefault();
+      const dir=Math.sign(e.deltaY)||1;
+      targetRadius=clamp(targetRadius*(1+dir*0.08), minRadius, maxRadius);
+      homeRadius=targetRadius;
+      idleHold=2.4;
+    }, {passive:false});
+
+    $('#btn-back-3d').onclick=()=>{ goMode('3d'); focusCamera('room'); playKeyClick(480,'triangle',0.06); };
+    addEventListener('keydown',e=>{
+      if(e.key!=='Escape') return;
+      if(mode==='os'){
+        if($('#spotlight')?.classList.contains('on') || $('#task-view')?.classList.contains('on') || $('#start-menu')?.classList.contains('on')) return;
+        goMode('3d'); focusCamera('room'); playKeyClick(480,'triangle',0.06);
+      } else if(mode==='3d' && camFocus==='dive' && dive && !dive.fired){
+        enteringOS=false; dive=null; camFocus='room';
+        $('#stage3d').classList.remove('entering-os');
+        focusCamera('room');
+      }
+    });
+
+    canvas.addEventListener('click',()=>{
+      if(mode!=='3d' || dragged) return;
+      raycaster.setFromCamera(mouseVec, camera);
+      const hits=raycaster.intersectObjects(interactables, true);
+      if(hits.length>0) enterDevilOSGlide();
+    });
+
+    addEventListener('resize',()=>{
+      camera.aspect=innerWidth/innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight, false);
+    });
+    renderer.setSize(innerWidth, innerHeight, false);
+    if(loadingEl) loadingEl.classList.add('hide');
+
+    let last=performance.now();
+    (function loop(now){
+      requestAnimationFrame(loop);
+      const dt=Math.min(0.05, (now-last)/1000);
+      last=now;
+      if(!sceneVisible) return;
+
+      if(camFocus==='dive' && dive){
+        const t=clamp((now-dive.t0)/dive.dur, 0, 1);
+        const split=0.58;
+        if(t<split){
+          const k=smoothstep(t/split);
+          camera.position.lerpVectors(dive.from, approach, k);
+          camLook.lerpVectors(dive.fromLook, screenCenter, k);
+        } else {
+          const k=smoothstep((t-split)/(1-split));
+          camera.position.lerpVectors(approach, inside, k);
+          camLook.lerpVectors(screenCenter, throughLook, k);
+        }
+        camera.lookAt(camLook);
+        screenGlow.intensity=0.8+smoothstep(Math.min(1, t/0.7))*16;
+        if(t>0.8 && !dive.fired){
+          dive.fired=true;
+          openBootFromScreen();
+        }
+      } else {
+        if(camFocus==='room' && !isDragging){
+          idleHold=Math.max(0, idleHold-dt);
+          if(idleHold<=0) targetYaw+=dt*0.16;
+        }
+        const k=1-Math.pow(0.001, dt);
+        yaw+=(targetYaw-yaw)*k;
+        pitch+=(targetPitch-pitch)*k;
+        radius+=(targetRadius-radius)*k;
+        camPos.lerp(spherical(yaw,pitch,radius), k);
+        camLook.lerp(look, k);
+        camera.position.copy(camPos);
+        camera.lookAt(camLook);
+        const pulse=0.5+0.5*Math.sin(now*0.0016);
+        screenGlow.intensity=(isNight?0.4:0.15)+pulse*0.2;
+      }
+
+      const pulse=0.5+0.5*Math.sin(now*0.0016);
+      rim.intensity=(isNight?3.6:1.1)+pulse*(isNight?1.1:0.35);
+
+      renderer.render(scene, camera);
+    })(performance.now());
+
+    three={renderer,scene,camera,focusCamera,toggleDayNight,toggleLoFiBeats,modelRoot};
+  }catch(err){
+    console.error('3D Init err:',err);
+    const loadingEl=$('#stage3d-loading');
+    if(loadingEl){
+      loadingEl.innerHTML='<div class="load-title">Computer failed to load — opening DevilOS</div>';
+      setTimeout(()=>loadingEl.classList.add('hide'), 900);
+    }
+    toast('3D studio unavailable — check <b>retro_computer.glb</b>');
+    goMode('os');
+  }
+}
+
+/* ============ EDITORIAL WEB SITE ============ */
+let siteStarted=false;
+function startSite(){
+  if(siteStarted) return; siteStarted=true;
+  $('#s-name').innerHTML=`${esc(CONFIG.name.toUpperCase())}<br><i>${esc(CONFIG.handle.toUpperCase())}</i>`;
+  $('#s-hero').textContent=CONFIG.role;
+  $('#s-mail').textContent=CONFIG.email; $('#s-mail').href='mailto:'+CONFIG.email;
+  $('#s-repo-count').textContent=CONFIG.work.length;
+  $('#s-work').innerHTML=CONFIG.work.map(([t,d,link],i)=>`
+    <a class="w-row" href="${link}" ${link.startsWith('#')?'':'target="_blank" rel="noopener"'} ${link==='#3d-studio'?'data-enter-studio="1"':''}>
+      <span class="w-no">${String(i+1).padStart(2,'0')}</span>
+      <div><h3>${t}</h3><p style="font-size:12.5px;color:var(--text-muted);margin-top:4px">${d}</p></div>
+      <span class="m">${link==='#3d-studio'?'OPEN 3D STUDIO →':'GITHUB REPO →'}</span>
+    </a>`).join('');
+  const enterStudio=()=>{ goMode('3d'); toast('Entering the <b>retro computer</b> 🖥️'); };
+  const studioBtn=$('#s-enter-studio'), studioCard=$('#s-studio-card');
+  if(studioBtn) studioBtn.onclick=enterStudio;
+  if(studioCard) studioCard.onclick=enterStudio;
+  document.querySelectorAll('[data-enter-studio]').forEach(el=>{
+    el.addEventListener('click',e=>{ e.preventDefault(); enterStudio(); });
+  });
+}
+
+/* ========================================================================= */
+/* ==================== DEVILOS TRINITY CORE LOGIC ========================= */
+/* ========================================================================= */
+let osSeeded=false;
+let tilingMode=false;
+
+function seedOS(){
+  if(!osSeeded){
+    osSeeded=true;
+    initStarfield();
+    updateClock(); setInterval(updateClock,1000);
+    initDockMagnification();
+    initStartMenu();
+    initSpotlight();
+    initControlCenter();
+    initMarqueeSelection();
+    initLaunchpad();
+    initLockScreen();
+    initTilingMode();
+    initSystemTelemetry();
+
+    setTimeout(()=>openApp('terminal'),280);
+  }
+}
+
+/* Starfield Particle Background */
+function initStarfield(){
+  const canvas=$('#star-canvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  let stars=[];
+  function resize(){
+    canvas.width=innerWidth; canvas.height=innerHeight;
+    stars=[];
+    for(let i=0;i<120;i++){
+      stars.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*1.5+0.3,
+        alpha:Math.random()*0.8+0.2,
+        speed:Math.random()*0.02+0.005
+      });
+    }
+  }
+  resize(); addEventListener('resize',resize);
+  (function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(s=>{
+      s.alpha+=s.speed;
+      const a=Math.abs(Math.sin(s.alpha));
+      ctx.fillStyle=`rgba(255,255,255,${a*0.7})`;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  })();
+}
+
+/* Clock & Telemetry */
+function updateClock(){
+  const d=new Date();
+  const wd=d.toLocaleString('en-US',{weekday:'short'});
+  const mo=d.toLocaleString('en-US',{month:'short'});
+  let h=d.getHours(); const ap=h>=12?'PM':'AM'; h=h%12||12;
+  const m=String(d.getMinutes()).padStart(2,'0');
+  $('#tb-clock').textContent=`${wd} ${mo} ${d.getDate()}  ${h}:${m} ${ap}`;
+  $('#lock-clk').textContent=`${h}:${m}`;
+  $('#lock-dt').textContent=`${d.toLocaleString('en-US',{weekday:'long'})}, ${mo} ${d.getDate()}`;
+
+  const s=d.getSeconds();
+  const sDeg=s*6, mDeg=(d.getMinutes()+s/60)*6, hDeg=((d.getHours()%12)+d.getMinutes()/60)*30;
+  if($('#w-clk-s')) $('#w-clk-s').style.transform=`rotate(${sDeg}deg)`;
+  if($('#w-clk-m')) $('#w-clk-m').style.transform=`rotate(${mDeg}deg)`;
+  if($('#w-clk-h')) $('#w-clk-h').style.transform=`rotate(${hDeg}deg)`;
+}
+
+function initSystemTelemetry(){
+  setInterval(()=>{
+    const cpu=Math.floor(8+Math.random()*16);
+    const ram=(7.8+Math.random()*0.8).toFixed(1);
+    if($('#tb-cpu-val')) $('#tb-cpu-val').textContent=cpu+'%';
+    if($('#tb-ram-val')) $('#tb-ram-val').textContent=ram+'G';
+    if($('#w-cpu-load')) $('#w-cpu-load').textContent=cpu+'% Load';
+    if($('#w-cpu-bar')) $('#w-cpu-bar').style.width=cpu+'%';
+    if($('#w-ram-label')) $('#w-ram-label').textContent=ram+' GB / 36 GB';
+    if($('#w-ram-bar')) $('#w-ram-bar').style.width=Math.round((parseFloat(ram)/36)*100)+'%';
+  },2400);
+}
+
+/* ============ LINUX HYPRLAND / i3 AUTO-TILING ============ */
+function initTilingMode(){
+  const btn=$('#btn-toggle-tiling');
+  btn.onclick=()=>toggleTiling();
+  addEventListener('keydown',e=>{
+    if((e.metaKey||e.altKey)&&e.key.toLowerCase()==='t'){
+      e.preventDefault(); toggleTiling();
+    }
+  });
+}
+
+function toggleTiling(force){
+  tilingMode=(force!==undefined)?force:!tilingMode;
+  $('#btn-toggle-tiling').classList.toggle('active',tilingMode);
+  $('#tiling-state-lbl').textContent=tilingMode?'Tiling Active':'Tile Windows';
+  if(tilingMode){
+    applyTilingLayout();
+    toast('Linux Tiling WM Active (<b>Hyprland Gaps Layout</b>)');
+  }else{
+    toast('Floating Windows Mode Activated');
+  }
+}
+
+function applyTilingLayout(){
+  const openWins=Object.values(WM.wins).filter(w=>w.el.style.display!=='none');
+  const count=openWins.length;
+  if(count===0) return;
+  const topOffset=38, bottomOffset=74, gap=10;
+  const availW=innerWidth-gap*2, availH=innerHeight-topOffset-bottomOffset-gap;
+
+  if(count===1){
+    const w=openWins[0].el;
+    w.style.left=gap+'px'; w.style.top=topOffset+gap+'px';
+    w.style.width=availW+'px'; w.style.height=availH+'px';
+  }else if(count===2){
+    const halfW=(availW-gap)/2;
+    openWins[0].el.style.left=gap+'px'; openWins[0].el.style.top=topOffset+gap+'px';
+    openWins[0].el.style.width=halfW+'px'; openWins[0].el.style.height=availH+'px';
+
+    openWins[1].el.style.left=(gap+halfW+gap)+'px'; openWins[1].el.style.top=topOffset+gap+'px';
+    openWins[1].el.style.width=halfW+'px'; openWins[1].el.style.height=availH+'px';
+  }else if(count===3){
+    const mainW=(availW-gap)*0.55, stackW=availW-mainW-gap;
+    const halfH=(availH-gap)/2;
+    openWins[0].el.style.left=gap+'px'; openWins[0].el.style.top=topOffset+gap+'px';
+    openWins[0].el.style.width=mainW+'px'; openWins[0].el.style.height=availH+'px';
+
+    openWins[1].el.style.left=(gap+mainW+gap)+'px'; openWins[1].el.style.top=topOffset+gap+'px';
+    openWins[1].el.style.width=stackW+'px'; openWins[1].el.style.height=halfH+'px';
+
+    openWins[2].el.style.left=(gap+mainW+gap)+'px'; openWins[2].el.style.top=(topOffset+gap+halfH+gap)+'px';
+    openWins[2].el.style.width=stackW+'px'; openWins[2].el.style.height=halfH+'px';
+  }else{
+    const halfW=(availW-gap)/2, halfH=(availH-gap)/2;
+    openWins.forEach((w,i)=>{
+      const col=i%2, row=Math.floor(i/2)%2;
+      w.el.style.left=(gap+col*(halfW+gap))+'px';
+      w.el.style.top=(topOffset+gap+row*(halfH+gap))+'px';
+      w.el.style.width=halfW+'px'; w.el.style.height=halfH+'px';
+    });
+  }
+}
+
+/* ============ DOCK FISH-EYE MAGNIFICATION ============ */
+function initDockMagnification(){
+  const dock=$('#dock');
+  const btns=dock.querySelectorAll('.dock-btn');
+  dock.addEventListener('mousemove',e=>{
+    const mouseX=e.clientX;
+    btns.forEach(btn=>{
+      const bRect=btn.getBoundingClientRect();
+      const btnCenter=bRect.left+bRect.width/2;
+      const dist=Math.abs(mouseX-btnCenter);
+      const maxDist=140;
+      if(dist<maxDist){
+        const scale=1+0.45*Math.cos((dist/maxDist)*(Math.PI/2));
+        btn.style.transform=`scale(${scale}) translateY(-${(scale-1)*24}px)`;
+      }else{
+        btn.style.transform='scale(1) translateY(0)';
+      }
+    });
+  });
+  dock.addEventListener('mouseleave',()=>{
+    btns.forEach(btn=>{btn.style.transform='scale(1) translateY(0)';});
+  });
+  btns.forEach(b=>b.addEventListener('click',()=>{
+    const id=b.dataset.app;
+    b.classList.add('bouncing');
+    setTimeout(()=>b.classList.remove('bouncing'),750);
+    playKeyClick(520,'triangle',0.04);
+    if(id==='start-hub') toggleStartMenu();
+    else openApp(id);
+  }));
+}
+
+/* ============ WINDOW MANAGER ============ */
+const WM={z:10,wins:{},activeId:null};
+const winLayer=$('#windows');
+
+function focusWin(id){
+  const w=WM.wins[id]; if(!w) return;
+  WM.z++; w.el.style.zIndex=WM.z;
+  WM.activeId=id;
+  Object.entries(WM.wins).forEach(([k,v])=>v.el.classList.toggle('focused',k===id));
+  const A=APPS[id];
+  $('#active-app-name').textContent=A?.appName || 'Finder';
+}
+
+function closeWin(id){
+  const w=WM.wins[id]; if(!w) return;
+  w.el.remove(); delete WM.wins[id];
+  updateDockStatus();
+  if(tilingMode) applyTilingLayout();
+  const rem=Object.keys(WM.wins);
+  if(rem.length>0) focusWin(rem[rem.length-1]);
+  else $('#active-app-name').textContent='Finder';
+}
+
+function updateDockStatus(){
+  document.querySelectorAll('.dock-btn').forEach(b=>{
+    const id=b.dataset.app;
+    const open=!!WM.wins[id]&&WM.wins[id].el.style.display!=='none';
+    b.classList.toggle('running',open);
+  });
+}
+
+function openApp(id,param){
+  if(id==='launchpad'){ toggleLaunchpad(); return; }
+  const ex=WM.wins[id];
+  if(ex){
+    if(ex.el.style.display==='none'){ex.el.style.display='flex';updateDockStatus();}
+    focusWin(id);
+    return ex;
+  }
+  const A=APPS[id]; if(!A) return;
+  const el=document.createElement('div'); el.className='win';
+  const n=Object.keys(WM.wins).length;
+  const w=Math.min(A.w,innerWidth-30), h=Math.min(A.h,innerHeight-70);
+  el.style.width=w+'px'; el.style.height=h+'px';
+  el.style.left=clamp(90+n*34,10,innerWidth-w-10)+'px';
+  el.style.top=clamp(44+n*26,34,innerHeight-h-20)+'px';
+
+  el.innerHTML=`
+    <div class="win-tbar">
+      <div class="win-traffic-lights">
+        <button class="traffic-btn traffic-close" title="Close (⌘W / Alt+F4)"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
+        <button class="traffic-btn traffic-min" title="Minimize (⌘M)"><svg viewBox="0 0 24 24"><path d="M5 12h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
+        <button class="traffic-btn traffic-max" title="Maximize / Windows Snap Assist"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        
+        <!-- Windows 11 Snap Assist Flyout -->
+        <div class="snap-flyout">
+          <div class="snap-layout-box" data-snap="left" title="Snap Left Half"><div class="snap-seg" style="flex:1"></div><div class="snap-seg" style="flex:1;opacity:.2"></div></div>
+          <div class="snap-layout-box" data-snap="right" title="Snap Right Half"><div class="snap-seg" style="flex:1;opacity:.2"></div><div class="snap-seg" style="flex:1"></div></div>
+          <div class="snap-layout-box" data-snap="center" title="Center Stage 70%"><div class="snap-seg" style="flex:1;margin:0 4px"></div></div>
+          <div class="snap-layout-box" data-snap="max" title="Full Screen"><div class="snap-seg" style="flex:1"></div></div>
+        </div>
+      </div>
+      <div class="win-title">
+        <img class="win-title-icon" src="${A.icon}" alt="">
+        <span>${A.title}</span>
+      </div>
+    </div>
+    <div class="win-body"></div>
+    <div class="win-resize n"></div><div class="win-resize s"></div>
+    <div class="win-resize w"></div><div class="win-resize e"></div>
+    <div class="win-resize nw"></div><div class="win-resize ne"></div>
+    <div class="win-resize sw"></div><div class="win-resize se"></div>
+  `;
+
+  el.querySelector('.win-body').append(A.build(el,param));
+  winLayer.append(el);
+  WM.wins[id]={el};
+  focusWin(id);
+  updateDockStatus();
+  if(tilingMode) applyTilingLayout();
+
+  // Traffic Light Controls
+  el.querySelector('.traffic-close').onclick=()=>closeWin(id);
+  el.querySelector('.traffic-min').onclick=()=>{el.style.display='none';updateDockStatus();if(tilingMode)applyTilingLayout();};
+  
+  // Windows Snap Hover & Zoom
+  const maxBtn=el.querySelector('.traffic-max'), snapFlyout=el.querySelector('.snap-flyout');
+  let snapTimeout;
+  maxBtn.addEventListener('mouseenter',()=>{
+    snapTimeout=setTimeout(()=>snapFlyout.classList.add('show'),300);
+  });
+  el.querySelector('.win-traffic-lights').addEventListener('mouseleave',()=>{
+    clearTimeout(snapTimeout); snapFlyout.classList.remove('show');
+  });
+  maxBtn.onclick=()=>el.classList.toggle('maximized');
+
+  // Snap flyout click handlers
+  snapFlyout.querySelectorAll('.snap-layout-box').forEach(sb=>{
+    sb.onclick=e=>{
+      e.stopPropagation(); snapFlyout.classList.remove('show');
+      const snap=sb.dataset.snap;
+      const topOffset=34, bottomOffset=70;
+      const availW=innerWidth, availH=innerHeight-topOffset-bottomOffset;
+      el.classList.remove('maximized');
+      if(snap==='left'){
+        el.style.left='0px'; el.style.top=topOffset+'px';
+        el.style.width=(availW/2)+'px'; el.style.height=availH+'px';
+      }else if(snap==='right'){
+        el.style.left=(availW/2)+'px'; el.style.top=topOffset+'px';
+        el.style.width=(availW/2)+'px'; el.style.height=availH+'px';
+      }else if(snap==='center'){
+        const w=availW*0.72, h=availH*0.85;
+        el.style.left=((availW-w)/2)+'px'; el.style.top=(topOffset+(availH-h)/2)+'px';
+        el.style.width=w+'px'; el.style.height=h+'px';
+      }else if(snap==='max'){
+        el.classList.add('maximized');
+      }
+    };
+  });
+
+  // Dragging
+  const tb=el.querySelector('.win-tbar');
+  tb.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.traffic-btn')||e.target.closest('.snap-flyout')) return;
+    focusWin(id);
+    if(el.classList.contains('maximized')) return;
+    const r=el.getBoundingClientRect(), dx=e.clientX-r.left, dy=e.clientY-r.top;
+    tb.setPointerCapture(e.pointerId);
+    const mv=ev=>{
+      el.style.left=clamp(ev.clientX-dx,-r.width+120,innerWidth-80)+'px';
+      el.style.top=clamp(ev.clientY-dy,30,innerHeight-40)+'px';
+    };
+    const up=()=>{tb.removeEventListener('pointermove',mv);tb.removeEventListener('pointerup',up);};
+    tb.addEventListener('pointermove',mv); tb.addEventListener('pointerup',up);
+  });
+  tb.addEventListener('dblclick',e=>{
+    if(!e.target.closest('.traffic-btn')) el.classList.toggle('maximized');
+  });
+
+  // Edge Resizing
+  initWinResize(el,id);
+  el.addEventListener('pointerdown',()=>focusWin(id));
+  return WM.wins[id];
+}
+
+function initWinResize(el,id){
+  const handles=el.querySelectorAll('.win-resize');
+  handles.forEach(h=>{
+    h.addEventListener('pointerdown',e=>{
+      e.stopPropagation(); focusWin(id);
+      if(el.classList.contains('maximized')) return;
+      const type=Array.from(h.classList).find(c=>['n','s','e','w','nw','ne','sw','se'].includes(c));
+      const startX=e.clientX, startY=e.clientY;
+      const r=el.getBoundingClientRect();
+      h.setPointerCapture(e.pointerId);
+      const mv=ev=>{
+        const dx=ev.clientX-startX, dy=ev.clientY-startY;
+        if(type.includes('e')) el.style.width=Math.max(320,r.width+dx)+'px';
+        if(type.includes('s')) el.style.height=Math.max(200,r.height+dy)+'px';
+        if(type.includes('w')){
+          const nw=Math.max(320,r.width-dx);
+          if(nw>320){ el.style.width=nw+'px'; el.style.left=r.left+dx+'px'; }
+        }
+        if(type.includes('n')){
+          const nh=Math.max(200,r.height-dy);
+          if(nh>200){ el.style.height=nh+'px'; el.style.top=r.top+dy+'px'; }
+        }
+      };
+      const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);};
+      h.addEventListener('pointermove',mv); h.addEventListener('pointerup',up);
+    });
+  });
+}
+
+// Desktop icons click
+document.querySelectorAll('.desk-item').forEach(b=>{
+  b.addEventListener('dblclick',()=>{ openApp(b.dataset.app); });
+  b.addEventListener('click',e=>{
+    e.stopPropagation();
+    document.querySelectorAll('.desk-item').forEach(d=>d.classList.remove('selected'));
+    b.classList.add('selected');
+  });
+});
+$('#desktop').addEventListener('pointerdown',e=>{
+  if(e.target===$('#wallpaper')||e.target===$('#star-canvas')||e.target===$('#desktop-icons')){
+    document.querySelectorAll('.desk-item').forEach(d=>d.classList.remove('selected'));
+    closeAllMenus();
+  }
+});
+
+/* ============ START MENU & TOP BAR MENUS ============ */
+function initStartMenu(){
+  const startBtn=$('#btn-start-menu'), startMenu=$('#start-menu');
+  const genericMenu=$('#menu-generic');
+
+  startBtn.addEventListener('click',e=>{
+    e.stopPropagation();
+    toggleStartMenu();
+  });
+
+  // Hotkey Super / Win Key
+  addEventListener('keydown',e=>{
+    if(e.key==='Meta'||e.key==='Super'||((e.altKey||e.ctrlKey)&&e.key==='m')){
+      e.preventDefault(); toggleStartMenu();
+    }
+  });
+
+  document.querySelectorAll('.sm-app-btn').forEach(b=>{
+    b.onclick=()=>{
+      openApp(b.dataset.app); toggleStartMenu(false);
+    };
+  });
+
+  document.querySelectorAll('.sm-power-btn').forEach(b=>{
+    b.onclick=()=>{
+      toggleStartMenu(false);
+      const a=b.dataset.action;
+      if(a==='about') openApp('about');
+      else if(a==='lock') lockScreen();
+      else if(a==='restart'){
+        toast('Rebooting DevilOS Trinity...');
+        setTimeout(()=>{
+          $('#boot').classList.remove('off');
+          $('#boot').classList.add('on');
+          startBootAnimation(()=>{ goMode('os'); });
+        }, 600);
+      }
+    };
+  });
+
+  document.querySelectorAll('.tb-left .tb-item[data-menu]').forEach(b=>{
+    b.addEventListener('click',e=>{
+      e.stopPropagation();
+      startMenu.classList.remove('on'); startBtn.classList.remove('open');
+      const rect=b.getBoundingClientRect();
+      const opening=!genericMenu.classList.contains('on') || genericMenu.dataset.menu!==b.dataset.menu;
+      fillMenu(b.dataset.menu);
+      genericMenu.style.left=rect.left+'px';
+      genericMenu.classList.toggle('on', opening);
+    });
+  });
+
+  genericMenu.addEventListener('click',e=>{
+    const r=e.target.closest('.menu-row');
+    if(!r) return;
+    e.stopPropagation();
+    closeAllMenus();
+    runMenuAction(r.dataset.action);
+  });
+}
+
+const MENUS={
+  file:[['new-window','New Terminal Window','⌘N'],['close-window','Close Window','⌘W'],['quit','Quit App','⌘Q']],
+  edit:[['find','Spotlight Search','⌘Space'],['select-all','Select Desktop Icons','']],
+  view:[['toggle-tile','Toggle Linux Tiling','Alt+T'],['task-view','Task View','Alt+Tab']],
+  tools:[['terminal','Open Terminal',''],['code','Open VS Code',''],['settings','System Settings','']],
+  window:[['task-view','Task View','Alt+Tab'],['cycle','Next Window','Alt+Tab'],['close-window','Close Window','⌘W']],
+  help:[['about','About DevilOS',''],['repos','Browse Projects','']]
+};
+function fillMenu(name){
+  const rows=MENUS[name]||MENUS.file;
+  const menu=$('#menu-generic');
+  menu.dataset.menu=name;
+  menu.innerHTML=rows.map(([action,label,shortcut])=>`<div class="menu-row" data-action="${action}">${label}${shortcut?`<span class="shortcut">${shortcut}</span>`:''}</div>`).join('');
+}
+function runMenuAction(action){
+  if(action==='about') openApp('about');
+  else if(action==='close-window'||action==='quit'){ if(WM.activeId) closeWin(WM.activeId); }
+  else if(action==='new-window'||action==='terminal') openApp('terminal');
+  else if(action==='code') openApp('code');
+  else if(action==='settings') openApp('settings');
+  else if(action==='toggle-tile') toggleTiling();
+  else if(action==='find') toggleSpotlight(true);
+  else if(action==='task-view') toggleTaskView(true);
+  else if(action==='cycle') cycleWindows(1);
+  else if(action==='repos') openApp('safari');
+  else if(action==='select-all') document.querySelectorAll('.desk-item').forEach(d=>d.classList.add('selected'));
+}
+
+function toggleStartMenu(force){
+  const startBtn=$('#btn-start-menu'), startMenu=$('#start-menu');
+  const on=(force!==undefined)?force:!startMenu.classList.contains('on');
+  startMenu.classList.toggle('on',on);
+  startBtn.classList.toggle('open',on);
+  if(on) closeAllMenus(startMenu);
+}
+
+function closeAllMenus(except){
+  if(except!=$('#start-menu')) { $('#start-menu').classList.remove('on'); $('#btn-start-menu').classList.remove('open'); }
+  document.querySelectorAll('.mac-dropdown').forEach(m=>m.classList.remove('on'));
+  document.querySelectorAll('.tb-item').forEach(b=>b.classList.remove('open'));
+  $('#control-center').classList.remove('on');
+  $('#widget-panel').classList.remove('on');
+  if(except!=='task') toggleTaskView(false);
+}
+function openWindowIds(){
+  return Object.keys(WM.wins).filter(id=>WM.wins[id].el.style.display!=='none');
+}
+function cycleWindows(dir){
+  const ids=openWindowIds();
+  if(!ids.length){ toast('No open windows'); return; }
+  const i=Math.max(0, ids.indexOf(WM.activeId));
+  focusWin(ids[(i+dir+ids.length)%ids.length]);
+}
+function toggleTaskView(force){
+  const view=$('#task-view');
+  if(!view) return;
+  const on=(force!==undefined)?force:!view.classList.contains('on');
+  view.classList.toggle('on', on);
+  view.setAttribute('aria-hidden', on?'false':'true');
+  if(!on) return;
+  const ids=openWindowIds();
+  const grid=$('#task-view-grid');
+  grid.innerHTML=ids.length?ids.map(id=>{
+    const A=APPS[id];
+    return `<button class="task-card" data-id="${id}"><img src="${A.icon}" alt=""><b>${esc(A.appName)}</b><span>${esc(A.title)}</span></button>`;
+  }).join(''):'<p class="task-empty">Nothing is open. Pick an app from the dock.</p>';
+  grid.querySelectorAll('.task-card').forEach(b=>b.onclick=()=>{
+    focusWin(b.dataset.id);
+    toggleTaskView(false);
+  });
+}
+
+/* ============ SPOTLIGHT / ROFI SEARCH ============ */
+function initSpotlight(){
+  const spot=$('#spotlight'), spotIn=$('#spot-input'), spotRes=$('#spot-results');
+  const btn=$('#btn-spotlight');
+
+  btn.addEventListener('click',e=>{e.stopPropagation(); toggleSpotlight();});
+  addEventListener('keydown',e=>{
+    if(mode!=='os') return;
+    if((e.metaKey||e.ctrlKey)&&e.key===' '){
+      e.preventDefault(); toggleSpotlight();
+    }else if(e.altKey&&e.key==='Tab'){
+      e.preventDefault();
+      if($('#task-view').classList.contains('on')) cycleWindows(e.shiftKey?-1:1);
+      else cycleWindows(e.shiftKey?-1:1);
+    }else if(e.key==='Escape'){
+      if(spot.classList.contains('on')) toggleSpotlight(false);
+      else if($('#task-view').classList.contains('on')) toggleTaskView(false);
+    }
+  });
+
+  spotIn.addEventListener('input',()=>renderSpot(spotIn.value.trim()));
+
+  function renderSpot(q){
+    const catalog=[
+      ['terminal','Terminal','Shell, neofetch, repos',ICONS.terminal],
+      ['code','VS Code','Project sources',ICONS.vscode],
+      ['finder','Files','Projects and desktop files',ICONS.finder],
+      ['safari','Safari','Portfolio and GitHub',ICONS.safari],
+      ['notes','Notes','Architecture notes',ICONS.notes],
+      ['settings','Settings','Wallpaper, sound, about',ICONS.settings],
+      ['mail','Mail','Inbox',ICONS.mail],
+      ['calendar','Calendar','This month',ICONS.calendar],
+      ['photos','Photos','Studio stills',ICONS.photos],
+      ['maps','Maps','Workspace map',ICONS.maps],
+      ['appstore','App Store','Installed DevilOS apps',ICONS.appstore],
+      ['games','Games','Snake, breakout, and memory',ICONS.games],
+      ['music','Music','Focus tracks',ICONS.music],
+      ['calculator','Calculator','Quick math',ICONS.calculator],
+      ['about','About DevilOS','Version and kernel', 'logo.png?v=2']
+    ];
+    if(!q){
+      spotRes.innerHTML=`<div class="spot-section-title">Applications</div>`+catalog.slice(0,6).map(([id,title,desc,icon])=>`
+        <div class="spot-item" data-action="app" data-id="${id}"><div class="s-icon"><img src="${icon}" alt=""></div><div><div class="s-title">${title}</div><div class="s-desc">${desc}</div></div></div>`).join('');
+    }else{
+      if(/^[\d\s\+\-\*\/\(\)\.\^]+$/.test(q)){
+        try{
+          const ans=Function(`'use strict'; return (${q})`)();
+          if(!isNaN(ans)){
+            spotRes.innerHTML=`<div class="spot-section-title">Calculation</div><div class="spot-calc-res">${esc(ans)}</div>`;
+            return;
+          }
+        }catch(e){}
+      }
+      const low=q.toLowerCase();
+      const apps=catalog.filter(([id,title,desc])=>`${id} ${title} ${desc}`.toLowerCase().includes(low));
+      const pHits=CONFIG.work.filter(([t,d])=>t.toLowerCase().includes(low)||d.toLowerCase().includes(low));
+      let html='';
+      if(apps.length){
+        html+=`<div class="spot-section-title">Applications</div>`+apps.map(([id,title,desc,icon])=>`
+          <div class="spot-item" data-action="app" data-id="${id}"><div class="s-icon"><img src="${icon}" alt=""></div><div><div class="s-title">${esc(title)}</div><div class="s-desc">${esc(desc)}</div></div></div>`).join('');
+      }
+      if(pHits.length){
+        html+=`<div class="spot-section-title">Repositories</div>`;
+        pHits.forEach(([t,d,link])=>{
+          html+=`<div class="spot-item" data-action="url" data-url="${link}"><div class="s-icon"><img src="${ICONS.github}" alt=""></div><div><div class="s-title">${esc(t)}</div><div class="s-desc">${esc(d)}</div></div></div>`;
+        });
+      }
+      spotRes.innerHTML=html||`<div class="spot-section-title">No matches</div>`;
+    }
+
+    spotRes.querySelectorAll('.spot-item').forEach(it=>{
+      it.onclick=()=>{
+        if(it.dataset.action==='app') openApp(it.dataset.id);
+        else if(it.dataset.action==='url') window.open(it.dataset.url,'_blank','noopener');
+        toggleSpotlight(false);
+      };
+    });
+  }
+}
+function toggleSpotlight(force){
+  const spot=$('#spotlight'), spotIn=$('#spot-input'), btn=$('#btn-spotlight');
+  const on=(force!==undefined)?force:!spot.classList.contains('on');
+  spot.classList.toggle('on',on);
+  btn.classList.toggle('open',on);
+  if(on){
+    spotIn.value=''; spotIn.focus();
+  }
+}
+
+/* ============ CONTROL CENTER & WIDGETS ============ */
+function initControlCenter(){
+  const cc=$('#control-center'), ccBtn=$('#btn-control-center');
+  const wp=$('#widget-panel'), wpBtn=$('#tb-clock');
+
+  ccBtn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const on=cc.classList.toggle('on');
+    ccBtn.classList.toggle('open',on);
+    wp.classList.remove('on');
+  });
+
+  wpBtn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const on=wp.classList.toggle('on');
+    cc.classList.remove('on');
+  });
+
+  $('#btn-task-switch').addEventListener('click',e=>{
+    e.stopPropagation();
+    const opening=!$('#task-view').classList.contains('on');
+    closeAllMenus('task');
+    toggleTaskView(opening);
+  });
+
+  $('#cc-bright-slider').addEventListener('input',e=>{
+    const v=e.target.value;
+    $('#cc-bright-val').textContent=v+'%';
+    document.documentElement.style.setProperty('--sys-brightness',v/100);
+  });
+  $('#cc-sound-slider').addEventListener('input',e=>{
+    uiGain=e.target.value/100;
+    $('#cc-sound-val').textContent=e.target.value+'%';
+    const settingsVol=$('#settings-vol');
+    if(settingsVol && settingsVol.value!==e.target.value) settingsVol.value=e.target.value;
+    playKeyClick(300+e.target.value*4,'sine',0.02);
+  });
+
+  ['cc-wifi','cc-bt','cc-airdrop','cc-dnd'].forEach(id=>{
+    $('#'+id).addEventListener('click',function(){ this.classList.toggle('active'); playKeyClick(440,'triangle',0.03); });
+  });
+
+  $('#cc-music-btn').addEventListener('click',()=>toggleMusic());
+  $('#task-view').addEventListener('click',e=>{ if(e.target.id==='task-view') toggleTaskView(false); });
+}
+
+/* ============ MARQUEE SELECTION ============ */
+function initMarqueeSelection(){
+  const box=$('#selection-box'), desk=$('#desktop');
+  let sx=0,sy=0,dragging=false;
+
+  desk.addEventListener('pointerdown',e=>{
+    if(e.target!==$('#wallpaper')&&e.target!==$('#star-canvas')&&e.target!==$('#desktop-icons')) return;
+    sx=e.clientX; sy=e.clientY; dragging=true;
+    box.style.left=sx+'px'; box.style.top=sy+'px'; box.style.width='0px'; box.style.height='0px';
+    box.style.display='block';
+  });
+
+  addEventListener('pointermove',e=>{
+    if(!dragging) return;
+    const x=Math.min(e.clientX,sx), y=Math.min(e.clientY,sy);
+    const w=Math.abs(e.clientX-sx), h=Math.abs(e.clientY-sy);
+    box.style.left=x+'px'; box.style.top=y+'px'; box.style.width=w+'px'; box.style.height=h+'px';
+  });
+
+  addEventListener('pointerup',()=>{
+    if(!dragging) return;
+    dragging=false;
+    const sel=box.getBoundingClientRect();
+    if(sel.width>6 && sel.height>6){
+      document.querySelectorAll('.desk-item').forEach(item=>{
+        const r=item.getBoundingClientRect();
+        const hit=!(r.right<sel.left||r.left>sel.right||r.bottom<sel.top||r.top>sel.bottom);
+        item.classList.toggle('selected', hit);
+      });
+    }
+    box.style.display='none';
+  });
+}
+
+/* ============ LAUNCHPAD ============ */
+function initLaunchpad(){
+  const lp=$('#launchpad'), grid=$('#lp-grid'), search=$('#lp-search');
+  const items=[
+    ['terminal','Terminal',ICONS.terminal],
+    ['code','VS Code',ICONS.vscode],
+    ['finder','Files',ICONS.finder],
+    ['safari','Safari',ICONS.safari],
+    ['notes','Notes',ICONS.notes],
+    ['calculator','Calculator',ICONS.calculator],
+    ['music','Music',ICONS.music],
+    ['settings','Settings',ICONS.settings],
+    ['mail','Mail',ICONS.mail],
+    ['calendar','Calendar',ICONS.calendar],
+    ['photos','Photos',ICONS.photos],
+    ['maps','Maps',ICONS.maps],
+    ['appstore','App Store',ICONS.appstore],
+    ['games','Games',ICONS.games],
+    ['about','About DevilOS','logo.png?v=2']
+  ];
+  grid.innerHTML=items.map(([id,lbl,ico])=>`
+    <button class="lp-item" data-app="${id}">
+      <div class="lp-icon"><img src="${ico}" alt="${lbl}"></div>
+      <span class="lp-lbl">${lbl}</span>
+    </button>
+  `).join('');
+
+  grid.querySelectorAll('.lp-item').forEach(b=>b.onclick=()=>{
+    openApp(b.dataset.app); toggleLaunchpad(false);
+  });
+
+  lp.addEventListener('click',e=>{if(e.target===lp) toggleLaunchpad(false);});
+  search.addEventListener('input',()=>{
+    const q=search.value.toLowerCase();
+    grid.querySelectorAll('.lp-item').forEach(b=>b.style.display=b.textContent.toLowerCase().includes(q)?'flex':'none');
+  });
+}
+function toggleLaunchpad(force){
+  const lp=$('#launchpad');
+  const on=(force!==undefined)?force:!lp.classList.contains('on');
+  lp.classList.toggle('on',on);
+  if(on){ $('#lp-search').value=''; $('#lp-search').focus(); }
+}
+
+/* ============ LOCK SCREEN ============ */
+function initLockScreen(){
+  const lock=$('#lock-screen'), inp=$('#lock-pass'), btn=$('#lock-unlock-btn');
+  function unlock(){
+    playKeyClick(600,'sine',0.06);
+    lock.classList.remove('on');
+    toast('Welcome back to <b>DevilOS Trinity</b> ✳');
+  }
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter') unlock();});
+  btn.addEventListener('click',unlock);
+}
+function lockScreen(){
+  $('#lock-screen').classList.add('on');
+  $('#lock-pass').value='';
+  setTimeout(()=>$('#lock-pass').focus(),100);
+}
+
+/* ========================================================================= */
+/* ==================== APPS DEFINITIONS & SUITE ============================ */
+/* ========================================================================= */
+const APPS={};
+
+/* 1. Finder */
+APPS.finder={
+  appName:'Finder',title:'Files & Projects — devil@space',icon:ICONS.finder,w:760,h:480,
+  build:()=>{
+    const r=document.createElement('div'); r.className='finder-app';
+    const file=(icon,name,kind,size,open)=>({icon,name,kind,size,open});
+    const folders={
+      home:[
+        file(ICONS.java,'BluetoothMeshRelay.java','Java','14 KB',()=>openApp('code')),
+        file(ICONS.python,'cognyx_engine.py','Python','28 KB',()=>openApp('code')),
+        file(ICONS.python,'tdms_parser.py','Python','18 KB',()=>openApp('code')),
+        file(ICONS.cpp,'dsu_fast.cpp','C++','9 KB',()=>openApp('code')),
+        file(ICONS.notes,'Architecture Notes','Notes','3 notes',()=>openApp('notes'))
+      ],
+      desktop:[
+        file(ICONS.finder,'Space Root HD','Volume','—',()=>goFolder('disk')),
+        file(ICONS.notes,'System Architecture','Notes','—',()=>openApp('notes')),
+        file(ICONS.vscode,'Code Workspace','App','—',()=>openApp('code')),
+        file(ICONS.terminal,'Zsh Terminal','App','—',()=>openApp('terminal'))
+      ],
+      documents:[
+        file(ICONS.notes,'DevilOS Trinity Architecture','Note','—',()=>openApp('notes')),
+        file(ICONS.notes,'Bluetooth MANET Mesh Relays','Note','—',()=>openApp('notes')),
+        file(ICONS.notes,'TDMS Specifications','Note','—',()=>openApp('notes'))
+      ],
+      downloads:[
+        file('logo.png?v=2','logo.png','Image','174 KB',()=>openApp('photos')),
+        file('retro_computer_closeup.png','retro-computer.png','Image','—',()=>openApp('photos'))
+      ],
+      disk:[
+        file(ICONS.appstore,'Applications','Folder','—',()=>openApp('appstore')),
+        file(ICONS.githubDark,'GitHub Repos','Folder',CONFIG.work.length+' repos',()=>goFolder('cloud'))
+      ],
+      cloud:CONFIG.work.map(([name,desc,link])=>file(ICONS.githubDark,name,'Repo','—',()=>{
+        if(link.startsWith('#')) goMode('3d');
+        else window.open(link,'_blank','noopener');
+      }))
+    };
+    const side=[
+      ['home',ICONS.finder,'devil'],
+      ['desktop',ICONS.photos,'Desktop'],
+      ['documents',ICONS.notes,'Documents'],
+      ['downloads',ICONS.safari,'Downloads'],
+      ['disk','logo.png?v=2','Space Root HD'],
+      ['cloud',ICONS.settings,'Cloud Drive']
+    ];
+    let hist=['home'], cursor=0, view='icons', query='';
+    r.innerHTML=`
+      <div class="finder-toolbar">
+        <div class="finder-nav-btns">
+          <button class="finder-nav-btn" data-nav="back" title="Back">‹</button>
+          <button class="finder-nav-btn" data-nav="forward" title="Forward">›</button>
+        </div>
+        <div class="finder-view-modes">
+          <button class="finder-view-btn active" data-view="icons">Icons</button>
+          <button class="finder-view-btn" data-view="list">List</button>
+          <button class="finder-view-btn" data-view="columns">Columns</button>
+        </div>
+        <input type="text" class="finder-search" placeholder="Search files...">
+      </div>
+      <div class="finder-content">
+        <div class="finder-sidebar">
+          <div class="finder-side-group">Favorites</div>
+          ${side.slice(0,4).map(([id,icon,label])=>`<button class="finder-side-item" data-folder="${id}"><img src="${icon}" alt=""> ${label}</button>`).join('')}
+          <div class="finder-side-group">Storage</div>
+          ${side.slice(4).map(([id,icon,label])=>`<button class="finder-side-item" data-folder="${id}"><img src="${icon}" alt=""> ${label}</button>`).join('')}
+        </div>
+        <div class="finder-main"></div>
+      </div>
+      <div class="finder-statusbar"><span></span><span>DevilOS workspace</span></div>
+    `;
+    const main=r.querySelector('.finder-main');
+    const status=r.querySelector('.finder-statusbar span');
+    function goFolder(id, push=true){
+      if(push){
+        hist=hist.slice(0, cursor+1);
+        if(hist[hist.length-1]!==id) hist.push(id);
+        cursor=hist.length-1;
+      }
+      paint();
+    }
+    function paint(){
+      const id=hist[cursor];
+      const q=query.toLowerCase();
+      const shown=(folders[id]||[]).filter(f=>f.name.toLowerCase().includes(q));
+      r.querySelectorAll('.finder-side-item').forEach(b=>b.classList.toggle('active', b.dataset.folder===id));
+      r.querySelector('[data-nav="back"]').disabled=cursor<=0;
+      r.querySelector('[data-nav="forward"]').disabled=cursor>=hist.length-1;
+      if(view==='icons'){
+        main.innerHTML=`<div class="finder-grid">${shown.map((f,i)=>`
+          <button class="finder-file" data-i="${i}"><img src="${f.icon}" alt=""><span>${esc(f.name)}</span></button>`).join('')||'<p style="opacity:.55;font-size:13px">No matching files</p>'}</div>`;
+      }else{
+        main.innerHTML=`<div class="finder-list">${shown.map((f,i)=>`
+          <button class="finder-row" data-i="${i}"><img src="${f.icon}" alt=""><span>${esc(f.name)}</span><span style="opacity:.55">${esc(f.kind)}</span><span style="opacity:.55">${esc(f.size)}</span></button>`).join('')||'<p style="opacity:.55;font-size:13px">No matching files</p>'}</div>`;
+      }
+      status.textContent=`${shown.length} item${shown.length===1?'':'s'}`;
+      main.querySelectorAll('[data-i]').forEach(el=>{
+        el.ondblclick=()=>shown[el.dataset.i].open();
+        el.onclick=()=>main.querySelectorAll('[data-i]').forEach(x=>x.classList.toggle('active', x===el));
+      });
+    }
+    r.querySelectorAll('.finder-side-item').forEach(b=>b.onclick=()=>goFolder(b.dataset.folder));
+    r.querySelector('[data-nav="back"]').onclick=()=>{ if(cursor>0){ cursor--; paint(); } };
+    r.querySelector('[data-nav="forward"]').onclick=()=>{ if(cursor<hist.length-1){ cursor++; paint(); } };
+    r.querySelectorAll('.finder-view-btn').forEach(b=>b.onclick=()=>{
+      view=b.dataset.view==='columns'?'list':b.dataset.view;
+      r.querySelectorAll('.finder-view-btn').forEach(x=>x.classList.toggle('active', x===b));
+      paint();
+    });
+    r.querySelector('.finder-search').addEventListener('input',e=>{ query=e.target.value.trim(); paint(); });
+    paint();
+    return r;
+  }
+};
+
+/* 2. Linux Zsh Terminal (Devil Neofetch + Htop + Cmatrix) */
+APPS.terminal={
+  appName:'Terminal',title:`${CONFIG.user}@${CONFIG.host}: ~`,icon:ICONS.terminal,w:720,h:460,
+  build:()=>{
+    const r=document.createElement('div'); r.className='term-app';
+    r.innerHTML=`<div class="term-log"></div><div class="term-line"><span class="term-prompt">${CONFIG.user}@${CONFIG.host}:~$</span><input type="text" class="term-input" spellcheck="false" autocomplete="off" autofocus></div>`;
+    const log=r.querySelector('.term-log'), inp=r.querySelector('.term-input');
+    const P=()=>`${CONFIG.user}@${CONFIG.host}:~$`;
+
+    const print=html=>{
+      const d=document.createElement('div'); d.innerHTML=html; log.append(d);
+      r.scrollTop=r.scrollHeight;
+    };
+
+    function run(cmd){
+      print(`<span class="term-prompt">${P()}</span> ${esc(cmd)}`);
+      const [c,...rest]=cmd.trim().split(/\s+/);
+      switch(c){
+        case '': break;
+        case 'help':
+          print(`<b>DevilOS Trinity Linux Commands:</b>\n  • <b>neofetch</b>  — Custom Devil Shield ASCII architecture specs\n  • <b>htop</b>      — Live multi-core CPU & process viewer\n  • <b>matrix</b>    — Cyber digital rain effect\n  • <b>repos</b>     — List active systems repositories\n  • <b>skills</b>    — Systems & engineering proficiencies\n  • <b>whoami</b>    — Developer persona & role\n  • <b>contact</b>   — Social & direct comms\n  • <b>pacman</b>    — Package manager simulator (pacman -Syu)\n  • <b>clear</b>     — Wipe terminal screen`);
+          break;
+        case 'neofetch':
+          print(`
+  <span style="color:#38BDF8">         /\\              /\\         </span>   <b>${CONFIG.user}@${CONFIG.host}</b>
+  <span style="color:#38BDF8">        /  \\            /  \\        </span>   ----------------------
+  <span style="color:#38BDF8">       / /\\ \\__________/ /\\ \\       </span>   <b>OS:</b> DevilOS Trinity v4.0 (x86_64 / arm64)
+  <span style="color:#38BDF8">      / /  \\    /\\    /  \\ \\      </span>   <b>Host:</b> MacBookPro Space-Edition / Custom
+  <span style="color:#38BDF8">     / /    \\  /  \\  /    \\ \\     </span>   <b>Kernel:</b> Linux 6.10.9-devil-zen / Darwin 24.1
+  <span style="color:#818CF8">    ( (   <span style="color:#FFF">▼</span>  \\/    \\/  <span style="color:#FFF">▼</span>   ) )    </span>   <b>Uptime:</b> 42 days, 13 hours, 37 mins
+  <span style="color:#818CF8">     \\ \\     /\\    /\\     / /     </span>   <b>Shell:</b> zsh 5.9 (powerlevel10k)
+  <span style="color:#38BDF8">      \\ \\___/  \\  /  \\___/ /      </span>   <b>WM:</b> Hyprland-Aqua Hybrid Tiling
+  <span style="color:#38BDF8">       \\   /    \\/    \\   /       </span>   <b>CPU:</b> AMD Ryzen 9 / Apple M3 Max (16-core)
+  <span style="color:#38BDF8">        \\ /  /\\    /\\  \\ /        </span>   <b>Memory:</b> 8420MiB / 36864MiB
+  <span style="color:#34D399">         V  /  \\  /  \\  V         </span>   <b>GPU:</b> Metal 3 & Vulkan Accelerated
+  <span style="color:#34D399">            \\  /  \\  /            </span>   <b>Theme:</b> Deep Space Cyan [GTK3]
+  <span style="color:#34D399">             \\/    \\/             </span>
+`);
+          break;
+        case 'htop':
+          print(`
+<b>CPU[|||||||||||||||||||||||               48.2%]</b>  Tasks: 142, 4 running
+<b>Mem[|||||||||||||||                       23.4%]</b>  8.4G / 36.0G
+<b>Swp[|                                      2.1%]</b>  512M / 16.0G
+
+  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
+ 1716 devil      20   0 1420M  480M  120M R 18.2  1.3  4:12.80 cognyx_engine
+  842 devil      20   0  980M  340M   95M S  8.4  0.9  1:40.12 bluetooth_manet
+ 2041 devil      20   0  620M  180M   65M S  4.1  0.5  0:45.30 zsh_session
+  101 root       20   0  320M   80M   35M S  1.2  0.2  2:10.05 hyprland_wm
+`);
+          break;
+        case 'matrix':
+          print(`<span style="color:#34D399">01000100 01100101 01110110 01101001 01101100 00110001 00110111 00110001 00110110\n01000011 01101111 01100111 01101110 01111001 01111000 01001111 01010011\n01010100 01010010 01001001 01001110 01001001 01010100 01011001 00100000 01001111 01010011</span>\nCyber Matrix stream connected.`);
+          break;
+        case 'pacman':
+          print(`:: Synchronizing package databases...\n  devil-core is up to date\n  extra is up to date\n  multilib is up to date\n:: Starting full system upgrade...\n there is nothing to do`);
+          break;
+        case 'repos':
+          print(CONFIG.work.map(([t,d])=>`  ▸ <b style="color:#38BDF8">${t}</b>\n    ${d}`).join('\n\n'));
+          break;
+        case 'skills':
+          print(`Java / Android Mesh (RFCOMM): ▓▓▓▓▓▓▓▓▓▓ 95%\nPython & TDMS Telemetry:     ▓▓▓▓▓▓▓▓▓▓ 94%\nJavaScript / Node / React:   ▓▓▓▓▓▓▓▓▓░ 92%\nC++ Data Structures (DSU):   ▓▓▓▓▓▓▓▓▓░ 90%\nLinux Kernels & Systems:     ▓▓▓▓▓▓▓▓▓░ 92%`);
+          break;
+        case 'whoami':
+          print(`${CONFIG.name} (${CONFIG.handle}) — ${CONFIG.role}`);
+          break;
+        case 'contact':
+          print(`Email:    ${CONFIG.email}\nGitHub:   ${CONFIG.github}\nLinkedIn: ${CONFIG.linkedin}`);
+          break;
+        case 'clear':
+          log.innerHTML='';
+          break;
+        default:
+          print(`zsh: command not found: ${esc(c)} (type <b>help</b>)`);
+      }
+    }
+
+    inp.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){
+        const v=inp.value; inp.value=''; run(v);
+        playKeyClick(420,'sine',0.03);
+      }
+    });
+    r.onclick=()=>inp.focus();
+
+    print(`DevilOS Trinity Kernel 6.10-devil on ${new Date().toLocaleString()}`);
+    print(`Type <b style="color:var(--cyan)">help</b> or <b style="color:var(--cyan)">neofetch</b> to explore.\n`);
+    return r;
+  }
+};
+
+/* 3. Safari Browser */
+APPS.safari={
+  appName:'Safari',title:'Safari — DevilOS Space Portal',icon:ICONS.safari,w:840,h:520,
+  build:()=>{
+    const r=document.createElement('div'); r.className='safari-app';
+    const pages={
+      start:{tab:'Start Page', url:'devilos.devil1716.dev', html:()=>`
+        <h2 class="safari-start-title">Favorites</h2>
+        <div class="safari-favs">
+          <button class="safari-fav-item" data-page="work"><div class="safari-fav-icon"><img src="${ICONS.vscode}" alt=""></div><span class="safari-fav-lbl">Projects</span></button>
+          <button class="safari-fav-item" data-page="github"><div class="safari-fav-icon" style="background:#0F172A"><img src="${ICONS.github}" alt=""></div><span class="safari-fav-lbl">GitHub</span></button>
+          <button class="safari-fav-item" data-page="studio"><div class="safari-fav-icon"><img src="retro_computer_closeup.png" alt=""></div><span class="safari-fav-lbl">3D Studio</span></button>
+          <button class="safari-fav-item" data-go="notes"><div class="safari-fav-icon"><img src="${ICONS.notes}" alt=""></div><span class="safari-fav-lbl">Notes</span></button>
+        </div>
+        <div style="background:#fff;border-radius:14px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.04);color:#334155">
+          <b style="color:#007AFF">${esc(CONFIG.name)}</b>
+          <p style="font-size:13px;color:#64748B;margin-top:6px">${esc(CONFIG.role)}. ${esc(CONFIG.email)}</p>
+        </div>`},
+      work:{tab:'Projects', url:'devilos.devil1716.dev/work', html:()=>`
+        <h2 class="safari-start-title">Selected work</h2>
+        <div style="display:flex;flex-direction:column;gap:10px">${CONFIG.work.map(([t,d,link])=>`
+          <a href="${link}" ${link.startsWith('#')?'':'target="_blank" rel="noopener"'} data-internal="${link.startsWith('#')?'studio':''}" style="display:block;background:#fff;border-radius:12px;padding:14px 16px;text-decoration:none;color:#1c1917;box-shadow:0 4px 14px rgba(0,0,0,.05)">
+            <b>${esc(t)}</b><p style="font-size:12.5px;color:#64748b;margin-top:4px">${esc(d)}</p>
+          </a>`).join('')}</div>`},
+      studio:{tab:'3D Studio', url:'devilos.devil1716.dev/studio', html:()=>`
+        <h2 class="safari-start-title">Retro computer</h2>
+        <img src="retro_computer_closeup.png" alt="Retro computer" style="width:100%;max-width:640px;border-radius:14px;display:block">
+        <p style="margin-top:12px;color:#475569">The portfolio hero is the Tripo PBR model. Open the studio to orbit it.</p>
+        <button data-go="3d" style="margin-top:14px;background:#1c1917;color:#fff;border:0;border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700">Enter 3D Studio</button>`},
+      github:{tab:'GitHub', url:'github.com/Devil1716', html:()=>`
+        <h2 class="safari-start-title">GitHub</h2>
+        <p style="color:#475569;margin-bottom:12px">${esc(CONFIG.github)}</p>
+        <button data-go="github" style="background:#0f172a;color:#fff;border:0;border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700">Open GitHub</button>`}
+    };
+    let hist=['start'], cursor=0;
+    r.innerHTML=`
+      <div class="safari-tabs"><div class="safari-tab"><img src="${ICONS.safari}" alt=""><span id="safari-tab">Start Page</span></div></div>
+      <div class="safari-toolbar">
+        <button class="finder-nav-btn" data-nav="back" title="Back">‹</button>
+        <button class="finder-nav-btn" data-nav="forward" title="Forward">›</button>
+        <div class="safari-url-bar" id="safari-url">devilos.devil1716.dev</div>
+        <button class="finder-nav-btn" data-nav="home" title="Start page">⌂</button>
+      </div>
+      <div class="safari-body"></div>
+    `;
+    const body=r.querySelector('.safari-body');
+    function show(id, push){
+      if(!pages[id]) return;
+      if(push){
+        hist=hist.slice(0, cursor+1);
+        if(hist[hist.length-1]!==id) hist.push(id);
+        cursor=hist.length-1;
+      }
+      const page=pages[hist[cursor]];
+      r.querySelector('#safari-tab').textContent=page.tab;
+      r.querySelector('#safari-url').textContent=page.url;
+      r.querySelector('[data-nav="back"]').disabled=cursor<=0;
+      r.querySelector('[data-nav="forward"]').disabled=cursor>=hist.length-1;
+      body.innerHTML=page.html();
+      body.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>show(b.dataset.page, true));
+      body.querySelectorAll('[data-internal="studio"]').forEach(a=>a.onclick=e=>{ e.preventDefault(); show('studio', true); });
+      body.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{
+        const go=b.dataset.go;
+        if(go==='3d') goMode('3d');
+        else if(go==='github') window.open(CONFIG.github,'_blank','noopener');
+        else openApp(go);
+      });
+    }
+    r.querySelector('[data-nav="back"]').onclick=()=>{ if(cursor>0){ cursor--; show(hist[cursor], false); } };
+    r.querySelector('[data-nav="forward"]').onclick=()=>{ if(cursor<hist.length-1){ cursor++; show(hist[cursor], false); } };
+    r.querySelector('[data-nav="home"]').onclick=()=>show('start', true);
+    show('start', false);
+    return r;
+  }
+};
+
+/* 4. Visual Studio Code */
+APPS.code={
+  appName:'Code',title:'Visual Studio Code — bluetooth-manet-android',icon:ICONS.vscode,w:850,h:530,
+  build:()=>{
+    const r=document.createElement('div'); r.className='vscode-app';
+    const files={
+      'BluetoothMeshRelay.java': {
+        icon: ICONS.java,
+        content: `// bluetooth-manet-android — Mesh Relay & TTL Routing
+package dev.devil1716.mesh;
+
+import android.bluetooth.BluetoothSocket;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class BluetoothMeshRelay {
+    private static final int MAX_TTL = 8;
+    private final RoutingTable routingTable = new RoutingTable();
+
+    public void onPacketReceived(Packet packet, String senderNodeId) {
+        if (routingTable.hasSeen(packet.getPacketId())) {
+            return; // Deduplicate looped mesh packet
+        }
+        routingTable.record(packet.getPacketId());
+
+        if (packet.getTtl() > 0) {
+            packet.decrementTtl();
+            broadcastToNeighbors(packet, senderNodeId);
+        }
+    }
+}`
+      },
+      'cognyx_engine.py': {
+        icon: ICONS.python,
+        content: `# CognyxOS — Systems Platform Architecture
+import asyncio
+from typing import Dict, Any
+
+class CognyxRuntime:
+    def __init__(self, node_id: str):
+        self.node_id = node_id
+        self.services: Dict[str, Any] = {}
+
+    async def initialize(self) -> bool:
+        print(f"[CognyxOS] Initializing runtime on node {self.node_id}")
+        await asyncio.sleep(0.05)
+        return True`
+      },
+      'tdms_parser.py': {
+        icon: ICONS.python,
+        content: `# nitdms — LabVIEW TDMS Telemetry Parser
+import struct
+
+class TDMSReader:
+    def __init__(self, filepath: str):
+        self.filepath = filepath
+
+    def parse_header(self, raw_bytes: bytes) -> dict:
+        tag, version = struct.unpack('<4sI', raw_bytes[:8])
+        return {"tag": tag.decode('ascii'), "version": version}`
+      },
+      'dsu_fast.cpp': {
+        icon: ICONS.cpp,
+        content: `// High-performance Disjoint Set Union (DSU)
+#include <vector>
+#include <numeric>
+
+class DisjointSetUnion {
+    std::vector<int> parent, rank;
+public:
+    DisjointSetUnion(int n) : parent(n), rank(n, 0) {
+        std::iota(parent.begin(), parent.end(), 0);
+    }
+    int find(int u) {
+        return parent[u] == u ? u : parent[u] = find(parent[u]);
+    }
+    bool unite(int u, int v) {
+        u = find(u); v = find(v);
+        if (u == v) return false;
+        if (rank[u] < rank[v]) std::swap(u, v);
+        parent[v] = u;
+        if (rank[u] == rank[v]) rank[u]++;
+        return true;
+    }
+};`
+      }
+    };
+
+    r.innerHTML=`
+      <div class="vscode-activity">
+        <svg class="active" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2"/></svg>
+      </div>
+      <div class="vscode-files">
+        <div style="padding:4px 10px;font-size:10px;font-weight:700;color:#6e7681;text-transform:uppercase">Explorer</div>
+        ${Object.keys(files).map((f,i)=>`<div class="vscode-file-item ${i===0?'active':''}" data-file="${f}"><img src="${files[f].icon}" alt=""> ${f}</div>`).join('')}
+      </div>
+      <div class="vscode-editor">
+        <div class="vscode-tabs"><div class="vscode-tab" id="vs-active-tab"><img src="${ICONS.java}" alt=""> BluetoothMeshRelay.java ✕</div></div>
+        <pre class="vscode-code" id="vs-code-content">${esc(files['BluetoothMeshRelay.java'].content)}</pre>
+        <div class="vscode-status"><span>main* · UTF-8</span><span>DevilOS Trinity Coder</span></div>
+      </div>
+    `;
+
+    r.querySelectorAll('.vscode-file-item').forEach(b=>{
+      b.onclick=()=>{
+        r.querySelectorAll('.vscode-file-item').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const f=b.dataset.file;
+        r.querySelector('#vs-active-tab').innerHTML=`<img src="${files[f].icon}" alt=""> ${f} ✕`;
+        r.querySelector('#vs-code-content').textContent=files[f].content;
+      };
+    });
+    return r;
+  }
+};
+
+/* 5. Notes */
+APPS.notes={
+  appName:'Notes',title:'Notes',icon:ICONS.notes,w:760,h:480,
+  build:()=>{
+    const r=document.createElement('div'); r.className='notes-app';
+    const notesData=[
+      {
+        title:'DevilOS Trinity Architecture & Vision',
+        date:'Aug 26',
+        body:`The Trinity Architecture merges the three greatest desktop paradigms:
+
+1. macOS: Seamless glass blur, 3D animated magnification dock, traffic light controls, spotlight intelligence.
+2. Windows 11: Instant Snap Assist layouts (50/50, Quadrant, 70/30) & quick unified start launcher.
+3. Linux (Hyprland): Lightning-fast keyboard tiling window manager, deep telemetry HUD, and rich zsh/htop terminal mastery.`
+      },
+      {
+        title:'Bluetooth MANET Mesh Relays',
+        date:'Aug 24',
+        body:`Android MANET (Mobile Ad-hoc Network) implementation notes:
+- Protocol: RFCOMM layered socket streams.
+- Routing: Distributed TTL flooding with bloom-filter packet deduplication.
+- Fault Tolerance: Auto-reconnect on node dropouts.`
+      },
+      {
+        title:'Telemetry & LabVIEW TDMS Specifications',
+        date:'Aug 20',
+        body:`Binary parsing considerations for National Instruments TDMS format:
+- Little-endian byte unpacker.
+- High-throughput streaming chunk decoders in Python.`
+      }
+    ];
+
+    r.innerHTML=`
+      <div class="notes-col1">
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.4);padding:4px 6px">STORAGE</div>
+        <button style="width:100%;text-align:left;background:rgba(255,255,255,.14);color:#fff;border:0;padding:6px 8px;border-radius:6px;font-size:12px;margin-top:4px">All Notes</button>
+      </div>
+      <div class="notes-col2">
+        ${notesData.map((n,i)=>`
+          <div class="note-card ${i===0?'active':''}" data-idx="${i}">
+            <b>${esc(n.title)}</b>
+            <p>${n.date} — ${esc(n.body.slice(0,40))}...</p>
+          </div>
+        `).join('')}
+      </div>
+        <div class="notes-editor">
+        <h2 id="note-title" contenteditable="true">${esc(notesData[0].title)}</h2>
+        <div id="note-body" contenteditable="true" style="white-space:pre-wrap;font-size:13.5px;line-height:1.6;outline:none">${esc(notesData[0].body)}</div>
+      </div>
+    `;
+
+    r.querySelectorAll('.note-card').forEach(b=>{
+      b.onclick=()=>{
+        r.querySelectorAll('.note-card').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const data=notesData[b.dataset.idx];
+        r.querySelector('#note-title').textContent=data.title;
+        r.querySelector('#note-body').textContent=data.body;
+      };
+    });
+    const titleEl=r.querySelector('#note-title'), bodyEl=r.querySelector('#note-body');
+    function saveNote(){
+      const active=r.querySelector('.note-card.active');
+      if(!active) return;
+      const data=notesData[active.dataset.idx];
+      data.title=titleEl.textContent.trim()||'Untitled';
+      data.body=bodyEl.textContent;
+      active.querySelector('b').textContent=data.title;
+      active.querySelector('p').textContent=`${data.date} — ${data.body.slice(0,40)}`;
+    }
+    titleEl.addEventListener('input', saveNote);
+    bodyEl.addEventListener('input', saveNote);
+    return r;
+  }
+};
+
+/* 6. Calculator */
+APPS.calculator={
+  appName:'Calculator',title:'Calculator',icon:ICONS.calculator,w:300,h:380,
+  build:()=>{
+    const r=document.createElement('div'); r.className='calc-app';
+    r.innerHTML=`
+      <div class="calc-screen" id="calc-scr">0</div>
+      <div class="calc-grid">
+        <button class="calc-btn fn" data-k="C">AC</button>
+        <button class="calc-btn fn" data-k="+/-">±</button>
+        <button class="calc-btn fn" data-k="%">%</button>
+        <button class="calc-btn op" data-k="/">÷</button>
+        <button class="calc-btn" data-k="7">7</button>
+        <button class="calc-btn" data-k="8">8</button>
+        <button class="calc-btn" data-k="9">9</button>
+        <button class="calc-btn op" data-k="*">×</button>
+        <button class="calc-btn" data-k="4">4</button>
+        <button class="calc-btn" data-k="5">5</button>
+        <button class="calc-btn" data-k="6">6</button>
+        <button class="calc-btn op" data-k="-">−</button>
+        <button class="calc-btn" data-k="1">1</button>
+        <button class="calc-btn" data-k="2">2</button>
+        <button class="calc-btn" data-k="3">3</button>
+        <button class="calc-btn op" data-k="+">+</button>
+        <button class="calc-btn zero" data-k="0">0</button>
+        <button class="calc-btn" data-k=".">.</button>
+        <button class="calc-btn op" data-k="=">=</button>
+      </div>
+    `;
+
+    let expr='';
+    const scr=r.querySelector('#calc-scr');
+    r.querySelectorAll('.calc-btn').forEach(b=>{
+      b.onclick=()=>{
+        playKeyClick(500,'triangle',0.02);
+        const k=b.dataset.k;
+        if(k==='C'){ expr=''; scr.textContent='0'; }
+        else if(k==='='){
+          try{ scr.textContent=Function(`'use strict'; return (${expr})`)(); expr=scr.textContent; }catch(e){ scr.textContent='Error'; expr=''; }
+        }        else if(k==='+/-'){
+          if(expr){ expr=String(-parseFloat(expr)); scr.textContent=expr; }
+        }else if(k==='%'){
+          const n=parseFloat(expr);
+          expr=Number.isFinite(n)?String(n/100):'';
+          scr.textContent=expr||'0';
+        }else{
+          expr+=k; scr.textContent=expr;
+        }
+      };
+    });
+    return r;
+  }
+};
+
+/* 7. System Settings with Space Wallpapers */
+APPS.settings={
+  appName:'System Settings',title:'System Settings',icon:ICONS.settings,w:800,h:520,
+  build:()=>{
+    const r=document.createElement('div'); r.className='settings-app';
+    const wallpapers=[
+      ['Orion Nebula Core','wp-space-orion','https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop'],
+      ['James Webb Cliffs','wp-space-webb','https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=600&auto=format&fit=crop'],
+      ['Event Horizon Hole','wp-space-blackhole','https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=600&auto=format&fit=crop'],
+      ['Crimson Supernova','wp-space-supernova','https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop'],
+      ['Andromeda Spiral','wp-space-galaxy','https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=600&auto=format&fit=crop'],
+      ['Cyber Deep Void','wp-space-void','']
+    ];
+
+    r.innerHTML=`
+      <div class="settings-sidebar">
+        <div class="settings-user-card">
+          <img src="logo.png?v=2" alt="">
+          <div><b style="font-size:12.5px;display:block">Devil1716</b><span style="font-size:10.5px;color:rgba(255,255,255,.5)">DaRkAngeL Core</span></div>
+        </div>
+        <button class="settings-side-item active" data-tab="wp"><img src="${ICONS.photos}" alt=""> Space Wallpapers</button>
+        <button class="settings-side-item" data-tab="about"><img src="logo.png?v=2" alt=""> About DevilOS</button>
+        <button class="settings-side-item" data-tab="sound"><img src="${ICONS.music}" alt=""> Sound & Audio</button>
+      </div>
+      <div class="settings-pane" id="settings-pane">
+        <h3 style="font-size:18px;font-weight:700">Space Wallpapers</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px">Select a cosmic nebula or deep space background</p>
+        <div class="wp-grid">
+          ${wallpapers.map(([name,cls,img])=>`
+            <div class="wp-thumb ${cls}" data-cls="${cls}" style="${img?`background-image:url('${img}')`:''}">
+              <span>${name}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+    `;
+
+    const pane=r.querySelector('#settings-pane');
+    const panes={
+      wp: pane.innerHTML,
+      about:`<h3 style="font-size:18px;font-weight:700">About DevilOS</h3>
+        <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.78);margin-top:10px">DevilOS Trinity 4.0 mixes a glass menu bar, snap layouts, and a tiling window manager around ${esc(CONFIG.name)}'s work.</p>
+        <div style="margin-top:14px;font-size:13px;line-height:1.8">
+          <div><b>Developer:</b> ${esc(CONFIG.name)} (${esc(CONFIG.handle)})</div>
+          <div><b>Email:</b> ${esc(CONFIG.email)}</div>
+          <div><b>Kernel:</b> Linux 6.10-devil / Darwin 24 hybrid</div>
+        </div>
+        <button id="settings-open-about" style="margin-top:16px;background:#007AFF;color:#fff;border:0;border-radius:8px;padding:8px 12px">Open About window</button>`,
+      sound:`<h3 style="font-size:18px;font-weight:700">Sound</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px">Interface clicks and music share this volume.</p>
+        <label style="display:flex;justify-content:space-between;margin-top:18px;font-size:13px"><span>Output volume</span><span id="settings-vol-label">${Math.round(uiGain*100)}%</span></label>
+        <input id="settings-vol" type="range" min="0" max="100" value="${Math.round(uiGain*100)}" style="width:100%;margin-top:10px">`
+    };
+    function showTab(tab){
+      r.querySelectorAll('.settings-side-item').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+      pane.innerHTML=panes[tab];
+      if(tab==='wp') bindWallpapers();
+      if(tab==='about') pane.querySelector('#settings-open-about').onclick=()=>openApp('about');
+      if(tab==='sound'){
+        const slider=pane.querySelector('#settings-vol');
+        slider.oninput=()=>{
+          uiGain=slider.value/100;
+          pane.querySelector('#settings-vol-label').textContent=slider.value+'%';
+          const cc=$('#cc-sound-slider');
+          if(cc){ cc.value=slider.value; $('#cc-sound-val').textContent=slider.value+'%'; }
+        };
+      }
+    }
+    function bindWallpapers(){
+      pane.querySelectorAll('.wp-thumb').forEach(b=>{
+        const current=[...$('#wallpaper').classList].find(c=>c.startsWith('wp-space-'));
+        b.classList.toggle('active', b.dataset.cls===current);
+        b.onclick=()=>{
+          const wp=$('#wallpaper');
+          wallpapers.forEach(([,c])=>wp.classList.remove(c));
+          wp.classList.add(b.dataset.cls);
+          pane.querySelectorAll('.wp-thumb').forEach(x=>x.classList.toggle('active', x===b));
+          toast(`Wallpaper set to <b>${b.textContent.trim()}</b>`);
+        };
+      });
+    }
+    r.querySelectorAll('.settings-side-item').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+    bindWallpapers();
+    return r;
+  }
+};
+
+/* 8. Music */
+const MUSIC={
+  playing:false, track:0, timer:null,
+  tracks:[
+    {title:'Interstellar Beats', artist:'Devil1716', chords:[[174.61,220,261.63,329.63],[164.81,196,246.94,293.66],[146.83,174.61,220,261.63],[130.81,164.81,196,246.94]]},
+    {title:'Mesh Night', artist:'Deep Space', chords:[[110,164.81,220,329.63],[98,146.83,196,293.66],[87.31,130.81,174.61,261.63]]},
+    {title:'Terminal Hum', artist:'DaRkAngeL', chords:[[130.81,196,261.63],[146.83,220,293.66],[164.81,246.94,329.63]]}
+  ]
+};
+let musicChord=0;
+function playMusicChord(){
+  if(!MUSIC.playing) return;
+  const track=MUSIC.tracks[MUSIC.track];
+  try{
+    const ctx=getAudio(), now=ctx.currentTime, chord=track.chords[musicChord%track.chords.length];
+    musicChord++;
+    chord.forEach((freq,idx)=>{
+      const osc=ctx.createOscillator(), gain=ctx.createGain(), filter=ctx.createBiquadFilter();
+      osc.type='sine'; osc.frequency.setValueAtTime(freq, now);
+      filter.type='lowpass'; filter.frequency.setValueAtTime(900, now);
+      const level=Math.max(0.0001, (0.028*uiGain)/(idx*0.4+1));
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(level, now+0.28);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now+2.6);
+      osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+      osc.start(now); osc.stop(now+2.7);
+    });
+  }catch(e){}
+  MUSIC.timer=setTimeout(playMusicChord, 2500);
+}
+function syncMusicUI(){
+  const track=MUSIC.tracks[MUSIC.track];
+  document.querySelectorAll('[data-music-title]').forEach(el=>{ el.textContent=track.title; });
+  document.querySelectorAll('[data-music-artist]').forEach(el=>{ el.textContent=track.artist; });
+  const cc=$('#cc-music-btn');
+  if(cc) cc.textContent=MUSIC.playing?'⏸':'▶';
+  document.querySelectorAll('.music-eq').forEach(el=>el.classList.toggle('paused', !MUSIC.playing));
+  document.querySelectorAll('[data-music-toggle]').forEach(el=>{ el.textContent=MUSIC.playing?'Pause':'Play'; });
+  document.querySelectorAll('.music-list button').forEach(b=>b.classList.toggle('on', Number(b.dataset.track)===MUSIC.track));
+}
+function toggleMusic(force){
+  MUSIC.playing=(force!==undefined)?force:!MUSIC.playing;
+  clearTimeout(MUSIC.timer);
+  if(MUSIC.playing) playMusicChord();
+  syncMusicUI();
+}
+function setMusicTrack(i){
+  MUSIC.track=(i+MUSIC.tracks.length)%MUSIC.tracks.length;
+  musicChord=0;
+  clearTimeout(MUSIC.timer);
+  if(MUSIC.playing) playMusicChord();
+  syncMusicUI();
+}
+APPS.music={
+  appName:'Music',title:'Music',icon:ICONS.music,w:360,h:520,
+  build:()=>{
+    const r=document.createElement('div'); r.className='music-app';
+    r.innerHTML=`
+      <div class="music-art" style="background:radial-gradient(circle at 30% 30%,#38bdf8,#1e1b4b 55%,#0f172a);display:grid;place-items:center;color:#fff;font-size:42px">♫</div>
+      <h3 data-music-title style="font-size:16px;font-weight:700">${esc(MUSIC.tracks[MUSIC.track].title)}</h3>
+      <p data-music-artist style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px">${esc(MUSIC.tracks[MUSIC.track].artist)}</p>
+      <div class="music-eq ${MUSIC.playing?'':'paused'}"><i></i><i></i><i></i><i></i></div>
+      <div class="music-controls">
+        <button class="ghost" data-step="-1">Prev</button>
+        <button data-music-toggle>${MUSIC.playing?'Pause':'Play'}</button>
+        <button class="ghost" data-step="1">Next</button>
+      </div>
+      <div class="music-list">
+        ${MUSIC.tracks.map((t,i)=>`<button data-track="${i}" class="${i===MUSIC.track?'on':''}">${esc(t.title)}</button>`).join('')}
+      </div>
+    `;
+    r.querySelector('[data-music-toggle]').onclick=()=>toggleMusic();
+    r.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>setMusicTrack(MUSIC.track+Number(b.dataset.step)));
+    r.querySelectorAll('[data-track]').forEach(b=>b.onclick=()=>{ setMusicTrack(Number(b.dataset.track)); if(!MUSIC.playing) toggleMusic(true); });
+    return r;
+  }
+};
+
+/* Mail */
+APPS.mail={
+  appName:'Mail',title:'Mail',icon:ICONS.mail,w:760,h:480,
+  build:()=>{
+    const r=document.createElement('div'); r.className='mail-app';
+    const inbox=[
+      {from:'GitHub', subject:'Stars on bluetooth-manet-android', preview:'Two new stars this week.', body:'bluetooth-manet-android picked up new stars. The RFCOMM relay and TTL forwarding notes are the ones people open first.'},
+      {from:'Studio', subject:'Retro computer is the hero model', preview:'Tripo PBR model is in the studio.', body:'The desk, chair, and shelf are out of the 3D view. The Tripo computer is the only model, with orbit, zoom, and a click-through into DevilOS.'},
+      {from:CONFIG.name, subject:'Open for collaboration', preview:CONFIG.email, body:`Write to ${CONFIG.email} about systems work, mesh networking, or the studio.`}
+    ];
+    r.innerHTML=`
+      <div class="mail-list">${inbox.map((m,i)=>`<button class="mail-item ${i===0?'active':''}" data-i="${i}"><b>${esc(m.from)}</b><em>${esc(m.subject)}</em><span>${esc(m.preview)}</span></button>`).join('')}</div>
+      <div class="mail-read"></div>
+    `;
+    const read=r.querySelector('.mail-read');
+    function openMsg(i){
+      r.querySelectorAll('.mail-item').forEach(b=>b.classList.toggle('active', Number(b.dataset.i)===i));
+      const m=inbox[i];
+      read.innerHTML=`<div style="font-size:12px;color:#7dd3fc">${esc(m.from)}</div><h3>${esc(m.subject)}</h3><p>${esc(m.body)}</p><button class="mail-compose">Reply by email</button>`;
+      read.querySelector('.mail-compose').onclick=()=>window.open('mailto:'+CONFIG.email+'?subject='+encodeURIComponent('Re: '+m.subject),'_blank');
+    }
+    r.querySelectorAll('.mail-item').forEach(b=>b.onclick=()=>openMsg(Number(b.dataset.i)));
+    openMsg(0);
+    return r;
+  }
+};
+
+/* Calendar */
+APPS.calendar={
+  appName:'Calendar',title:'Calendar',icon:ICONS.calendar,w:640,h:480,
+  build:()=>{
+    const r=document.createElement('div'); r.className='cal-app';
+    const now=new Date();
+    const y=now.getFullYear(), m=now.getMonth();
+    const first=new Date(y,m,1).getDay();
+    const days=new Date(y,m+1,0).getDate();
+    const events={3:'Mesh relay test', 12:'Portfolio review', 21:'TDMS notes'};
+    if(!events[now.getDate()]) events[now.getDate()]='Today';
+    const label=now.toLocaleString('en-US',{month:'long', year:'numeric'});
+    let cells='';
+    for(let i=0;i<first;i++) cells+=`<div class="cal-cell out"></div>`;
+    for(let d=1;d<=days;d++){
+      const ev=events[d];
+      cells+=`<div class="cal-cell ${d===now.getDate()?'today':''}">${d}${ev?`<small>${esc(ev)}</small>`:''}</div>`;
+    }
+    r.innerHTML=`<div class="cal-head"><h3 style="font-size:20px">${label}</h3><span style="font-size:12px;color:rgba(255,255,255,.55)">${esc(CONFIG.handle)}</span></div>
+      <div class="cal-grid">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('')}${cells}</div>`;
+    return r;
+  }
+};
+
+/* Photos */
+APPS.photos={
+  appName:'Photos',title:'Photos',icon:ICONS.photos,w:820,h:520,
+  build:()=>{
+    const shots=[
+      ['retro_computer_closeup.png','Retro computer'],
+      ['website_3d_preview.png','3D studio'],
+      ['website_boot_preview.png','Boot sequence'],
+      ['website_site_preview.png','Portfolio page'],
+      ['battlestation_preview.png','Earlier workstation study'],
+      ['logo.png?v=2','DevilOS mark']
+    ];
+    const r=document.createElement('div'); r.className='photo-app';
+    r.innerHTML=`
+      <figure class="photo-stage"><img alt="" id="photo-full"><figcaption id="photo-cap"></figcaption></figure>
+      <div class="photo-strip">${shots.map(([src,cap],i)=>`<button data-i="${i}" class="${i===0?'on':''}"><img src="${src}" alt="${esc(cap)}"></button>`).join('')}</div>
+    `;
+    const full=r.querySelector('#photo-full'), cap=r.querySelector('#photo-cap');
+    function pick(i){
+      full.src=shots[i][0]; cap.textContent=shots[i][1];
+      r.querySelectorAll('.photo-strip button').forEach(b=>b.classList.toggle('on', Number(b.dataset.i)===i));
+    }
+    r.querySelectorAll('.photo-strip button').forEach(b=>b.onclick=()=>pick(Number(b.dataset.i)));
+    pick(0);
+    return r;
+  }
+};
+
+/* Workspace map */
+APPS.maps={
+  appName:'Maps',title:'Workspace map',icon:ICONS.maps,w:720,h:460,
+  build:()=>{
+    const r=document.createElement('div'); r.className='map-app';
+    const nodes=[
+      ['28%','42%','3D Studio','Retro computer','3d'],
+      ['58%','30%','DevilOS','This desktop','os'],
+      ['72%','62%','GitHub','Devil1716','github'],
+      ['40%','70%','Portfolio','Selected work','site'],
+      ['18%','68%','Mail','Collaboration','mail']
+    ];
+    r.innerHTML=nodes.map(([x,y,title,sub,go])=>`<button class="map-node" style="left:${x};top:${y}" data-go="${go}"><b>${title}</b><span>${sub}</span></button>`).join('');
+    r.querySelectorAll('.map-node').forEach(b=>b.onclick=()=>{
+      const go=b.dataset.go;
+      if(go==='github') window.open(CONFIG.github,'_blank','noopener');
+      else if(go==='3d'||go==='site'||go==='os') goMode(go);
+      else openApp(go);
+    });
+    return r;
+  }
+};
+
+/* App Store */
+APPS.appstore={
+  appName:'App Store',title:'DevilOS Apps',icon:ICONS.appstore,w:760,h:500,
+  build:()=>{
+    const apps=[
+      ['finder','Files',ICONS.finder,'Projects, desktop, and repositories.'],
+      ['terminal','Terminal',ICONS.terminal,'neofetch, repos, skills, and help.'],
+      ['code','VS Code',ICONS.vscode,'Mesh relay, Cognyx, TDMS, and DSU sources.'],
+      ['safari','Safari',ICONS.safari,'Portfolio pages and GitHub.'],
+      ['notes','Notes',ICONS.notes,'Editable architecture notes.'],
+      ['mail','Mail',ICONS.mail,'A short inbox and a reply link.'],
+      ['calendar','Calendar',ICONS.calendar,'This month, with a few marks.'],
+      ['photos','Photos',ICONS.photos,'Studio and site stills.'],
+      ['maps','Maps',ICONS.maps,'Jump between studio, OS, and GitHub.'],
+      ['games','Games',ICONS.games,'Snake, breakout, and memory. Finished and playable.'],
+      ['music','Music',ICONS.music,'Three focus tracks.'],
+      ['settings','Settings',ICONS.settings,'Wallpaper, sound, and about.']
+    ];
+    const r=document.createElement('div'); r.className='store-app';
+    r.innerHTML=`<h3 style="font-size:20px">Installed</h3><p style="font-size:12px;color:rgba(255,255,255,.55);margin-top:4px">Everything in DevilOS is already on this machine.</p>
+      <div class="store-grid">${apps.map(([id,name,icon,blurb])=>`
+        <article class="store-card"><img src="${icon}" alt=""><b>${name}</b><p>${blurb}</p><button data-app="${id}">Open</button></article>`).join('')}</div>`;
+    r.querySelectorAll('[data-app]').forEach(b=>b.onclick=()=>openApp(b.dataset.app));
+    return r;
+  }
+};
+
+/* Games */
+APPS.games={
+  appName:'Games',title:'DevilOS Games',icon:ICONS.games,w:760,h:520,
+  build:()=>{
+    const r=document.createElement('div'); r.className='games-app';
+    r.innerHTML=`
+      <aside class="games-side">
+        <button data-game="snake" class="on">Snake</button>
+        <button data-game="breakout">Breakout</button>
+        <button data-game="memory">Memory</button>
+        <button data-game="restart">Restart</button>
+        <p class="games-meta" id="game-meta">Score 0</p>
+        <p class="games-help" id="game-help"></p>
+      </aside>
+      <div class="games-stage" id="game-stage"></div>
+    `;
+    const stage=r.querySelector('#game-stage');
+    const meta=r.querySelector('#game-meta');
+    const help=r.querySelector('#game-help');
+    let token=0, current='snake';
+    const keys={};
+    function alive(t){ return t===token && r.isConnected; }
+    function setMeta(text){ meta.textContent=text; }
+    function setHelp(text){ help.textContent=text; }
+    function setBanner(text){
+      let el=stage.querySelector('.game-banner');
+      if(!el){ el=document.createElement('div'); el.className='game-banner'; stage.append(el); }
+      el.textContent=text;
+    }
+    function mount(name){
+      current=name;
+      token++;
+      const t=token;
+      stage.innerHTML='';
+      r.querySelectorAll('[data-game]').forEach(b=>b.classList.toggle('on', b.dataset.game===name));
+      if(name==='snake') runSnake(t);
+      else if(name==='breakout') runBreakout(t);
+      else runMemory(t);
+    }
+    function runSnake(t){
+      const canvas=document.createElement('canvas');
+      canvas.width=400; canvas.height=400;
+      stage.append(canvas);
+      const ctx=canvas.getContext('2d');
+      const N=20, cell=20;
+      let snake=[{x:8,y:10},{x:7,y:10},{x:6,y:10}];
+      let dir={x:1,y:0}, queued={x:1,y:0};
+      let score=0, over=false, acc=0, last=performance.now();
+      const occupied=()=>new Set(snake.map(s=>s.x+','+s.y));
+      function spawn(){
+        const used=occupied();
+        const open=[];
+        for(let y=0;y<N;y++) for(let x=0;x<N;x++) if(!used.has(x+','+y)) open.push({x,y});
+        return open[Math.floor(Math.random()*open.length)] || {x:0,y:0};
+      }
+      let food=spawn();
+      function draw(){
+        ctx.fillStyle='#07080c'; ctx.fillRect(0,0,400,400);
+        ctx.strokeStyle='rgba(56,189,248,.22)';
+        ctx.lineWidth=1;
+        ctx.strokeRect(10.5,10.5,379,379);
+        ctx.strokeStyle='#7dd3fc';
+        ctx.lineWidth=5;
+        ctx.strokeRect(2.5,2.5,395,395);
+        ctx.strokeStyle='rgba(248,250,252,.55)';
+        ctx.lineWidth=2;
+        const corners=[[4,4,1,1],[392,4,-1,1],[4,392,1,-1],[392,392,-1,-1]];
+        corners.forEach(([x,y,sx,sy])=>{
+          ctx.beginPath();
+          ctx.moveTo(x, y+sy*16); ctx.lineTo(x, y); ctx.lineTo(x+sx*16, y);
+          ctx.stroke();
+        });
+        ctx.fillStyle='#22c55e';
+        ctx.fillRect(food.x*cell+3, food.y*cell+3, cell-6, cell-6);
+        snake.forEach((s,i)=>{
+          ctx.fillStyle=i===0?'#f8fafc':'#38bdf8';
+          ctx.fillRect(s.x*cell+1, s.y*cell+1, cell-2, cell-2);
+        });
+      }
+      function step(){
+        dir=queued;
+        const head={x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+        if(head.x<0||head.y<0||head.x>=N||head.y>=N||snake.some(s=>s.x===head.x&&s.y===head.y)){
+          over=true;
+          const best=Math.max(score, Number(localStorage.getItem('devil-snake-best')||0));
+          localStorage.setItem('devil-snake-best', String(best));
+          setMeta(`Score ${score} · Best ${best}`);
+          setBanner('Crashed. Press R or Restart.');
+          return;
+        }
+        snake.unshift(head);
+        if(head.x===food.x && head.y===food.y){ score++; food=spawn(); setMeta(`Score ${score}`); }
+        else snake.pop();
+      }
+      keys.onKey=e=>{
+        const k=e.key;
+        if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d','W','A','S','D','r','R'].includes(k)) e.preventDefault();
+        if(k==='r'||k==='R'){ mount('snake'); return; }
+        if(over) return;
+        const map={ArrowUp:{x:0,y:-1},w:{x:0,y:-1},W:{x:0,y:-1},ArrowDown:{x:0,y:1},s:{x:0,y:1},S:{x:0,y:1},ArrowLeft:{x:-1,y:0},a:{x:-1,y:0},A:{x:-1,y:0},ArrowRight:{x:1,y:0},d:{x:1,y:0},D:{x:1,y:0}};
+        const next=map[k];
+        if(!next || (next.x===-dir.x && next.y===-dir.y)) return;
+        queued=next;
+      };
+      setHelp('Arrows or WASD move the snake. The glowing frame is the wall. Eat the green cells. R restarts.');
+      setMeta('Score 0');
+      (function loop(now){
+        if(!alive(t)) return;
+        if(!over){
+          acc+=now-last;
+          if(acc>130){ acc=0; step(); }
+        }
+        last=now;
+        draw();
+        requestAnimationFrame(loop);
+      })(performance.now());
+    }
+    function runBreakout(t){
+      const canvas=document.createElement('canvas');
+      canvas.width=420; canvas.height=320;
+      stage.append(canvas);
+      const ctx=canvas.getContext('2d');
+      const cols=8, rows=5, colors=['#38bdf8','#818cf8','#f472b6','#34d399','#fbbf24'];
+      const bricks=[];
+      for(let y=0;y<rows;y++) for(let x=0;x<cols;x++) bricks.push({x,y,alive:true});
+      const pw=74, ph=10;
+      let paddle=173, launched=false, lives=3, score=0, over=false;
+      let ball={x:210,y:270,vx:2.3,vy:-3};
+      function park(){ ball.x=paddle+pw/2; ball.y=278; launched=false; }
+      park();
+      function aim(clientX){
+        const rect=canvas.getBoundingClientRect();
+        const x=(clientX-rect.left)*(canvas.width/rect.width);
+        paddle=Math.max(0, Math.min(canvas.width-pw, x-pw/2));
+        if(!launched) ball.x=paddle+pw/2;
+      }
+      canvas.addEventListener('pointermove', e=>aim(e.clientX));
+      canvas.addEventListener('pointerdown', ()=>{ launched=true; });
+      function tick(){
+        if(!launched||over) return;
+        ball.x+=ball.vx; ball.y+=ball.vy;
+        if(ball.x<8||ball.x>canvas.width-8) ball.vx*=-1;
+        if(ball.y<8) ball.vy=Math.abs(ball.vy);
+        if(ball.vy>0 && ball.y>286 && ball.y<304 && ball.x>paddle && ball.x<paddle+pw){
+          ball.vy=-Math.abs(ball.vy);
+          ball.vx=(ball.x-(paddle+pw/2))*0.09;
+        }
+        const bw=(canvas.width-16)/cols, bh=16;
+        bricks.forEach(b=>{
+          if(!b.alive) return;
+          const bx=8+b.x*bw, by=14+b.y*(bh+6);
+          if(ball.x>bx && ball.x<bx+bw-4 && ball.y>by && ball.y<by+bh){
+            b.alive=false; ball.vy*=-1; score+=10;
+          }
+        });
+        if(bricks.every(b=>!b.alive)){
+          over=true;
+          const best=Math.max(score, Number(localStorage.getItem('devil-break-best')||0));
+          localStorage.setItem('devil-break-best', String(best));
+          setMeta(`Score ${score} · Best ${best}`);
+          setBanner('Board cleared. Press R to play again.');
+        } else if(ball.y>canvas.height+8){
+          lives--;
+          if(lives<=0){ over=true; setBanner('Out of lives. Press R to restart.'); }
+          else park();
+        }
+        if(!over) setMeta(`Score ${score} · Lives ${lives}`);
+      }
+      function draw(){
+        ctx.fillStyle='#07080c'; ctx.fillRect(0,0,canvas.width,canvas.height);
+        bricks.forEach(b=>{
+          if(!b.alive) return;
+          const bw=(canvas.width-16)/cols, bh=16;
+          ctx.fillStyle=colors[b.y];
+          ctx.fillRect(8+b.x*bw, 14+b.y*(bh+6), bw-4, bh);
+        });
+        ctx.fillStyle='#f8fafc';
+        ctx.fillRect(paddle, 292, pw, ph);
+        ctx.beginPath(); ctx.arc(ball.x, ball.y, 6, 0, Math.PI*2); ctx.fill();
+      }
+      keys.onKey=e=>{
+        if(['ArrowLeft','ArrowRight',' ','r','R'].includes(e.key)) e.preventDefault();
+        if(e.key==='r'||e.key==='R'){ mount('breakout'); return; }
+        if(e.key==='ArrowLeft') aimFromPad(-22);
+        if(e.key==='ArrowRight') aimFromPad(22);
+        if(e.key===' ') launched=true;
+      };
+      function aimFromPad(dx){
+        paddle=Math.max(0, Math.min(canvas.width-pw, paddle+dx));
+        if(!launched) ball.x=paddle+pw/2;
+      }
+      setHelp('Move the paddle with the pointer or arrow keys. Click or press space to launch the ball.');
+      setMeta('Score 0 · Lives 3');
+      (function loop(){
+        if(!alive(t)) return;
+        tick();
+        if(!over) draw();
+        requestAnimationFrame(loop);
+      })();
+    }
+    function runMemory(t){
+      const faces=['△','◇','○','□','✦','✚','☼','⚑'];
+      const deck=faces.concat(faces).map(f=>({f, open:false, done:false})).sort(()=>Math.random()-0.5);
+      const grid=document.createElement('div');
+      grid.className='mem-grid';
+      stage.append(grid);
+      let lock=false, first=null, moves=0, matched=0;
+      deck.forEach(card=>{
+        const b=document.createElement('button');
+        b.className='mem-card';
+        b.textContent=card.f;
+        b.onclick=()=>{
+          if(!alive(t) || lock || card.open || card.done) return;
+          card.open=true; b.classList.add('up');
+          if(!first){ first={card,b}; return; }
+          moves++;
+          if(first.card.f===card.f){
+            card.done=first.card.done=true;
+            b.classList.add('done'); first.b.classList.add('done');
+            matched++; first=null;
+            if(matched===faces.length) setBanner(`All pairs found in ${moves} moves.`);
+          }else{
+            lock=true;
+            const prev=first; first=null;
+            setTimeout(()=>{
+              if(!alive(t)) return;
+              card.open=prev.card.open=false;
+              b.classList.remove('up'); prev.b.classList.remove('up');
+              lock=false;
+            }, 620);
+          }
+          setMeta(`${moves} move${moves===1?'':'s'}`);
+        };
+        grid.append(b);
+      });
+      keys.onKey=e=>{ if(e.key==='r'||e.key==='R'){ e.preventDefault(); mount('memory'); } };
+      setHelp('Flip two cards and match all eight pairs. R deals a new board.');
+      setMeta('0 moves');
+    }
+    r.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{
+      const name=b.dataset.game;
+      mount(name==='restart'?current:name);
+    });
+    addEventListener('keydown', function onKey(e){
+      if(!r.isConnected){ removeEventListener('keydown', onKey); return; }
+      const win=r.closest('.win');
+      if(!win || !win.classList.contains('focused')) return;
+      if(e.target && (e.target.tagName==='INPUT' || e.target.tagName==='TEXTAREA' || e.target.isContentEditable)) return;
+      if(keys.onKey) keys.onKey(e);
+    });
+    mount('snake');
+    return r;
+  }
+};
+
+/* 9. About DevilOS */
+APPS.about={
+  appName:'About DevilOS',title:'About DevilOS Trinity',icon:'logo.png?v=2',w:560,h:420,
+  build:()=>{
+    const r=document.createElement('div');
+    r.style.cssText='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;text-align:center;color:#fff;background:linear-gradient(135deg,#120e1a,#0a0812)';
+    r.innerHTML=`
+      <div style="width:200px;height:200px;margin-bottom:8px;display:grid;place-items:center"><img src="logo.png?v=2" style="width:100%;height:100%;object-fit:contain" alt=""></div>
+      <h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">Devil<span style="color:var(--devil-red)">OS</span> Trinity</h2>
+      <p style="font-size:12.5px;color:var(--cyan);margin-top:2px;font-weight:600">The Convergence of Windows, macOS & Linux</p>
+      <div style="margin-top:16px;font-size:12px;line-height:1.8;color:rgba(255,255,255,.85);text-align:left;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:12px 20px;border-radius:12px">
+        <div><b>Version:</b> DevilOS Trinity 4.0 (Build 26.8.2026-Space)</div>
+        <div><b>Kernel:</b> Linux 6.10-devil / XNU Darwin 24.1 Hybrid</div>
+        <div><b>Windowing:</b> Hyprland-Aqua Compositor with Windows Snap Assist</div>
+        <div><b>Developer:</b> ${CONFIG.name} (${CONFIG.handle})</div>
+      </div>
+    `;
+    return r;
+  }
+};
+
+/* 10. Trash */
+APPS.trash={
+  appName:'Trash',title:'Trash',icon:'https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png',w:400,h:280,
+  build:()=>{
+    const r=document.createElement('div');
+    r.style.cssText='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,.6);font-size:13px;gap:8px';
+    r.innerHTML=`<svg style="width:48px;height:48px" viewBox="0 0 64 64"><rect x="14" y="16" width="36" height="42" rx="6" fill="#CBD5E1" stroke="#94A3B8" stroke-width="2"/><line x1="22" y1="24" x2="22" y2="48" stroke="#94A3B8" stroke-width="2.5"/><line x1="32" y1="24" x2="32" y2="48" stroke="#94A3B8" stroke-width="2.5"/><line x1="42" y1="24" x2="42" y2="48" stroke="#94A3B8" stroke-width="2.5"/><rect x="10" y="10" width="44" height="6" rx="3" fill="#E2E8F0"/></svg><b>Trash is empty</b><p style="font-size:11.5px">Clean developer workspace</p>`;
+    return r;
+  }
+};
+
+// Start the retro-computer studio directly
+init3D();
+setPill('3d');
+</script>
+</body>
+</html>

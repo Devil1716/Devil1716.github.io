@@ -1,0 +1,11 @@
+{
+  "name": "shard-portfolio",
+  "private": true,
+  "description": "Shard portfolio: the Pitts assistant, desktop OS, mobile OS and the 3D studio. No build step.",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/",
+    "e2e": "node tests/e2e.cjs"
+  }
+}

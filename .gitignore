@@ -9,3 +9,6 @@ battlestation_preview_draft.png
 retro_computer_clean.glb
 build_battlestation.py
 render_cinematic_loop.py
+node_modules/
+shots/
+.env

@@ -28,7 +28,7 @@
     cube:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>',
     book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg>'
   };
-  const MARK = '<svg class="sb-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#2c2c35"/><g transform="translate(6.4 6.4) scale(.3)"><path d="M13 16 34 32M13 32h21M13 48l21-16M40 32h12" stroke="#f4f4f6" stroke-width="4.5" stroke-linecap="round"/><circle cx="13" cy="16" r="5" fill="#f4f4f6"/><circle cx="13" cy="32" r="5" fill="#f4f4f6"/><circle cx="13" cy="48" r="5" fill="#f4f4f6"/><circle cx="54" cy="32" r="5" fill="#f4f4f6"/><circle cx="36" cy="32" r="9" fill="#f0714f"/></g></svg>';
+  const MARK = '<svg class="sb-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#2a2520"/><g transform="translate(6.4 6.4) scale(.3)"><path d="M13 16 34 32M13 32h21M13 48l21-16M40 32h12" stroke="#f4f4f6" stroke-width="4.5" stroke-linecap="round"/><circle cx="13" cy="16" r="5" fill="#f4f4f6"/><circle cx="13" cy="32" r="5" fill="#f4f4f6"/><circle cx="13" cy="48" r="5" fill="#f4f4f6"/><circle cx="54" cy="32" r="5" fill="#f4f4f6"/><circle cx="36" cy="32" r="9" fill="#f0714f"/></g></svg>';
 
   /* ---------- theme ---------- */
   const Theme = {
@@ -161,7 +161,7 @@
 
     function welcome(){
       feed.innerHTML = '';
-      const w = h(`<section class="sb-welcome">${MARK}<h2>Hi, I'm ${NAME}. Ask me anything about <em>Sharan</em>.</h2>
+      const w = h(`<section class="sb-welcome">${MARK}<p class="sb-eyebrow">${NAME} · Sharan's assistant</p><h2>Hi, I'm ${NAME}. Ask me anything about <em>Sharan</em>.</h2>
         <p>Sharan S is a B.Tech AI/ML student at Amity University Bengaluru who builds agents, Android tools and backend systems. I know his projects, stack and open-source work.</p>${Core.BRAND.assistantWhy?`
         <p class="sb-why">${Core.esc(Core.BRAND.assistantWhy)}</p>`:''}
         <div class="sb-chips"></div></section>`);

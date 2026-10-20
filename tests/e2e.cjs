@@ -59,24 +59,24 @@ const fails = []; const ok = (c, m) => { console.log((c?'PASS ':'FAIL ')+m); if(
         await page.waitForSelector('#chat-home.on', { timeout:5000 });
         ok(true, `${tag}: resize back restores the chat`);
       } else {
-        await page.waitForSelector('#mobile-os.on .m-home');
+        await page.waitForSelector('#mobile-os.on .ou-home');
         await page.waitForTimeout(300);
         await page.screenshot({ path:`${OUT}/${tag}-1-home.png` });
-        await page.locator('#mobile-os .m-home [data-app="projects"]').click();
-        await page.waitForSelector('#mobile-os .m-win.on .m-card');
+        await page.locator('#mobile-os .ou-home .ou-app[data-app="projects"]').click();
+        await page.waitForSelector('#mobile-os .ou-win.on .ou-row');
         await page.waitForTimeout(400);
         await page.screenshot({ path:`${OUT}/${tag}-2-projects-app.png` });
-        await page.locator('#mobile-os .m-back').click();
+        await page.locator('#mobile-os [data-back]').click();
         await page.waitForTimeout(400);
-        ok(!(await page.locator('#mobile-os .m-win.on').count()), `${tag}: back closes the app`);
+        ok(!(await page.locator('#mobile-os .ou-win.on').count()), `${tag}: back closes the app`);
         // swipe up opens the app drawer
-        await page.evaluate(() => { const el=document.querySelector('#mobile-os'); const t=(type,y)=>el.dispatchEvent(new TouchEvent(type,{bubbles:true,touches:type==='touchend'?[]:[new Touch({identifier:1,target:el,clientX:200,clientY:y})],changedTouches:[new Touch({identifier:1,target:el,clientX:200,clientY:y})]})); t('touchstart',600); t('touchend',380); });
+        await page.evaluate(() => { const el=document.querySelector('#mobile-os'); const t=(type,y)=>el.dispatchEvent(new TouchEvent(type,{bubbles:true,touches:type==='touchend'?[]:[new Touch({identifier:1,target:el,clientX:200,clientY:y})],changedTouches:[new Touch({identifier:1,target:el,clientX:200,clientY:y})]})); t('touchstart',500); t('touchend',280); });
         await page.waitForTimeout(450);
-        ok(await page.locator('#mobile-os .m-drawer.on').count() === 1, `${tag}: swipe up opens app drawer`);
+        ok(await page.locator('#mobile-os .ou-drawer.on').count() === 1, `${tag}: swipe up opens app drawer`);
         await page.screenshot({ path:`${OUT}/${tag}-3-app-drawer.png` });
         await page.keyboard.press('Escape'); await page.waitForTimeout(400);
-        await page.locator('#mobile-os .m-search').click();
-        await page.waitForSelector('#mobile-os .m-win.on .sb-welcome');
+        await page.locator('#mobile-os .ou-ask').click();
+        await page.waitForSelector('#mobile-os .ou-win.on .sb-welcome');
         await page.waitForTimeout(400);
         await page.waitForTimeout(400); await page.screenshot({ path:`${OUT}/${tag}-4-assistant-empty.png` });
         await page.locator('#mobile-os .sb-chip').nth(1).click();
@@ -84,8 +84,8 @@ const fails = []; const ok = (c, m) => { console.log((c?'PASS ':'FAIL ')+m); if(
         await page.waitForTimeout(300);
         await page.screenshot({ path:`${OUT}/${tag}-5-assistant-answer.png` });
         ok(true, `${tag}: assistant answers on mobile`);
-        const small = await page.evaluate(() => [...document.querySelectorAll('#mobile-os .m-win.on button, #mobile-os .m-home button')].filter(b=>{const r=b.getBoundingClientRect(); return r.width>0 && (r.height<44||r.width<44);}).map(b=>b.getAttribute('aria-label')||b.textContent.trim()).slice(0,5));
-        ok(small.length===0, `${tag}: touch targets >= 44px ${small.join('|')}`);
+        const small = await page.evaluate(() => [...document.querySelectorAll('#mobile-os .ou-win.on button, #mobile-os .ou-home button')].filter(b=>{const r=b.getBoundingClientRect(); return !b.closest("[inert]") && r.width>0 && (r.height<47.5||r.width<47.5);}).map(b=>b.getAttribute('aria-label')||b.textContent.trim()).slice(0,5));
+        ok(small.length===0, `${tag}: touch targets >= 48px ${small.join('|')}`);
       }
       ok(errors.length===0, `${tag}: no page errors ${errors.join(' | ')}`);
       await ctx.close();

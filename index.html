@@ -18,7 +18,9 @@
 <script src="assistant/mobile-os.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Gochi+Hand&family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Gochi+Hand&family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Gochi+Hand&family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Gochi+Hand&family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <script type="importmap">
 {
   "imports": {
@@ -1018,7 +1020,7 @@ body.m-mobile .mode-pill{display:none!important}
   <!-- Initial Boot Card -->
   <div class="boot-box" id="boot-init-card">
     <div class="boot-logo">
-      <img src="logo.png?v=2" alt="DevilOS">
+      <img loading="lazy" decoding="async" src="logo.png?v=2" alt="DevilOS">
     </div>
     <p class="px">DEVIL<span>OS</span> TRINITY</p>
     <p class="px small">HYBRID WORKSTATION · WINDOWS + MAC + LINUX</p>
@@ -1032,7 +1034,7 @@ body.m-mobile .mode-pill{display:none!important}
   <!-- Live Cinematic Boot Loader -->
   <div class="boot-loader-container" id="boot-loader">
     <div class="boot-loader-logo">
-      <img src="logo.png?v=2" alt="DevilOS">
+      <img loading="lazy" decoding="async" src="logo.png?v=2" alt="DevilOS">
     </div>
     <div class="boot-progress-track">
       <div class="boot-progress-bar" id="boot-progress-bar"></div>
@@ -1070,7 +1072,7 @@ body.m-mobile .mode-pill{display:none!important}
 <div id="mobile-os" aria-hidden="true"></div>
 
 <!-- ============ SKETCHBOOK PORTFOLIO ============ -->
-<div id="site" class="on">
+<div id="site">
   <div class="s-scroll" id="s-scroll">
     <div class="s-stage" id="hero">
       <div class="s-flip-track" id="s-flip-track">
@@ -1102,7 +1104,7 @@ body.m-mobile .mode-pill{display:none!important}
                     <p class="s-meta">Bengaluru · IST</p>
                   </div>
                   <div class="s-note-art">
-                    <img src="sketch-scene.jpg" alt="Sketch of Sharan at a laptop among plants">
+                    <img loading="lazy" decoding="async" src="sketch-scene.jpg" alt="Sketch of Sharan at a laptop among plants">
                   </div>
                 </div>
                 <span class="s-note-tab">a few things I actually believe</span>
@@ -1172,7 +1174,7 @@ body.m-mobile .mode-pill{display:none!important}
       </button>
       <!-- Devil OS Start Hub Icon -->
       <div class="tb-item os-logo-btn" id="btn-start-menu" title="DevilOS Trinity Hub (Win/Super Key)">
-        <img src="logo.png?v=2" alt="DevilOS">
+        <img loading="lazy" decoding="async" src="logo.png?v=2" alt="DevilOS">
         <span style="font-weight:700;letter-spacing:-.02em">Devil<span style="color:var(--devil-red)">OS</span></span>
       </div>
       <div class="tb-item tb-app-name" id="active-app-name">Finder</div>
@@ -1214,7 +1216,7 @@ body.m-mobile .mode-pill{display:none!important}
   <div id="start-menu">
     <div class="sm-user-banner">
       <div class="sm-user-avatar">
-        <img src="logo.png?v=2" alt="Devil1716">
+        <img loading="lazy" decoding="async" src="logo.png?v=2" alt="Devil1716">
       </div>
       <div class="sm-user-info">
         <b>Sharan S (@Devil1716)</b>
@@ -1225,20 +1227,20 @@ body.m-mobile .mode-pill{display:none!important}
     <div>
       <div class="sm-sec-title">Pinned Applications</div>
       <div class="sm-grid">
-        <button class="sm-app-btn" data-app="terminal"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png" alt=""><span>Terminal</span></button>
-        <button class="sm-app-btn" data-app="code"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png" alt=""><span>VS Code</span></button>
-        <button class="sm-app-btn" data-app="finder"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt=""><span>Files</span></button>
-        <button class="sm-app-btn" data-app="safari"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/safari/256.png" alt=""><span>Browser</span></button>
-        <button class="sm-app-btn" data-app="notes"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt=""><span>Notes</span></button>
-        <button class="sm-app-btn" data-app="calculator"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png" alt=""><span>Calculator</span></button>
-        <button class="sm-app-btn" data-app="music"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png" alt=""><span>Music</span></button>
-        <button class="sm-app-btn" data-app="games"><img src="logo.png?v=2" alt="" style="display:none"><span>Games</span></button>
-        <button class="sm-app-btn" data-app="settings"><img src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png" alt=""><span>Settings</span></button>
+        <button class="sm-app-btn" data-app="terminal"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png" alt=""><span>Terminal</span></button>
+        <button class="sm-app-btn" data-app="code"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png" alt=""><span>VS Code</span></button>
+        <button class="sm-app-btn" data-app="finder"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt=""><span>Files</span></button>
+        <button class="sm-app-btn" data-app="safari"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/safari/256.png" alt=""><span>Browser</span></button>
+        <button class="sm-app-btn" data-app="notes"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt=""><span>Notes</span></button>
+        <button class="sm-app-btn" data-app="calculator"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png" alt=""><span>Calculator</span></button>
+        <button class="sm-app-btn" data-app="music"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png" alt=""><span>Music</span></button>
+        <button class="sm-app-btn" data-app="games"><img loading="lazy" decoding="async" src="logo.png?v=2" alt="" style="display:none"><span>Games</span></button>
+        <button class="sm-app-btn" data-app="settings"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png" alt=""><span>Settings</span></button>
       </div>
     </div>
 
     <div class="sm-footer">
-      <button class="sm-power-btn" data-action="about"><img src="logo.png?v=2" style="width:14px;height:14px" alt=""> About DevilOS</button>
+      <button class="sm-power-btn" data-action="about"><img loading="lazy" decoding="async" src="logo.png?v=2" style="width:14px;height:14px" alt=""> About DevilOS</button>
       <div style="display:flex;gap:6px">
         <button class="sm-power-btn" data-action="lock">🔒 Lock</button>
         <button class="sm-power-btn" data-action="restart">⟳ Restart</button>
@@ -1283,7 +1285,7 @@ body.m-mobile .mode-pill{display:none!important}
       <input type="range" class="cc-slider" id="cc-sound-slider" min="0" max="100" value="85">
     </div>
     <div class="cc-music">
-      <img src="https://picsum.photos/seed/warm-studio-lofi/100/100" alt="">
+      <img loading="lazy" decoding="async" src="https://picsum.photos/seed/warm-studio-lofi/100/100" alt="">
       <div class="cc-music-info">
         <b data-music-title>Interstellar Beats</b>
         <span data-music-artist>Devil1716</span>
@@ -1339,62 +1341,62 @@ body.m-mobile .mode-pill{display:none!important}
     <div id="dock">
       <!-- 1. Start Hub -->
       <button class="dock-btn" data-app="start-hub">
-        <img class="dock-icon" src="logo.png?v=2" alt="DevilOS Start">
+        <img loading="lazy" decoding="async" class="dock-icon" src="logo.png?v=2" alt="DevilOS Start">
         <span class="dock-tooltip">DevilOS Start Menu</span>
       </button>
       <div class="dock-sep"></div>
       <button class="dock-btn" data-app="assistant">
-        <img class="dock-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23161619'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='%23f0714f'/%3E%3Ccircle cx='19.5' cy='13' r='5.5' fill='%23161619'/%3E%3C/svg%3E" alt="Sable assistant">
+        <img loading="lazy" decoding="async" class="dock-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23161619'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='%23f0714f'/%3E%3Ccircle cx='19.5' cy='13' r='5.5' fill='%23161619'/%3E%3C/svg%3E" alt="Sable assistant">
         <span class="dock-tooltip">Sable — ask about Sharan (Alt+A)</span>
       </button>
       <!-- 2. Finder -->
       <button class="dock-btn running" data-app="finder">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt="Finder">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt="Finder">
         <span class="dock-tooltip">Finder</span>
       </button>
       <!-- 3. Launchpad -->
       <button class="dock-btn" data-app="launchpad">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/launchpad/256.png" alt="Launchpad">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/launchpad/256.png" alt="Launchpad">
         <span class="dock-tooltip">Launchpad</span>
       </button>
       <!-- 4. Safari -->
       <button class="dock-btn" data-app="safari">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/safari/256.png" alt="Safari">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/safari/256.png" alt="Safari">
         <span class="dock-tooltip">Safari Browser</span>
       </button>
       <!-- 5. Notes -->
       <button class="dock-btn" data-app="notes">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt="Notes">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt="Notes">
         <span class="dock-tooltip">Notes</span>
       </button>
       <!-- 6. Terminal -->
       <button class="dock-btn running" data-app="terminal">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png" alt="Terminal">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/terminal/256.png" alt="Terminal">
         <span class="dock-tooltip">Terminal</span>
       </button>
       <!-- 7. VS Code -->
       <button class="dock-btn" data-app="code">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png" alt="Visual Studio Code">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/vscode/256.png" alt="Visual Studio Code">
         <span class="dock-tooltip">Visual Studio Code</span>
       </button>
       <!-- 8. Calculator -->
       <button class="dock-btn" data-app="calculator">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png" alt="Calculator">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png" alt="Calculator">
         <span class="dock-tooltip">Calculator</span>
       </button>
       <!-- 9. Music -->
       <button class="dock-btn" data-app="music">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png" alt="Music">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png" alt="Music">
         <span class="dock-tooltip">Music</span>
       </button>
       <!-- 10. Settings -->
       <button class="dock-btn" data-app="settings">
-        <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png" alt="System Settings">
+        <img loading="lazy" decoding="async" class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png" alt="System Settings">
         <span class="dock-tooltip">System Settings</span>
       </button>
 
       <button class="dock-btn" data-app="games">
-        <img class="dock-icon" id="dock-games-icon" src="logo.png?v=2" alt="Games">
+        <img loading="lazy" decoding="async" class="dock-icon" id="dock-games-icon" src="logo.png?v=2" alt="Games">
         <span class="dock-tooltip">Games</span>
       </button>
 
@@ -1417,7 +1419,7 @@ body.m-mobile .mode-pill{display:none!important}
   <div class="lock-date" id="lock-dt">Wednesday, August 26</div>
   <div class="lock-user">
     <div class="lock-avatar">
-      <img src="logo.png?v=2" alt="Devil1716">
+      <img loading="lazy" decoding="async" src="logo.png?v=2" alt="Devil1716">
     </div>
     <span class="lock-name">Sharan S (@Devil1716)</span>
     <div class="lock-input-box">
@@ -2571,7 +2573,7 @@ function openApp(id,param){
         </div>
       </div>
       <div class="win-title">
-        <img class="win-title-icon" src="${A.icon}" alt="">
+        <img loading="lazy" decoding="async" class="win-title-icon" src="${A.icon}" alt="">
         <span>${A.title}</span>
       </div>
     </div>
@@ -2694,8 +2696,8 @@ function renderDesktop(){
     {label:'Trash',icon:TRASH_ICON,open:()=>openApp('trash'),drop:TRASH}
   ];
   const files=FS.isDir(dir)?FS.list(dir):[];
-  box.innerHTML=shortcuts.map((s,i)=>`<button class="desk-item" data-s="${i}"><div class="desk-item-icon"><img src="${s.icon}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('')
-    +files.map((e,i)=>`<button class="desk-item" data-f="${i}" draggable="true"><div class="desk-item-icon"><img class="fs-ico" src="${fileIcon(e.path,e.node)}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('');
+  box.innerHTML=shortcuts.map((s,i)=>`<button class="desk-item" data-s="${i}"><div class="desk-item-icon"><img loading="lazy" decoding="async" src="${s.icon}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('')
+    +files.map((e,i)=>`<button class="desk-item" data-f="${i}" draggable="true"><div class="desk-item-icon"><img loading="lazy" decoding="async" class="fs-ico" src="${fileIcon(e.path,e.node)}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('');
   const select=b=>{ box.querySelectorAll('.desk-item').forEach(d=>d.classList.toggle('selected',d===b)); };
   box.querySelectorAll('.desk-item').forEach(b=>{
     const s=b.dataset.s!==undefined?shortcuts[b.dataset.s]:null, e=s?null:files[b.dataset.f];
@@ -2899,7 +2901,7 @@ function toggleTaskView(force){
   const grid=$('#task-view-grid');
   grid.innerHTML=ids.length?ids.map(id=>{
     const A=APPS[id];
-    return `<button class="task-card" data-id="${id}"><img src="${A.icon}" alt=""><b>${esc(A.appName)}</b><span>${esc(A.title)}</span></button>`;
+    return `<button class="task-card" data-id="${id}"><img loading="lazy" decoding="async" src="${A.icon}" alt=""><b>${esc(A.appName)}</b><span>${esc(A.title)}</span></button>`;
   }).join(''):'<p class="task-empty">Nothing is open. Pick an app from the dock.</p>';
   grid.querySelectorAll('.task-card').forEach(b=>b.onclick=()=>{
     focusWin(b.dataset.id);
@@ -2951,7 +2953,7 @@ function initSpotlight(){
     ];
     if(!q){
       spotRes.innerHTML=`<div class="spot-section-title">Applications</div>`+catalog.slice(0,6).map(([id,title,desc,icon])=>`
-        <div class="spot-item" data-action="app" data-id="${id}"><div class="s-icon"><img src="${icon}" alt=""></div><div><div class="s-title">${title}</div><div class="s-desc">${desc}</div></div></div>`).join('');
+        <div class="spot-item" data-action="app" data-id="${id}"><div class="s-icon"><img loading="lazy" decoding="async" src="${icon}" alt=""></div><div><div class="s-title">${title}</div><div class="s-desc">${desc}</div></div></div>`).join('');
     }else{
       if(/^[\d\s\+\-\*\/\(\)\.\^]+$/.test(q)){
         try{
@@ -2968,12 +2970,12 @@ function initSpotlight(){
       let html='';
       if(apps.length){
         html+=`<div class="spot-section-title">Applications</div>`+apps.map(([id,title,desc,icon])=>`
-          <div class="spot-item" data-action="app" data-id="${id}"><div class="s-icon"><img src="${icon}" alt=""></div><div><div class="s-title">${esc(title)}</div><div class="s-desc">${esc(desc)}</div></div></div>`).join('');
+          <div class="spot-item" data-action="app" data-id="${id}"><div class="s-icon"><img loading="lazy" decoding="async" src="${icon}" alt=""></div><div><div class="s-title">${esc(title)}</div><div class="s-desc">${esc(desc)}</div></div></div>`).join('');
       }
       if(pHits.length){
         html+=`<div class="spot-section-title">Repositories</div>`;
         pHits.forEach(([t,d,link])=>{
-          html+=`<div class="spot-item" data-action="url" data-url="${link}"><div class="s-icon"><img src="${ICONS.github}" alt=""></div><div><div class="s-title">${esc(t)}</div><div class="s-desc">${esc(d)}</div></div></div>`;
+          html+=`<div class="spot-item" data-action="url" data-url="${link}"><div class="s-icon"><img loading="lazy" decoding="async" src="${ICONS.github}" alt=""></div><div><div class="s-title">${esc(t)}</div><div class="s-desc">${esc(d)}</div></div></div>`;
         });
       }
       const fHits=[];
@@ -2983,7 +2985,7 @@ function initSpotlight(){
         if(fHits.length>=8) return false;
       });
       if(fHits.length){
-        html+=`<div class="spot-section-title">Files</div>`+fHits.map(([p,n])=>`<div class="spot-item" data-action="path" data-path="${esc(p)}"><div class="s-icon"><img class="fs-ico" src="${fileIcon(p,n)}" alt=""></div><div><div class="s-title">${esc(FS.baseOf(p))}</div><div class="s-desc">${esc(FS.pretty(FS.parentOf(p)))}</div></div></div>`).join('');
+        html+=`<div class="spot-section-title">Files</div>`+fHits.map(([p,n])=>`<div class="spot-item" data-action="path" data-path="${esc(p)}"><div class="s-icon"><img loading="lazy" decoding="async" class="fs-ico" src="${fileIcon(p,n)}" alt=""></div><div><div class="s-title">${esc(FS.baseOf(p))}</div><div class="s-desc">${esc(FS.pretty(FS.parentOf(p)))}</div></div></div>`).join('');
       }
       spotRes.innerHTML=html||`<div class="spot-section-title">No matches</div>`;
     }
@@ -3103,7 +3105,7 @@ function initLaunchpad(){
   ];
   grid.innerHTML=items.map(([id,lbl,ico])=>`
     <button class="lp-item" data-app="${id}">
-      <div class="lp-icon"><img src="${ico}" alt="${lbl}"></div>
+      <div class="lp-icon"><img loading="lazy" decoding="async" src="${ico}" alt="${lbl}"></div>
       <span class="lp-lbl">${lbl}</span>
     </button>
   `).join('');
@@ -3648,7 +3650,7 @@ function openTerminalAt(dir){
 function mdInline(s){
   return s
     .replace(/`([^`]+)`/g,(m,c)=>`<code>${c}</code>`)
-    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g,(m,alt,src)=>`<img alt="${alt.replace(/"/g,'&quot;')}" ${/^https?:\/\//.test(src)?'src':'data-rel'}="${src.replace(/"/g,'%22')}">`)
+    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g,(m,alt,src)=>`<img loading="lazy" decoding="async" alt="${alt.replace(/"/g,'&quot;')}" ${/^https?:\/\//.test(src)?'src':'data-rel'}="${src.replace(/"/g,'%22')}">`)
     .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,(m,t,href)=>{
       const h=href.replace(/"/g,'%22');
       return /^(https?:\/\/|mailto:)/.test(href)?`<a href="${h}" target="_blank" rel="noopener">${t}</a>`:`<a data-path="${h}">${t}</a>`;
@@ -3778,7 +3780,7 @@ function buildFinder(win,start){
       <input type="text" class="finder-search" placeholder="Search" spellcheck="false" style="margin-left:8px">
     </div>
     <div class="finder-content">
-      <div class="finder-sidebar">${side.map(([g,items])=>`<div class="finder-side-group">${g}</div>${items.map(([p,l])=>`<button class="finder-side-item" data-folder="${p}"><img src="${p===TRASH?TRASH_ICON:p===HOME?ICONS.finder:FOLDER_ICON}" alt=""> ${l}</button>`).join('')}`).join('')}</div>
+      <div class="finder-sidebar">${side.map(([g,items])=>`<div class="finder-side-group">${g}</div>${items.map(([p,l])=>`<button class="finder-side-item" data-folder="${p}"><img loading="lazy" decoding="async" src="${p===TRASH?TRASH_ICON:p===HOME?ICONS.finder:FOLDER_ICON}" alt=""> ${l}</button>`).join('')}`).join('')}</div>
       <div class="finder-main" tabindex="0"></div>
     </div>
     <div class="finder-statusbar"><span></span><span></span></div>`;
@@ -4392,10 +4394,10 @@ APPS.safari={
       start:{tab:'Start Page', url:'devilos.devil1716.dev', html:()=>`
         <h2 class="safari-start-title">Favorites</h2>
         <div class="safari-favs">
-          <button class="safari-fav-item" data-page="work"><div class="safari-fav-icon"><img src="${ICONS.vscode}" alt=""></div><span class="safari-fav-lbl">Projects</span></button>
-          <button class="safari-fav-item" data-page="github"><div class="safari-fav-icon" style="background:#0F172A"><img src="${ICONS.github}" alt=""></div><span class="safari-fav-lbl">GitHub</span></button>
-          <button class="safari-fav-item" data-page="studio"><div class="safari-fav-icon"><img src="retro_computer_closeup.png" alt=""></div><span class="safari-fav-lbl">3D Studio</span></button>
-          <button class="safari-fav-item" data-go="notes"><div class="safari-fav-icon"><img src="${ICONS.notes}" alt=""></div><span class="safari-fav-lbl">Notes</span></button>
+          <button class="safari-fav-item" data-page="work"><div class="safari-fav-icon"><img loading="lazy" decoding="async" src="${ICONS.vscode}" alt=""></div><span class="safari-fav-lbl">Projects</span></button>
+          <button class="safari-fav-item" data-page="github"><div class="safari-fav-icon" style="background:#0F172A"><img loading="lazy" decoding="async" src="${ICONS.github}" alt=""></div><span class="safari-fav-lbl">GitHub</span></button>
+          <button class="safari-fav-item" data-page="studio"><div class="safari-fav-icon"><img loading="lazy" decoding="async" src="retro_computer_closeup.png" alt=""></div><span class="safari-fav-lbl">3D Studio</span></button>
+          <button class="safari-fav-item" data-go="notes"><div class="safari-fav-icon"><img loading="lazy" decoding="async" src="${ICONS.notes}" alt=""></div><span class="safari-fav-lbl">Notes</span></button>
         </div>
         <div style="background:#fff;border-radius:14px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.04);color:#334155">
           <b style="color:#007AFF">${esc(CONFIG.name)}</b>
@@ -4409,7 +4411,7 @@ APPS.safari={
           </a>`).join('')}</div>`},
       studio:{tab:'3D Studio', url:'devilos.devil1716.dev/studio', html:()=>`
         <h2 class="safari-start-title">Retro computer</h2>
-        <img src="retro_computer_closeup.png" alt="Retro computer" style="width:100%;max-width:640px;border-radius:14px;display:block">
+        <img loading="lazy" decoding="async" src="retro_computer_closeup.png" alt="Retro computer" style="width:100%;max-width:640px;border-radius:14px;display:block">
         <p style="margin-top:12px;color:#475569">The portfolio hero is the Tripo PBR model. Open the studio to orbit it.</p>
         <button data-go="3d" style="margin-top:14px;background:#1c1917;color:#fff;border:0;border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700">Enter 3D Studio</button>`},
       github:{tab:'GitHub', url:'github.com/Devil1716', html:()=>`
@@ -4419,7 +4421,7 @@ APPS.safari={
     };
     let hist=['start'], cursor=0;
     r.innerHTML=`
-      <div class="safari-tabs"><div class="safari-tab"><img src="${ICONS.safari}" alt=""><span id="safari-tab">Start Page</span></div></div>
+      <div class="safari-tabs"><div class="safari-tab"><img loading="lazy" decoding="async" src="${ICONS.safari}" alt=""><span id="safari-tab">Start Page</span></div></div>
       <div class="safari-toolbar">
         <button class="finder-nav-btn" data-nav="back" title="Back">‹</button>
         <button class="finder-nav-btn" data-nav="forward" title="Forward">›</button>
@@ -4554,7 +4556,7 @@ APPS.code={
       else go();
     }
     function renderTabs(){
-      tabsEl.innerHTML=tabs.map((t,i)=>`<div class="vscode-tab${i===active?' on':''}" data-t="${i}"><img class="fs-ico" src="${fileIcon(t.path,FS.node(t.path))}" alt=""><span></span>${dirty(t)?'<i class="dot" title="Unsaved changes"></i>':''}<span class="x" data-x="${i}" title="Close">✕</span></div>`).join('');
+      tabsEl.innerHTML=tabs.map((t,i)=>`<div class="vscode-tab${i===active?' on':''}" data-t="${i}"><img loading="lazy" decoding="async" class="fs-ico" src="${fileIcon(t.path,FS.node(t.path))}" alt=""><span></span>${dirty(t)?'<i class="dot" title="Unsaved changes"></i>':''}<span class="x" data-x="${i}" title="Close">✕</span></div>`).join('');
       tabsEl.querySelectorAll('[data-t]').forEach(el=>{
         const t=tabs[el.dataset.t];
         el.children[1].textContent=FS.baseOf(t.path)+(t.deleted?' (deleted)':'');
@@ -4889,14 +4891,14 @@ APPS.settings={
     r.innerHTML=`
       <div class="settings-sidebar">
         <div class="settings-user-card">
-          <img src="logo.png?v=2" alt="">
+          <img loading="lazy" decoding="async" src="logo.png?v=2" alt="">
           <div><b style="font-size:12.5px;display:block">${esc(CONFIG.name)}</b><span style="font-size:10.5px;color:rgba(255,255,255,.5)">${esc(CONFIG.user)}@${esc(CONFIG.host)}</span></div>
         </div>
-        <button class="settings-side-item" data-tab="wp"><img src="${ICONS.photos}" alt=""> Wallpaper</button>
-        <button class="settings-side-item" data-tab="display"><img src="${ICONS.settings}" alt=""> Display</button>
-        <button class="settings-side-item" data-tab="sound"><img src="${ICONS.music}" alt=""> Sound</button>
-        <button class="settings-side-item" data-tab="storage"><img src="${ICONS.finder}" alt=""> Storage</button>
-        <button class="settings-side-item" data-tab="about"><img src="logo.png?v=2" alt=""> About</button>
+        <button class="settings-side-item" data-tab="wp"><img loading="lazy" decoding="async" src="${ICONS.photos}" alt=""> Wallpaper</button>
+        <button class="settings-side-item" data-tab="display"><img loading="lazy" decoding="async" src="${ICONS.settings}" alt=""> Display</button>
+        <button class="settings-side-item" data-tab="sound"><img loading="lazy" decoding="async" src="${ICONS.music}" alt=""> Sound</button>
+        <button class="settings-side-item" data-tab="storage"><img loading="lazy" decoding="async" src="${ICONS.finder}" alt=""> Storage</button>
+        <button class="settings-side-item" data-tab="about"><img loading="lazy" decoding="async" src="logo.png?v=2" alt=""> About</button>
       </div>
       <div class="settings-pane" id="settings-pane"></div>`;
     const pane=r.querySelector('#settings-pane');
@@ -5136,7 +5138,7 @@ APPS.photos={
   appName:'Photos',title:'Photos',icon:ICONS.photos,w:820,h:520,
   build:(win,param)=>{
     const r=document.createElement('div'); r.className='photo-app'; r.tabIndex=0;
-    r.innerHTML=`<figure class="photo-stage"><img alt=""><figcaption></figcaption></figure><div class="photo-strip"></div>`;
+    r.innerHTML=`<figure class="photo-stage"><img loading="lazy" decoding="async" alt=""><figcaption></figcaption></figure><div class="photo-strip"></div>`;
     const full=r.querySelector('.photo-stage img'), cap=r.querySelector('figcaption'), strip=r.querySelector('.photo-strip');
     const titleEl=win.querySelector('.win-title span');
     let dir=HOME+'/Pictures', shots=[], cur=null;
@@ -5217,7 +5219,7 @@ APPS.appstore={
     const r=document.createElement('div'); r.className='store-app';
     r.innerHTML=`<h3 style="font-size:20px">Installed</h3><p style="font-size:12px;color:rgba(255,255,255,.55);margin-top:4px">Everything in DevilOS is already installed.</p>
       <div class="store-grid">${apps.map(([id,name,icon,blurb])=>`
-        <article class="store-card"><img src="${icon}" alt=""><b>${name}</b><p>${blurb}</p><button data-app="${id}">Open</button></article>`).join('')}</div>`;
+        <article class="store-card"><img loading="lazy" decoding="async" src="${icon}" alt=""><b>${name}</b><p>${blurb}</p><button data-app="${id}">Open</button></article>`).join('')}</div>`;
     r.querySelectorAll('[data-app]').forEach(b=>b.onclick=()=>openApp(b.dataset.app));
     return r;
   }
@@ -5485,7 +5487,7 @@ APPS.about={
     const r=document.createElement('div');
     r.style.cssText='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;text-align:center;color:#fff;background:linear-gradient(135deg,#120e1a,#0a0812)';
     r.innerHTML=`
-      <div style="width:200px;height:200px;margin-bottom:8px;display:grid;place-items:center"><img src="logo.png?v=2" style="width:100%;height:100%;object-fit:contain" alt=""></div>
+      <div style="width:200px;height:200px;margin-bottom:8px;display:grid;place-items:center"><img loading="lazy" decoding="async" src="logo.png?v=2" style="width:100%;height:100%;object-fit:contain" alt=""></div>
       <h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">Devil<span style="color:var(--devil-red)">OS</span> Trinity</h2>
       <p style="font-size:12.5px;color:var(--cyan);margin-top:2px;font-weight:600">A small desktop OS that runs in your browser</p>
       <div style="margin-top:16px;font-size:12px;line-height:1.8;color:rgba(255,255,255,.85);text-align:left;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:12px 20px;border-radius:12px">

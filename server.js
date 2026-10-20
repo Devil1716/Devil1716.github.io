@@ -4,6 +4,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
 const Core = require('./assistant/core.js');
 
 const ROOT = __dirname;
@@ -165,8 +166,14 @@ function serveStatic(req, res) {
   }
   fs.readFile(file, (err, data) => {
     if (err) { res.writeHead(404, { 'Content-Type': 'text/plain' }); return res.end('Not Found'); }
-    res.writeHead(200, { 'Content-Type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff' });
-    res.end(data);
+    const type = MIME[path.extname(file).toLowerCase()] || 'application/octet-stream';
+    const headers = { 'Content-Type': type, 'X-Content-Type-Options': 'nosniff', 'Cache-Control': /\.(html|json)$/.test(file) ? 'no-cache' : 'public, max-age=3600', Vary: 'Accept-Encoding' };
+    if (/text|javascript|json|svg|markdown|gltf\+json/.test(type) && /\bgzip\b/.test(req.headers['accept-encoding'] || '') && data.length > 1024) {
+      headers['Content-Encoding'] = 'gzip';
+      data = zlib.gzipSync(data, { level: 6 });
+    }
+    res.writeHead(200, headers);
+    res.end(req.method === 'HEAD' ? undefined : data);
   });
 }
 

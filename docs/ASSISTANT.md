@@ -80,3 +80,6 @@ No model has been fine-tuned. Retrieval over a small, editable knowledge base is
 - Touch targets in the chat and the mobile shell are ≥ 44–48px; safe-area insets are respected; the composer stays above the on-screen keyboard (`100dvh`, `scrollIntoView`).
 - Markdown is escaped first, then a small allow-list of tags is added; links are limited to http(s), mailto and in-page anchors and open with `rel="noopener noreferrer"`.
 - The assistant scripts are `defer`red and tiny; Three.js and the 3D model load only when the studio is opened.
+
+## DevilOS Mobile (One UI-inspired)
+Original design and icons, no vendor assets. Large centred titles that collapse into the toolbar as you scroll; grouped 26px cards; squircle icons in solid colours; two home pages with dots, a dock and a bottom "Ask Sable" pill; swipe down (or tap the status bar) for the quick panel (dark mode, less motion, recents, email, brightness); swipe up for the app drawer with search; swipe up from the handle to go home, or swipe up and hold for recents; swipe from the left edge or press Esc to go back. Checked with `tests/oneui-shots.cjs`, which measures WCAG AA contrast and ≥48px targets on every screen.

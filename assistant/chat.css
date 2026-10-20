@@ -1,4 +1,4 @@
-/* Sable design tokens: shared by the chat page, the desktop window and the phone OS. */
+/* Assistant design tokens: shared by the chat page, the desktop window and the phone OS. */
 :root{
   --sb-font:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
   --sb-serif:'Fraunces',Georgia,serif;
@@ -67,6 +67,8 @@
 .sb-welcome h2{font:400 clamp(28px,4.2vw,40px)/1.15 var(--sb-serif);letter-spacing:-.02em;margin:0 0 12px}
 .sb-welcome h2 em{color:var(--sb-accent);font-style:italic}
 .sb-welcome p{color:var(--sb-muted);max-width:56ch;margin:0 0 28px}
+.sb-welcome p:has(+ .sb-why){margin-bottom:8px}
+.sb-welcome .sb-why{font-size:13.5px;margin-bottom:24px}
 .sb-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .sb-chip{min-height:52px;padding:12px 14px;border-radius:var(--sb-r);border:1px solid var(--sb-line);background:var(--sb-surface);text-align:left;font-size:14px;transition:border-color .15s,transform .15s var(--sb-ease)}
 .sb-chip:hover{border-color:var(--sb-muted);transform:translateY(-1px)}

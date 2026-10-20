@@ -295,14 +295,14 @@
     {
       "id": "proj-portfolio",
       "type": "project",
-      "title": "DevilOS (this portfolio)",
-      "text": "This website: a chatbot-first portfolio with a browser desktop OS (windows, dock, terminal, file system mirrored from GitHub), an Android-inspired phone OS, and a Three.js 3D retro computer you can click to enter the OS. Vanilla JavaScript, no build step.",
+      "title": "Shard (this portfolio)",
+      "text": "This website: a chatbot-first portfolio with Pitts, the assistant (named after Walter Pitts of the 1943 McCulloch–Pitts neuron), plus Shard, a browser desktop OS (windows, dock, terminal, file system mirrored from GitHub), a One UI-inspired phone OS, and a Three.js 3D retro computer you can click to enter the OS. The name Shard is SHARan + the D of Devil1716. Vanilla JavaScript, no build step.",
       "tags": [
         "project",
         "portfolio",
         "website",
-        "devilos",
-        "three.js"
+        "shard",
+                "three.js"
       ],
       "links": [
         [
@@ -394,7 +394,7 @@
       "id": "faq-resume",
       "type": "faq",
       "title": "Resume",
-      "text": "The resume lives on the DevilOS desktop as Resume.md (open the Desktop OS). A PDF resume is not published on this site yet.",
+      "text": "The resume lives on the Shard desktop as Resume.md (open the Desktop OS). A PDF resume is not published on this site yet.",
       "tags": [
         "resume",
         "cv"

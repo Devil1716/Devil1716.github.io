@@ -1,4 +1,4 @@
-/* DevilOS Mobile: an original One UI-inspired phone shell. Own icons, no vendor assets. */
+/* Shard Mobile: an original One UI-inspired phone shell. Own icons, no vendor assets. */
 #mobile-os{
   --ou-ease:cubic-bezier(.22,1,.36,1);          /* spring-like settle, no overshoot */
   --ou-pop:cubic-bezier(.34,1.32,.64,1);        /* tiny overshoot for icons/tiles */
@@ -158,7 +158,7 @@ button.ou-row:active,a.ou-row:active{background:var(--ou-card2)}
 .ou-soon{color:var(--ou-sub);font-style:italic}
 .ou-err{padding:20px;color:var(--sb-err,#c0392b)}
 
-/* Sable inside the shell */
+/* The assistant inside the shell */
 .ou-win.chat .ou-scroll{overflow:hidden;padding-bottom:0;display:flex;flex-direction:column;padding-top:calc(92px + env(safe-area-inset-top))}
 .ou-win.chat .ou-bar h2{opacity:1;transform:none}
 .ou-win.chat .ou-bar::after{opacity:1}

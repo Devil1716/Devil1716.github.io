@@ -1,10 +1,11 @@
-/* DevilOS Mobile: an original One UI-inspired phone shell (own icons; no vendor assets).
+/* Shard Mobile: an original One UI-inspired phone shell (own icons; no vendor assets).
    Large reachable titles, grouped rounded cards, quick panel, drawer, recents, gesture handle. */
 (function(){
   'use strict';
+  const BRAND = window.AssistantCore.BRAND;
   const S = (p, extra) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra||''}>${p}</svg>`;
   const G = {
-    sable:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="#ff8d6e"/><circle cx="15" cy="9.4" r="4.8" fill="#2c2c35"/></svg>',
+    assistant:'<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 16 34 32M13 32h21M13 48l21-16M40 32h12" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><circle cx="13" cy="16" r="5" fill="#fff"/><circle cx="13" cy="32" r="5" fill="#fff"/><circle cx="13" cy="48" r="5" fill="#fff"/><circle cx="54" cy="32" r="5" fill="#fff"/><circle cx="36" cy="32" r="9" fill="#f0714f"/></svg>',
     projects:S('<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>'),
     skills:S('<path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5"/>'),
     about:S('<circle cx="12" cy="8.5" r="3.6"/><path d="M5 19.5c1.3-3.2 4-4.8 7-4.8s5.7 1.6 7 4.8"/>'),
@@ -30,7 +31,7 @@
   const PALETTE = ['#b35c10','#2f5fcc','#1f7a50','#b8432f','#5d45c4','#a33d72','#1f6f80','#6e5530','#4a5868','#9a4230','#2f6b4c'];
 
   const APPS = {
-    sable:{ name:'Sable', color:'#2c2c35', glyph:G.sable },
+    assistant:{ name:BRAND.assistant, color:'#2c2c35', glyph:G.assistant },
     projects:{ name:'Projects', color:'#d4701a', glyph:G.projects },
     skills:{ name:'Skills', color:'#3f6fdc', glyph:G.skills },
     about:{ name:'About', color:'#23885a', glyph:G.about },
@@ -40,8 +41,8 @@
     sketch:{ name:'Sketchbook', color:'#b2467e', glyph:G.sketch },
     settings:{ name:'Settings', color:'#55657a', glyph:G.settings }
   };
-  const SUBS = { sable:'Ask anything about Sharan', projects:'10 projects', skills:'What he builds with', about:'Agents · Android · Backend', contact:'Email, GitHub, LinkedIn', oss:'27 merged PRs', settings:'Display and accessibility' };
-  const PAGE1 = ['projects','skills','about','oss'], DOCK = ['sable','contact','github','settings'], PAGE2 = ['sketch'];
+  const SUBS = { assistant:'Ask anything about Sharan', projects:'10 projects', skills:'What he builds with', about:'Agents · Android · Backend', contact:'Email, GitHub, LinkedIn', oss:'27 merged PRs', settings:'Display and accessibility' };
+  const PAGE1 = ['projects','skills','about','oss'], DOCK = ['assistant','contact','github','settings'], PAGE2 = ['sketch'];
 
   let kb = null, root = null, chat = null, opts = {}, ignorePop = 0, recents = [];
   const stack = [];
@@ -54,7 +55,7 @@
   const row = o => `<${o.href?`a href="${esc(o.href)}" ${/^http/.test(o.href)?'target="_blank" rel="noopener noreferrer"':''}`:'button'} class="ou-row${o.ico?' has-ico':''}" ${o.attrs||''}>${o.ico?`<span class="ri" aria-hidden="true" style="background:${o.color||'#55657a'}">${o.ico}</span>`:''}<span class="rt"><b>${esc(o.title)}</b>${o.sub?`<span>${esc(o.sub)}</span>`:''}</span>${o.right!==undefined?o.right:U.chev.replace('<svg','<svg class="chev"')}</${o.href?'a':'button'}>`;
   const group = (rows, cap) => `${cap?`<h3 class="ou-cap">${esc(cap)}</h3>`:''}<div class="ou-group">${rows.join('')}</div>`;
   const textCard = (html, cap) => `${cap?`<h3 class="ou-cap">${esc(cap)}</h3>`:''}<div class="ou-group ou-text">${html}</div>`;
-  const askBtn = q => `<button class="ou-btn" data-ask="${esc(q)}">Ask Sable about this</button>`;
+  const askBtn = q => `<button class="ou-btn" data-ask="${esc(q)}">Ask ${esc(BRAND.assistant)} about this</button>`;
   const firstSentence = t => t.split(/(?<=\.)\s/)[0].replace(/\.$/,'');
   const projOf = e => { const m = e.text.match(/^(.*?)(?: Stack: (.*?)\.)?(?: Highlights: (.*))?$/s) || []; return { summary:m[1]||e.text, stack:(m[2]||'').split(/\s*[·,]\s*/).filter(Boolean), points:(m[3]||'').replace(/\.$/,'').split('; ').filter(Boolean) }; };
 
@@ -71,6 +72,7 @@
         + group([row({ title:'Amity University Bengaluru', sub:'B.Tech, AI & ML · 7th semester · graduating May 2027', ico:G.about, color:'#23885a', right:'' })], 'Education')
         + group([row({ title:'Technical Lead, Quickoo', sub:'Dates and details coming soon', ico:G.projects, color:'#d4701a', right:'' }), row({ title:'Open-source contributor', sub:'27 merged PRs across 14 projects', ico:G.oss, color:'#6c50dc', attrs:'data-app="oss"' })], 'Experience')
         + textCard(`<p>${esc(f('belief').text)}</p>`, 'How he works')
+        + group([row({ title:'Why '+BRAND.os+'?', sub:BRAND.osWhy, ico:'<img src="assets/shard-light.svg" alt="" width="22" height="22">', color:'#141416', right:'' })].concat(BRAND.assistantWhy?[row({ title:'Why '+BRAND.assistant+'?', sub:BRAND.assistantWhy, ico:G.assistant, color:'#2c2c35', right:'' })]:[]), 'Names')
         + group([row({ title:'Achievements', sub:'Coming soon', right:'' }), row({ title:'Interests', sub:'Coming soon', right:'' })], 'More')
         + `<div class="ou-actions">${askBtn('Who am I?')}</div>` }; },
     oss: k => { const e = k.entries.find(x=>x.id==='exp-oss'); const L = e.links.slice(1);
@@ -78,16 +80,17 @@
     contact: k => { const p=k.profile;
       return { title:'Contact', sub:p.lookingFor, html: group([row({ title:'Email', sub:p.email, href:'mailto:'+p.email, ico:U.mail, color:'#d4513c' }), row({ title:'GitHub', sub:'@'+p.handle, href:p.github, ico:G.github, color:'#26262b' }), row({ title:'LinkedIn', sub:'sharan-s-171816s', href:p.linkedin, ico:U.link, color:'#2e6fb8' })])
         + `<div class="ou-actions"><a class="ou-btn primary" href="mailto:${esc(p.email)}">Send an email</a>${askBtn('Contact me.')}</div>` }; },
-    settings: () => { const t = window.Sable.Theme.get(), sys = !localStorage.getItem('sable.theme');
+    settings: () => { const t = window.AssistantUI.Theme.get();
       return { title:'Settings', sub:'This phone runs in your browser', html: group(['light','dark'].map(m=>row({ title:m==='light'?'Light':'Dark', ico:m==='light'?U.sun:U.moon, color:m==='light'?'#e5a52c':'#4b4f8f', attrs:`role="radio" aria-checked="${t===m}" data-theme="${m}"`, right:'<span class="radio" aria-hidden="true"></span>' })), 'Display')
         + group([row({ title:'Reduce motion', sub:'Turn off animations in this shell', ico:U.motion, color:'#2e8fa3', attrs:`role="switch" aria-checked="${!!prefs.get('reduce',false)}" data-toggle="reduce"`, right:`<span class="radio" aria-hidden="true"></span>` })], 'Accessibility')
-        + group([row({ title:'DevilOS Mobile', sub:'Built by Sharan S · vanilla JavaScript, no framework', right:'' }), row({ title:'Sketchbook portfolio', sub:'The classic one-page portfolio', attrs:'data-app="sketch"' })], 'About this phone') }; }
+        + group([row({ title:'Why '+BRAND.os+'?', sub:BRAND.osWhy, right:'' })].concat(BRAND.assistantWhy?[row({ title:'Why '+BRAND.assistant+'?', sub:BRAND.assistantWhy, right:'' })]:[]), 'Names')
+        + group([row({ title:BRAND.os+' Mobile', sub:'Built by Sharan S · vanilla JavaScript, no framework', right:'' }), row({ title:'Sketchbook portfolio', sub:'The classic one-page portfolio', attrs:'data-app="sketch"' })], 'About this phone') }; }
   };
 
   /* ---------- build ---------- */
   function build(){
     root = document.getElementById('mobile-os');
-    root.dataset.sbTheme = window.Sable.Theme.get();
+    root.dataset.sbTheme = window.AssistantUI.Theme.get();
     root.style.setProperty('--ou-bright', prefs.get('bright', 1));
     root.classList.toggle('reduce', !!prefs.get('reduce', false));
     root.innerHTML = `
@@ -107,7 +110,7 @@
           </div>
         </div>
         <div class="ou-home-foot">
-          <button class="ou-ask" data-app="sable"><svg class="orb" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#2c2c35"/><circle cx="16" cy="16" r="7.5" fill="#ff8d6e"/><circle cx="19.5" cy="13" r="5.5" fill="#2c2c35"/></svg>Ask Sable about Sharan<span class="go" aria-hidden="true">${U.arrow}</span></button>
+          <button class="ou-ask" data-app="assistant"><span class="orb ou-ico" style="background:#2c2c35;width:32px;height:32px;border-radius:10px">${G.assistant}</span>Ask ${esc(BRAND.assistant)} about Sharan<span class="go" aria-hidden="true">${U.arrow}</span></button>
           <div class="ou-dots" role="tablist" aria-label="Home pages"><button role="tab" aria-label="Page 1" aria-current="true" data-page="0"></button><button role="tab" aria-label="Page 2" data-page="1"></button></div>
           <nav class="ou-dock" aria-label="Dock">${DOCK.map(tile).join('')}</nav>
         </div>
@@ -162,13 +165,13 @@
     // keep layouts above the on-screen keyboard
     if (window.visualViewport) { const vv = window.visualViewport; const fit = () => root.style.setProperty('--ou-vh', vv.height + 'px'); vv.addEventListener('resize', fit); fit(); }
     // theme changes from anywhere (Settings, chat, quick panel)
-    new MutationObserver(() => { root.dataset.sbTheme = window.Sable.Theme.get(); paintQP(); }).observe(document.documentElement, { attributes:true, attributeFilter:['data-sb-theme'] });
+    new MutationObserver(() => { root.dataset.sbTheme = window.AssistantUI.Theme.get(); paintQP(); }).observe(document.documentElement, { attributes:true, attributeFilter:['data-sb-theme'] });
   }
 
   function onClick(e){
     const t = e.target;
-    const ask = t.closest('[data-ask]'); if (ask) { openApp('sable', null, ask); setTimeout(() => chat.ask(ask.dataset.ask), 60); return; }
-    const th = t.closest('[data-theme]'); if (th) { localStorage.setItem('sable.theme', th.dataset.theme); window.Sable.Theme.set(th.dataset.theme); return rerender(); }
+    const ask = t.closest('[data-ask]'); if (ask) { openApp('assistant', null, ask); setTimeout(() => chat.ask(ask.dataset.ask), 60); return; }
+    const th = t.closest('[data-theme]'); if (th) { window.AssistantUI.Theme.set(th.dataset.theme); return rerender(); }
     const tg = t.closest('[data-toggle="reduce"]'); if (tg) { toggleReduce(); return rerender(); }
     const sub = t.closest('[data-sub]'); if (sub && !sub.dataset.app) return push({ kind:'app', id:'project', sub:sub.dataset.sub, from:'projects' });
     const a = t.closest('[data-app]'); if (a) { if (a.dataset.sub) { openApp('projects', a); return push({ kind:'app', id:'project', sub:a.dataset.sub }); } return openApp(a.dataset.app, null, a); }
@@ -181,7 +184,7 @@
     const dots = t.closest('[data-page]'); if (dots) { const p = $('.ou-pages'); p.scrollTo({ left: p.clientWidth * +dots.dataset.page, behavior: reduced() ? 'auto' : 'smooth' }); return; }
     const q = t.closest('[data-qp]');
     if (q) { const k = q.dataset.qp;
-      if (k === 'theme') { const n = window.Sable.Theme.get()==='dark'?'light':'dark'; window.Sable.Theme.set(n); }
+      if (k === 'theme') { const n = window.AssistantUI.Theme.get()==='dark'?'light':'dark'; window.AssistantUI.Theme.set(n); }
       if (k === 'reduce') toggleReduce();
       if (k === 'recents') { back(); setTimeout(openRecents, 50); }
       if (k === 'mail') location.href = 'mailto:sharan071718@gmail.com';
@@ -191,7 +194,7 @@
   function toggleReduce(){ const v = !prefs.get('reduce', false); prefs.set('reduce', v); root.classList.toggle('reduce', v); paintQP(); }
   function paintQP(){
     if (!root) return;
-    const dark = window.Sable.Theme.get() === 'dark', red = !!prefs.get('reduce', false);
+    const dark = window.AssistantUI.Theme.get() === 'dark', red = !!prefs.get('reduce', false);
     const t1 = root.querySelector('[data-qp="theme"]'), t2 = root.querySelector('[data-qp="reduce"]');
     if (!t1) return;
     t1.setAttribute('aria-pressed', String(dark)); t1.querySelector('small').textContent = dark ? 'On' : 'Off';
@@ -223,12 +226,12 @@
   async function paintWin(entry, keepScroll){
     const win = $('.ou-win'), sc = $('.ou-scroll'), act = $('.ou-baract');
     const key = entry.id + ':' + (entry.sub || '');
-    if (win.dataset.key === key && !keepScroll && entry.id === 'sable') return;
+    if (win.dataset.key === key && !keepScroll && entry.id === 'assistant') return;
     const prevTop = sc.scrollTop;
-    win.dataset.key = key; win.classList.toggle('chat', entry.id === 'sable'); act.innerHTML = '';
-    if (entry.id === 'sable') {
-      $('#ou-wt').textContent = 'Sable';
-      if (!chat) { const host = document.createElement('div'); host.className = 'ou-chatwrap'; chat = window.Sable.mountChat(host, { variant:'compact', resume:true }); }
+    win.dataset.key = key; win.classList.toggle('chat', entry.id === 'assistant'); act.innerHTML = '';
+    if (entry.id === 'assistant') {
+      $('#ou-wt').textContent = BRAND.assistant;
+      if (!chat) { const host = document.createElement('div'); host.className = 'ou-chatwrap'; chat = window.AssistantUI.mountChat(host, { variant:'compact', resume:true }); }
       sc.innerHTML = ''; sc.appendChild(chat.el.parentNode);
       act.innerHTML = `<button class="ou-iconbtn" aria-label="New conversation">${U.plus}</button>`;
       act.firstChild.onclick = () => chat.el.querySelector('[data-act="new"]').click();
@@ -286,7 +289,7 @@
   }
 
   window.MobileOS = {
-    show(o){ opts = o || {}; if (!root || !root.firstChild) build(); root.classList.add('on'); root.setAttribute('aria-hidden','false'); if (o && o.openChat) openApp('sable'); },
+    show(o){ opts = o || {}; if (!root || !root.firstChild) build(); root.classList.add('on'); root.setAttribute('aria-hidden','false'); if (o && o.openChat) openApp('assistant'); },
     hide(){ if (root) { root.classList.remove('on'); root.setAttribute('aria-hidden','true'); } },
     openApp, openQP, openDrawer, openRecents
   };

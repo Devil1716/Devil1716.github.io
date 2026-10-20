@@ -1,7 +1,7 @@
 {
-  "name": "devilos-portfolio",
+  "name": "shard-portfolio",
   "private": true,
-  "description": "DevilOS portfolio: Sable assistant, desktop OS, mobile OS and the 3D studio. No build step.",
+  "description": "Shard portfolio: the Pitts assistant, desktop OS, mobile OS and the 3D studio. No build step.",
   "engines": { "node": ">=18" },
   "scripts": {
     "start": "node server.js",

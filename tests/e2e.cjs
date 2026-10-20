@@ -38,15 +38,15 @@ const fails = []; const ok = (c, m) => { console.log((c?'PASS ':'FAIL ')+m); if(
         await page.waitForTimeout(500); await page.screenshot({ path:`${OUT}/${tag}-4-error.png` });
         ok(true, `${tag}: error state with retry`);
         await page.unroute('**/api/chat');
-        // Enter the desktop OS and open Sable as a window
+        // Enter the desktop OS and open the assistant as a window
         await page.locator('#chat-home [data-nav="os"]').click();
         await page.waitForSelector('#desktop.on', { timeout:20000 });
         await page.waitForTimeout(800);
         await page.keyboard.press('Alt+a');
         await page.waitForSelector('.win .sb', { timeout:5000 });
         await page.waitForTimeout(500);
-        await page.screenshot({ path:`${OUT}/${tag}-5-desktop-os-sable-window.png` });
-        ok(true, `${tag}: desktop OS opens Sable window (Alt+A)`);
+        await page.screenshot({ path:`${OUT}/${tag}-5-desktop-os-assistant-window.png` });
+        ok(true, `${tag}: desktop OS opens assistant window (Alt+A)`);
         // Back to chat via the mode pill
         await page.locator('#mode-pill [data-mode="chat"]').click();
         await page.waitForSelector('#chat-home.on', { timeout:5000 });
@@ -87,6 +87,9 @@ const fails = []; const ok = (c, m) => { console.log((c?'PASS ':'FAIL ')+m); if(
         const small = await page.evaluate(() => [...document.querySelectorAll('#mobile-os .ou-win.on button, #mobile-os .ou-home button')].filter(b=>{const r=b.getBoundingClientRect(); return !b.closest("[inert]") && r.width>0 && (r.height<47.5||r.width<47.5);}).map(b=>b.getAttribute('aria-label')||b.textContent.trim()).slice(0,5));
         ok(small.length===0, `${tag}: touch targets >= 48px ${small.join('|')}`);
       }
+      const OLD = /sable|arya|\bbose\b|sharanix|devil ?os|trinity/i;
+      const leak = await page.evaluate(re => { const r = new RegExp(re, 'i'); const bits = [document.title, document.body.innerText, ...[...document.querySelectorAll('[aria-label],[alt],[title],[placeholder]')].map(n => [n.getAttribute('aria-label'), n.getAttribute('alt'), n.getAttribute('title'), n.getAttribute('placeholder')].join(' '))]; return bits.filter(b => b && r.test(b)).map(b => b.match(r)[0]).slice(0, 5); }, OLD.source);
+      ok(leak.length === 0, `${tag}: no old names in UI ${leak.join(',')}`);
       ok(errors.length===0, `${tag}: no page errors ${errors.join(' | ')}`);
       await ctx.close();
     }

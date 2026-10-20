@@ -3,17 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sharan S (@Devil1716) — Agentic systems, Android & Backend</title>
+<title>Shard — Sharan S (@Devil1716) · Agentic systems, Android & Backend</title>
 <meta name="description" content="Sharan S, a B.Tech AI/ML student in Bengaluru, builds on-device AI agents, Android apps, and Python backends, and has 27 merged open-source PRs. Open to remote Backend / Agentic AI internships.">
 <meta property="og:title" content="Sharan S (@Devil1716) — Portfolio">
 <meta property="og:description" content="On-device agents, Android, and backends. 27 merged open-source PRs, including NVIDIA Megatron-LM. Open to remote internships.">
 <meta property="og:image" content="https://devil1716.github.io/retro_computer_closeup.png">
 <meta property="og:type" content="website">
-<link rel="icon" href="logo.png?v=2">
-<meta name="sable-api" content="/api">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0e0e10">
+<meta name="application-name" content="Shard">
+<meta name="assistant-api" content="/api">
 <link rel="stylesheet" href="assistant/chat.css">
 <link rel="stylesheet" href="assistant/mobile-os.css">
-<script src="assistant/core.js" defer></script>
+<script src="assistant/core.js"></script>
 <script src="assistant/chat.js" defer></script>
 <script src="assistant/mobile-os.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,7 +85,7 @@ a{color:inherit}
 
 /* Initial Boot Card */
 .boot-box{position:relative;z-index:1;border:1px solid rgba(255,255,255,.12);padding:44px 56px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.8);border-radius:28px;background:rgba(16,16,24,.82);backdrop-filter:blur(32px);transition:opacity .3s ease, transform .3s ease}
-.boot-logo{width:168px;height:168px;margin:0 auto 12px;filter:drop-shadow(0 8px 24px var(--devil-glow));animation:logoPulse 3s infinite ease-in-out}
+.boot-logo{width:168px;height:168px;margin:0 auto 12px;width:128px;height:128px}
 @keyframes logoPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 8px 24px rgba(225,29,72,.3))}50%{transform:scale(1.05);filter:drop-shadow(0 12px 32px rgba(225,29,72,.5))}}
 .boot-logo img{width:100%;height:100%;object-fit:contain}
 .px{font-family:'Archivo',sans-serif;color:#ffffff;font-size:26px;letter-spacing:-.02em;line-height:1.3;font-weight:800;text-transform:uppercase}
@@ -103,7 +108,7 @@ a{color:inherit}
 }
 .boot-loader-logo img{
   width:100%;height:100%;object-fit:contain;
-  filter:drop-shadow(0 0 24px rgba(56,189,248,.4));
+  
   animation:bootPulse 2s infinite ease-in-out;
 }
 @keyframes bootPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
@@ -277,7 +282,7 @@ body.m-mobile .mode-pill{display:none!important}
 }
 
 /* ========================================================================= */
-/* ==================== DEVILOS: THE TRINITY HYBRID OS ===================== */
+/* ==================== SHARD: THE SHARD HYBRID OS ===================== */
 /* ========================================================================= */
 #desktop{
   position:fixed;inset:0;display:none;z-index:500;overflow:hidden;
@@ -321,7 +326,7 @@ body.m-mobile .mode-pill{display:none!important}
 .tb-item:hover, .tb-item.open{background:rgba(255,255,255,.14);color:#fff}
 .tb-app-name{font-weight:700;color:#fff;display:flex;align-items:center;gap:6px}
 
-/* Trinity Devil OS Logo Button */
+/* Shard Shard Logo Button */
 .os-logo-btn{
   display:flex;align-items:center;justify-content:center;
   height:26px;padding:0 7px;border-radius:6px;gap:6px;
@@ -362,7 +367,7 @@ body.m-mobile .mode-pill{display:none!important}
 .tb-telem-item span{color:rgba(255,255,255,.6)}
 .tb-telem-item b{color:#34D399}
 
-/* ============ TRINITY START MENU / HYBRID HUB ============ */
+/* ============ SHARD START MENU / HYBRID HUB ============ */
 #start-menu{
   position:absolute;top:34px;left:8px;width:420px;
   background:rgba(20,20,30,.88);
@@ -1020,9 +1025,9 @@ body.m-mobile .mode-pill{display:none!important}
   <!-- Initial Boot Card -->
   <div class="boot-box" id="boot-init-card">
     <div class="boot-logo">
-      <img loading="lazy" decoding="async" src="logo.png?v=2" alt="DevilOS">
+      <img loading="lazy" decoding="async" src="assets/shard-app.svg" alt="Shard">
     </div>
-    <p class="px">DEVIL<span>OS</span> TRINITY</p>
+    <p class="px">SHARD</p>
     <p class="px small">HYBRID WORKSTATION · WINDOWS + MAC + LINUX</p>
     <div style="display:flex;gap:12px;justify-content:center;margin-top:28px">
       <button id="start-btn">ENTER 3D STUDIO</button>
@@ -1034,7 +1039,7 @@ body.m-mobile .mode-pill{display:none!important}
   <!-- Live Cinematic Boot Loader -->
   <div class="boot-loader-container" id="boot-loader">
     <div class="boot-loader-logo">
-      <img loading="lazy" decoding="async" src="logo.png?v=2" alt="DevilOS">
+      <img loading="lazy" decoding="async" src="assets/shard-app.svg" alt="Shard">
     </div>
     <div class="boot-progress-track">
       <div class="boot-progress-bar" id="boot-progress-bar"></div>
@@ -1054,21 +1059,21 @@ body.m-mobile .mode-pill{display:none!important}
     <div class="load-bar"><i></i></div>
   </div>
 
-  <div class="stage-caption">Drag to orbit · Scroll to zoom · Click the computer to enter DevilOS</div>
+  <div class="stage-caption">Drag to orbit · Scroll to zoom · Click the computer to enter Shard</div>
 </div>
 <div id="flash"></div>
 
 <!-- ============ MODE PILL SWITCHER ============ -->
 <div class="mode-pill on" id="mode-pill" role="group" aria-label="Switch view">
-  <button data-mode="chat">ASK SABLE</button>
+  <button data-mode="chat" data-brand-text="ASK {ASSISTANT}">ASK</button>
   <button data-mode="3d">3D STUDIO</button>
-  <button data-mode="os">DEVILOS</button>
+  <button data-mode="os">SHARD OS</button>
   <button class="on" data-mode="site">PORTFOLIO</button>
 </div>
 
-<!-- ============ SABLE: chatbot-first home (desktop) ============ -->
-<div id="chat-home" aria-label="Sable, Sharan's assistant"></div>
-<!-- ============ DEVILOS MOBILE (phones) ============ -->
+<!-- ============ ASSISTANT: chatbot-first home (desktop) ============ -->
+<div id="chat-home" data-brand-label="{assistant}, Sharan's assistant"></div>
+<!-- ============ SHARD MOBILE (phones) ============ -->
 <div id="mobile-os" aria-hidden="true"></div>
 
 <!-- ============ SKETCHBOOK PORTFOLIO ============ -->
@@ -1158,7 +1163,7 @@ body.m-mobile .mode-pill{display:none!important}
 </div>
 
 <!-- ========================================================================= */
-/* ==================== DEVILOS TRINITY WORKSPACE ========================== */
+/* ==================== SHARD SHARD WORKSPACE ========================== */
 /* ========================================================================= -->
 <div id="desktop">
   <!-- Deep Space Wallpaper -->
@@ -1172,9 +1177,9 @@ body.m-mobile .mode-pill{display:none!important}
       <button class="tb-item" id="btn-back-3d" style="background:rgba(56,189,248,.18);border:1px solid rgba(56,189,248,.4);color:#38bdf8;font-weight:700;margin-right:6px;border-radius:6px;gap:5px" title="Return to the 3D studio (ESC)">
         <span>↩</span> <span>3D Studio</span>
       </button>
-      <!-- Devil OS Start Hub Icon -->
-      <div class="tb-item os-logo-btn" id="btn-start-menu" title="DevilOS Trinity Hub (Win/Super Key)">
-        <img loading="lazy" decoding="async" src="logo.png?v=2" alt="DevilOS">
+      <!-- Shard Start Hub Icon -->
+      <div class="tb-item os-logo-btn" id="btn-start-menu" title="Shard menu (Win/Super Key)">
+        <img loading="lazy" decoding="async" src="assets/shard-app.svg" alt="Shard">
         <span style="font-weight:700;letter-spacing:-.02em">Devil<span style="color:var(--devil-red)">OS</span></span>
       </div>
       <div class="tb-item tb-app-name" id="active-app-name">Finder</div>
@@ -1212,15 +1217,15 @@ body.m-mobile .mode-pill{display:none!important}
     </div>
   </header>
 
-  <!-- Trinity Start Menu / Hub -->
+  <!-- Shard Start Menu / Hub -->
   <div id="start-menu">
     <div class="sm-user-banner">
       <div class="sm-user-avatar">
-        <img loading="lazy" decoding="async" src="logo.png?v=2" alt="Devil1716">
+        <img loading="lazy" decoding="async" src="assets/shard-app.svg" alt="Devil1716">
       </div>
       <div class="sm-user-info">
         <b>Sharan S (@Devil1716)</b>
-        <span>DevilOS Trinity · Linux 6.10 / Darwin 24</span>
+        <span>Shard · runs in your browser</span>
       </div>
     </div>
 
@@ -1234,13 +1239,13 @@ body.m-mobile .mode-pill{display:none!important}
         <button class="sm-app-btn" data-app="notes"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/notes/256.png" alt=""><span>Notes</span></button>
         <button class="sm-app-btn" data-app="calculator"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/calculator/256.png" alt=""><span>Calculator</span></button>
         <button class="sm-app-btn" data-app="music"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/music/256.png" alt=""><span>Music</span></button>
-        <button class="sm-app-btn" data-app="games"><img loading="lazy" decoding="async" src="logo.png?v=2" alt="" style="display:none"><span>Games</span></button>
+        <button class="sm-app-btn" data-app="games"><img loading="lazy" decoding="async" src="assets/shard-app.svg" alt="" style="display:none"><span>Games</span></button>
         <button class="sm-app-btn" data-app="settings"><img loading="lazy" decoding="async" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/system-preferences/256.png" alt=""><span>Settings</span></button>
       </div>
     </div>
 
     <div class="sm-footer">
-      <button class="sm-power-btn" data-action="about"><img loading="lazy" decoding="async" src="logo.png?v=2" style="width:14px;height:14px" alt=""> About DevilOS</button>
+      <button class="sm-power-btn" data-action="about"><img loading="lazy" decoding="async" src="assets/shard-app.svg" style="width:14px;height:14px" alt=""> About Shard</button>
       <div style="display:flex;gap:6px">
         <button class="sm-power-btn" data-action="lock">🔒 Lock</button>
         <button class="sm-power-btn" data-action="restart">⟳ Restart</button>
@@ -1313,7 +1318,7 @@ body.m-mobile .mode-pill{display:none!important}
       </div>
     </div>
     <div class="widget">
-      <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:8px">DEVILOS HYBRID TELEMETRY</p>
+      <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:8px">SHARD TELEMETRY</p>
       <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Ryzen 9 / M3 Max Hybrid</span><span style="color:#34D399" id="w-cpu-load">12% Load</span></div>
       <div style="height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden"><div id="w-cpu-bar" style="width:12%;height:100%;background:#38BDF8"></div></div>
       <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:10px;margin-bottom:6px"><span>Unified RAM (Linux Cache)</span><span id="w-ram-label">8.4 GB / 36 GB</span></div>
@@ -1341,13 +1346,13 @@ body.m-mobile .mode-pill{display:none!important}
     <div id="dock">
       <!-- 1. Start Hub -->
       <button class="dock-btn" data-app="start-hub">
-        <img loading="lazy" decoding="async" class="dock-icon" src="logo.png?v=2" alt="DevilOS Start">
-        <span class="dock-tooltip">DevilOS Start Menu</span>
+        <img loading="lazy" decoding="async" class="dock-icon" src="assets/shard-app.svg" alt="Shard Start">
+        <span class="dock-tooltip">Shard Start Menu</span>
       </button>
       <div class="dock-sep"></div>
       <button class="dock-btn" data-app="assistant">
-        <img loading="lazy" decoding="async" class="dock-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23161619'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='%23f0714f'/%3E%3Ccircle cx='19.5' cy='13' r='5.5' fill='%23161619'/%3E%3C/svg%3E" alt="Sable assistant">
-        <span class="dock-tooltip">Sable — ask about Sharan (Alt+A)</span>
+        <img loading="lazy" decoding="async" class="dock-icon" src="assets/assistant-app.svg" data-brand-label="{assistant} assistant" alt="">
+        <span class="dock-tooltip" data-brand-text="{assistant} — ask about Sharan (Alt+A)"></span>
       </button>
       <!-- 2. Finder -->
       <button class="dock-btn running" data-app="finder">
@@ -1396,7 +1401,7 @@ body.m-mobile .mode-pill{display:none!important}
       </button>
 
       <button class="dock-btn" data-app="games">
-        <img loading="lazy" decoding="async" class="dock-icon" id="dock-games-icon" src="logo.png?v=2" alt="Games">
+        <img loading="lazy" decoding="async" class="dock-icon" id="dock-games-icon" src="assets/shard-app.svg" alt="Games">
         <span class="dock-tooltip">Games</span>
       </button>
 
@@ -1419,7 +1424,7 @@ body.m-mobile .mode-pill{display:none!important}
   <div class="lock-date" id="lock-dt">Wednesday, August 26</div>
   <div class="lock-user">
     <div class="lock-avatar">
-      <img loading="lazy" decoding="async" src="logo.png?v=2" alt="Devil1716">
+      <img loading="lazy" decoding="async" src="assets/shard-app.svg" alt="Devil1716">
     </div>
     <span class="lock-name">Sharan S (@Devil1716)</span>
     <div class="lock-input-box">
@@ -1438,7 +1443,7 @@ const CONFIG = {
   handle:   'Devil1716',
   role:     'Agentic systems · Android · Backend',
   user:     'sharan',
-  host:     'devilos',
+  host:     'shard',
   email:    'sharan071718@gmail.com',
   github:   'https://github.com/Devil1716',
   linkedin: 'https://www.linkedin.com/in/sharan-s-171816s/',
@@ -1542,7 +1547,7 @@ function toast(m,ms=3600){
 
 /* ---------- Mode Switching ---------- */
 let mode='site', sceneVisible=false, siteStarted=false;
-/* ---------- Adaptive shell: phones get DevilOS Mobile, larger screens get Sable + the desktop OS ---------- */
+/* ---------- Adaptive shell: phones get Shard Mobile, larger screens get the assistant + the desktop OS ---------- */
 const DEVICE={
   // Capability-based: a small viewport, or a touch-first device whose narrow side is tablet-sized and held in portrait.
   isPhoneLike(){
@@ -1558,12 +1563,19 @@ const DEVICE={
     try{ const c=document.createElement('canvas'); return !!(c.getContext('webgl2')||c.getContext('webgl')); }catch(e){ return false; }
   }
 };
-const SABLE_ICON="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23161619'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='%23f0714f'/%3E%3Ccircle cx='19.5' cy='13' r='5.5' fill='%23161619'/%3E%3C/svg%3E";
-function whenSable(fn){ if(window.Sable&&window.MobileOS) fn(); else document.addEventListener('DOMContentLoaded',fn,{once:true}); }
+const ASSISTANT_ICON="assets/assistant-app.svg";
+const BRAND=window.AssistantCore.BRAND;
+function applyBrand(root){
+  const fill=t=>t.replace(/\{assistant\}/g,BRAND.assistant).replace(/\{ASSISTANT\}/g,BRAND.assistant.toUpperCase()).replace(/\{os\}/g,BRAND.os);
+  (root||document).querySelectorAll('[data-brand-text]').forEach(n=>n.textContent=fill(n.dataset.brandText));
+  (root||document).querySelectorAll('[data-brand-label]').forEach(n=>n.setAttribute(n.tagName==='IMG'?'alt':'aria-label',fill(n.dataset.brandLabel)));
+}
+applyBrand();
+function whenAssistant(fn){ if(window.AssistantUI&&window.MobileOS) fn(); else document.addEventListener('DOMContentLoaded',fn,{once:true}); }
 let chatHome=null;
 function mountChatHome(){
   if(chatHome) return;
-  chatHome=Sable.mountChat($('#chat-home'),{variant:'page',nav:{
+  chatHome=AssistantUI.mountChat($('#chat-home'),{variant:'page',nav:{
     studio:()=>DEVICE.canRun3D()?goMode('3d'):goMode('os'),
     os:()=>startBootAnimation(()=>goMode('os')),
     site:()=>goMode('site')
@@ -1600,8 +1612,8 @@ function goMode(m, opts){
     document.body.classList.toggle('m-mobile',m==='mobile');
     $('#mode-pill').classList.toggle('on',m!=='chat' && m!=='mobile');
     sceneVisible=(m==='3d');
-    if(m==='chat') whenSable(mountChatHome);
-    whenSable(()=>{ if(m==='mobile') MobileOS.show({openChat:!!(opts&&opts.openChat), onSite:()=>goMode('site')}); else MobileOS.hide(); });
+    if(m==='chat') whenAssistant(mountChatHome);
+    whenAssistant(()=>{ if(m==='mobile') MobileOS.show({openChat:!!(opts&&opts.openChat), onSite:()=>goMode('site')}); else MobileOS.hide(); });
     if(m==='site') startSite();
     if(m==='os') seedOS();
     if(m==='3d') init3D();
@@ -1676,7 +1688,7 @@ function startBootAnimation(onComplete){
       if(finished) return;
       finished=true;
       bar.style.width='100%';
-      ticker.textContent='[READY] DevilOS Trinity Online.';
+      ticker.textContent='[READY] Shard online.';
       setTimeout(()=>{
         const b=$('#boot');
         b.classList.add('off');
@@ -1982,7 +1994,7 @@ async function init3D(){
     let enteringOS=false;
     let dive=null;
     const smoothstep=t=>t*t*(3-2*t);
-    function enterDevilOSGlide(){
+    function enterShardGlide(){
       if(enteringOS) return;
       enteringOS=true;
       $('#stage3d').classList.add('entering-os');
@@ -2058,7 +2070,7 @@ async function init3D(){
       if(mode!=='3d' || dragged) return;
       raycaster.setFromCamera(mouseVec, camera);
       const hits=raycaster.intersectObjects(interactables, true);
-      if(hits.length>0) enterDevilOSGlide();
+      if(hits.length>0) enterShardGlide();
     });
 
     addEventListener('resize',()=>{
@@ -2122,7 +2134,7 @@ async function init3D(){
     console.error('3D Init err:',err);
     const loadingEl=$('#stage3d-loading');
     if(loadingEl){
-      loadingEl.innerHTML='<div class="load-title">Computer failed to load — opening DevilOS</div>';
+      loadingEl.innerHTML='<div class="load-title">Computer failed to load — opening Shard</div>';
       setTimeout(()=>loadingEl.classList.add('hide'), 900);
     }
     toast('3D studio unavailable — check <b>retro_computer.glb</b>');
@@ -2319,7 +2331,7 @@ function initSiteMotion(){
 }
 
 /* ========================================================================= */
-/* ==================== DEVILOS TRINITY CORE LOGIC ========================= */
+/* ==================== SHARD SHARD CORE LOGIC ========================= */
 /* ========================================================================= */
 let osSeeded=false;
 let tilingMode=false;
@@ -2689,7 +2701,7 @@ const isDeskBg=t=>t===$('#wallpaper')||t===$('#star-canvas')||t===$('#desktop-ic
 function renderDesktop(){
   const box=$('#desktop-icons'), dir=HOME+'/Desktop';
   const shortcuts=[
-    {label:'Ask Sable',icon:SABLE_ICON,open:()=>openApp('assistant')},
+    {label:'Ask '+BRAND.assistant,icon:ASSISTANT_ICON,open:()=>openApp('assistant')},
     {label:'Home',icon:ICONS.finder,open:()=>openApp('finder',HOME),drop:HOME},
     {label:'Projects',icon:REPO_FOLDER_ICON,open:()=>openApp('finder',HOME+'/Projects'),drop:HOME+'/Projects'},
     {label:'Terminal',icon:ICONS.terminal,open:()=>openApp('terminal')},
@@ -2803,7 +2815,7 @@ function initStartMenu(){
       if(a==='about') openApp('about');
       else if(a==='lock') lockScreen();
       else if(a==='restart'){
-        toast('Rebooting DevilOS Trinity...');
+        toast('Rebooting Shard...');
         setTimeout(()=>{
           $('#boot').classList.remove('off');
           $('#boot').classList.add('on');
@@ -2840,7 +2852,7 @@ const MENUS={
   view:[['toggle-tile','Toggle Linux Tiling','Alt+T'],['task-view','Task View','Alt+Tab']],
   tools:[['terminal','Open Terminal',''],['code','Open VS Code',''],['settings','System Settings','']],
   window:[['task-view','Task View','Alt+Tab'],['cycle','Next Window','Alt+Tab'],['close-window','Close Window','⌘W']],
-  help:[['about','About DevilOS',''],['repos','Browse Projects','']]
+  help:[['about','About Shard',''],['repos','Browse Projects','']]
 };
 function fillMenu(name){
   const rows=MENUS[name]||MENUS.file;
@@ -2945,11 +2957,11 @@ function initSpotlight(){
       ['photos','Photos','Images in ~/Pictures',ICONS.photos],
       ['trash','Trash','Deleted files',TRASH_ICON],
       ['maps','Maps','Workspace map',ICONS.maps],
-      ['appstore','App Store','Installed DevilOS apps',ICONS.appstore],
+      ['appstore','App Store','Installed Shard apps',ICONS.appstore],
       ['games','Games','Snake, breakout, and memory',ICONS.games],
       ['music','Music','Focus tracks',ICONS.music],
       ['calculator','Calculator','Quick math',ICONS.calculator],
-      ['about','About DevilOS','Version and kernel', 'logo.png?v=2']
+      ['about','About Shard','Version and kernel', 'assets/shard-app.svg']
     ];
     if(!q){
       spotRes.innerHTML=`<div class="spot-section-title">Applications</div>`+catalog.slice(0,6).map(([id,title,desc,icon])=>`
@@ -3101,7 +3113,7 @@ function initLaunchpad(){
     ['maps','Maps',ICONS.maps],
     ['appstore','App Store',ICONS.appstore],
     ['games','Games',ICONS.games],
-    ['about','About DevilOS','logo.png?v=2']
+    ['about','About Shard','assets/shard-app.svg']
   ];
   grid.innerHTML=items.map(([id,lbl,ico])=>`
     <button class="lp-item" data-app="${id}">
@@ -3133,7 +3145,7 @@ function initLockScreen(){
   function unlock(){
     playKeyClick(600,'sine',0.06);
     lock.classList.remove('on');
-    toast('Welcome back to <b>DevilOS Trinity</b> ✳');
+    toast('Welcome back to <b>Shard</b>');
   }
   inp.addEventListener('keydown',e=>{if(e.key==='Enter') unlock();});
   btn.addEventListener('click',unlock);
@@ -3197,7 +3209,7 @@ ${CONFIG.contributions.map(([r,w])=>`- **${r}** — ${w}`).join('\n')}
 `;
 }
 function welcomeMd(){
-  return `# Welcome to DevilOS
+  return `# Welcome to Shard
 
 This is a working desktop that I built. It runs entirely in your browser, and anything you create or edit here is saved on your device.
 
@@ -3217,7 +3229,7 @@ Read my [Resume](~/Desktop/Resume.md), or switch to the **Portfolio** tab at the
 }
 function notesSeed(){
   return {
-    'Using DevilOS.md':`# Using DevilOS\n\nKeyboard shortcuts that work everywhere on this desktop:\n\n- Ctrl+Space — Spotlight search for apps and files\n- Alt+Tab — next window\n- Alt+T — tile every open window\n- Ctrl+S — save in VS Code\n- Esc — close Spotlight or Task View\n\nNotes you write here are saved in ~/Notes as markdown files, so the Terminal and VS Code can open them too.`,
+    'Using Shard.md':`# Using Shard\n\nKeyboard shortcuts that work everywhere on this desktop:\n\n- Ctrl+Space — Spotlight search for apps and files\n- Alt+Tab — next window\n- Alt+T — tile every open window\n- Ctrl+S — save in VS Code\n- Esc — close Spotlight or Task View\n\nNotes you write here are saved in ~/Notes as markdown files, so the Terminal and VS Code can open them too.`,
     'Mesh signing vs encryption.md':`# Mesh signing vs encryption\n\nIn bluetooth-manet-android, messages and files are signed. A relay phone cannot change a payload without the change being detected.\n\nThey are not end-to-end encrypted. Nearby radios and relay phones can read them, and the app says so plainly instead of implying privacy it doesn't provide.`,
     'Agent safety checklist.md':`# Agent safety checklist\n\nRules agent-phone-app follows before it touches a real phone:\n\n- Every step appears in a visible execution trace\n- Sensitive actions need explicit confirmation\n- Changes reach main only through pull requests that pass CI, emulator, and dependency-scan checks\n- Releases are checked against a device matrix and a physical-device checklist`
   };
@@ -3230,7 +3242,7 @@ function fsSeed(){
   CONFIG.work.forEach(([name])=>{ projects[name]={t:'d',c:{},m:now,repo:name}; });
   const notes={}; Object.entries(notesSeed()).forEach(([n,b])=>notes[n]=F(b));
   const pics={};
-  [['Retro computer.png','retro_computer_closeup.png'],['3D studio.png','website_3d_preview.png'],['Boot sequence.png','website_boot_preview.png'],['Portfolio page.png','website_site_preview.png'],['Workstation study.png','battlestation_preview.png'],['DevilOS logo.png','logo.png?v=2']]
+  [['Retro computer.png','retro_computer_closeup.png'],['3D studio.png','website_3d_preview.png'],['Boot sequence.png','website_boot_preview.png'],['Portfolio page.png','website_site_preview.png'],['Workstation study.png','battlestation_preview.png'],['Shard logo.svg','assets/shard-app.svg']]
     .forEach(([n,src])=>pics[n]=F('',{src}));
   return D({
     home:D({[CONFIG.user]:D({
@@ -3524,7 +3536,7 @@ function openPath(p){
   }
   if(n.src) return openApp('photos',p);
   if(n.bin){
-    if(n.url) window.open(n.url,'_blank','noopener'); else toast('DevilOS cannot open binary files');
+    if(n.url) window.open(n.url,'_blank','noopener'); else toast('Shard cannot open binary files');
     return;
   }
   if(ext==='md') return openApp('preview',p);
@@ -3949,7 +3961,7 @@ APPS.finder={
   build:(win,param)=>buildFinder(win,param&&FS.isDir(param)?param:HOME)
 };
 
-/* 2. Terminal: a real shell over the DevilOS file system */
+/* 2. Terminal: a real shell over the Shard file system */
 const fmtDuration=ms=>{
   const s=Math.floor(ms/1000), d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60);
   return [d&&`${d} day${d===1?'':'s'}`, h&&`${h} hour${h===1?'':'s'}`, `${m} min${m===1?'':'s'}`].filter(Boolean).join(', ')+(s<60?` (${s}s)`:'');
@@ -4017,7 +4029,7 @@ APPS.terminal={
         const g=[
           ['Files',[['ls [-la] [path]','list a folder'],['cd [path]','change folder (cd - goes back)'],['pwd','print the current folder'],['cat <file>','print a file'],['head / tail [-n N]','first or last lines'],['tree [path]','folder tree'],['find [path] [-name pat]','find files by name'],['grep [-in] <text> [file]','search inside files'],['wc [-l] <file>','count lines, words, bytes'],['mkdir [-p] <dir>','make a folder'],['touch <file>','create an empty file'],['rm [-r] <path>','move to the Trash'],['mv / cp [-r]','move or copy'],['echo <text> > file','write text to a file']]],
           ['Apps',[['open <file|folder|app>','open with the right app'],['code [path]','open in VS Code'],['history','previous commands'],['clear','clear the screen'],['exit','close this window']]],
-          ['System',[['neofetch','system info'],['htop','running windows'],['date · uptime · uname -a','time and system'],['reset --yes','restore DevilOS files to their defaults']]],
+          ['System',[['neofetch','system info'],['htop','running windows'],['date · uptime · uname -a','time and system'],['reset --yes','restore Shard files to their defaults']]],
           ['About me',[['whoami','who built this'],['resume','my resume'],['repos','my projects'],['oss','open-source contributions'],['skills','what I work with'],['contact','how to reach me']]]
         ];
         ctx.html(g.map(([t,rows])=>`<b style="color:#F5C542">${t}</b>\n`+rows.map(([c,d])=>`  ${C('#38BDF8',c.padEnd(26))} ${esc(d)}`).join('\n')).join('\n\n')+`\n\nPipes ( | ), redirects ( > >> ), &&, ;, Tab completion, and ↑/↓ history all work.`,'');
@@ -4186,19 +4198,19 @@ APPS.terminal={
       exit:{run:()=>{ setTimeout(()=>closeWin('terminal'),60); }},
       date:{run:ctx=>ctx.out(new Date().toString())},
       uptime:{run:ctx=>ctx.out(`up ${fmtDuration(Date.now()-BOOT_TIME)}, ${openWindowIds().length} window${openWindowIds().length===1?'':'s'} open`)},
-      uname:{run:ctx=>{ const b=browserInfo(); ctx.out(ctx.args.includes('-a')?`DevilOS ${CONFIG.host} 4.1-web ${b.name}-${b.ver} ${b.platform} JavaScript`:'DevilOS'); }},
+      uname:{run:ctx=>{ const b=browserInfo(); ctx.out(ctx.args.includes('-a')?`Shard ${CONFIG.host} 4.1-web ${b.name}-${b.ver} ${b.platform} JavaScript`:'Shard'); }},
       neofetch:{run:ctx=>{
         const b=browserInfo();
         let files=0, dirs=0; FS.walk('/',(p,n)=>{ n.t==='d'?dirs++:files++; });
         const info=[
           `<b style="color:#38BDF8">${CONFIG.user}</b>@<b style="color:#38BDF8">${CONFIG.host}</b>`,
           '-'.repeat(CONFIG.user.length+CONFIG.host.length+1),
-          `<b>OS:</b> DevilOS 4.1 (runs in your browser)`,
+          `<b>OS:</b> Shard 4.1 (runs in your browser)`,
           `<b>Host:</b> ${esc(b.name)} ${esc(b.ver)} on ${esc(b.platform)}`,
           `<b>Uptime:</b> ${fmtDuration(Date.now()-BOOT_TIME)}`,
           `<b>Shell:</b> dsh 1.0`,
           `<b>Display:</b> ${screen.width}×${screen.height} @ ${devicePixelRatio}x`,
-          `<b>WM:</b> DevilOS compositor (snap + tiling)`,
+          `<b>WM:</b> Shard compositor (snap + tiling)`,
           `<b>CPU:</b> ${navigator.hardwareConcurrency||'?'} logical cores`,
           `<b>Memory:</b> ${navigator.deviceMemory?navigator.deviceMemory+' GB (reported by browser)':'not reported by this browser'}`,
           `<b>Disk:</b> ${files} files, ${dirs} folders · ${fmtSize(FS.bytesUsed())} saved locally`,
@@ -4236,12 +4248,12 @@ APPS.terminal={
           const lines=list.map(c=>[c.sha.slice(0,7),new Date(c.commit.author.date).toISOString().slice(0,10),c.commit.message.split('\n')[0]]);
           ctx.html(lines.map(([s,d,m])=>`${C('#F59E0B',s)} ${C('#94A3B8',d)} ${esc(m)}`).join('\n')+`\n${C('#94A3B8','Full history:')} ${esc(repoUrl(g.repo))}/commits`,lines.map(l=>l.join(' ')).join('\n'));
         }
-        else ctx.out(`On branch HEAD\nThis folder is a read-only mirror of ${repoUrl(g.repo)}.\nLocal edits are saved in DevilOS, not pushed to GitHub.`);
+        else ctx.out(`On branch HEAD\nThis folder is a read-only mirror of ${repoUrl(g.repo)}.\nLocal edits are saved in Shard, not pushed to GitHub.`);
       }},
       sudo:{run:ctx=>ctx.out(`${CONFIG.user} is not in the sudoers file. This incident will be reported.`)},
       reset:{run:ctx=>{
-        if(ctx.args[0]!=='--yes'){ ctx.html(`${C('#FBBF24','This restores every DevilOS file to its default and empties the Trash.')}\nRun ${C('#38BDF8','reset --yes')} to continue.`,''); return; }
-        FS.reset(); cwd=HOME; prevDir=HOME; setPrompt(); ctx.out('DevilOS files restored to their defaults.');
+        if(ctx.args[0]!=='--yes'){ ctx.html(`${C('#FBBF24','This restores every Shard file to its default and empties the Trash.')}\nRun ${C('#38BDF8','reset --yes')} to continue.`,''); return; }
+        FS.reset(); cwd=HOME; prevDir=HOME; setPrompt(); ctx.out('Shard files restored to their defaults.');
       }},
       matrix:{run:()=>new Promise(res=>{
         const pre=print(''); pre.style.color='#34D399';
@@ -4378,7 +4390,7 @@ APPS.terminal={
     r.addEventListener('mouseup',()=>{ if(!getSelection().toString()) inp.focus(); });
     win.onParam=dir=>{ if(FS.isDir(dir)){ prevDir=cwd; cwd=dir; setPrompt(); print(C('#94A3B8',`cd ${FS.pretty(dir)}`)); } inp.focus(); };
     setPrompt();
-    print(`DevilOS 4.1 · dsh — ${esc(new Date().toLocaleString())}`);
+    print(`Shard 4.1 · dsh — ${esc(new Date().toLocaleString())}`);
     print(`This is ${esc(CONFIG.name)}'s machine. Look around: ${C('#38BDF8','ls')}, ${C('#38BDF8','cd Projects')}, ${C('#38BDF8','cat ~/Desktop/Resume.md')}, or ${C('#38BDF8','help')}.\n`);
     setTimeout(()=>inp.focus(),50);
     return r;
@@ -4387,11 +4399,11 @@ APPS.terminal={
 
 /* 3. Safari Browser */
 APPS.safari={
-  appName:'Safari',title:'Safari — DevilOS Space Portal',icon:ICONS.safari,w:840,h:520,
+  appName:'Safari',title:'Safari — Shard Space Portal',icon:ICONS.safari,w:840,h:520,
   build:()=>{
     const r=document.createElement('div'); r.className='safari-app';
     const pages={
-      start:{tab:'Start Page', url:'devilos.devil1716.dev', html:()=>`
+      start:{tab:'Start Page', url:'shard.devil1716.dev', html:()=>`
         <h2 class="safari-start-title">Favorites</h2>
         <div class="safari-favs">
           <button class="safari-fav-item" data-page="work"><div class="safari-fav-icon"><img loading="lazy" decoding="async" src="${ICONS.vscode}" alt=""></div><span class="safari-fav-lbl">Projects</span></button>
@@ -4403,13 +4415,13 @@ APPS.safari={
           <b style="color:#007AFF">${esc(CONFIG.name)}</b>
           <p style="font-size:13px;color:#64748B;margin-top:6px">${esc(CONFIG.role)}. ${esc(CONFIG.email)}</p>
         </div>`},
-      work:{tab:'Projects', url:'devilos.devil1716.dev/work', html:()=>`
+      work:{tab:'Projects', url:'shard.devil1716.dev/work', html:()=>`
         <h2 class="safari-start-title">Selected work</h2>
         <div style="display:flex;flex-direction:column;gap:10px">${CONFIG.work.map(([t,d,link])=>`
           <a href="${link}" ${link.startsWith('#')?'':'target="_blank" rel="noopener"'} data-internal="${link.startsWith('#')?'studio':''}" style="display:block;background:#fff;border-radius:12px;padding:14px 16px;text-decoration:none;color:#1c1917;box-shadow:0 4px 14px rgba(0,0,0,.05)">
             <b>${esc(t)}</b><p style="font-size:12.5px;color:#64748b;margin-top:4px">${esc(d)}</p>
           </a>`).join('')}</div>`},
-      studio:{tab:'3D Studio', url:'devilos.devil1716.dev/studio', html:()=>`
+      studio:{tab:'3D Studio', url:'shard.devil1716.dev/studio', html:()=>`
         <h2 class="safari-start-title">Retro computer</h2>
         <img loading="lazy" decoding="async" src="retro_computer_closeup.png" alt="Retro computer" style="width:100%;max-width:640px;border-radius:14px;display:block">
         <p style="margin-top:12px;color:#475569">The portfolio hero is the Tripo PBR model. Open the studio to orbit it.</p>
@@ -4425,7 +4437,7 @@ APPS.safari={
       <div class="safari-toolbar">
         <button class="finder-nav-btn" data-nav="back" title="Back">‹</button>
         <button class="finder-nav-btn" data-nav="forward" title="Forward">›</button>
-        <div class="safari-url-bar" id="safari-url">devilos.devil1716.dev</div>
+        <div class="safari-url-bar" id="safari-url">shard.devil1716.dev</div>
         <button class="finder-nav-btn" data-nav="home" title="Start page">⌂</button>
       </div>
       <div class="safari-body"></div>
@@ -4567,7 +4579,7 @@ APPS.code={
     }
     function status(){
       const t=cur();
-      if(!t){ stL.textContent=FS.pretty(root); stR.textContent='DevilOS'; return; }
+      if(!t){ stL.textContent=FS.pretty(root); stR.textContent='Shard'; return; }
       stL.textContent=`${FS.pretty(t.path)} · ${t.loading?'Loading…':t.error?'Error':dirty(t)?'● Unsaved':'Saved'}`;
       let ln=1, col=1;
       if(ta){ const before=ta.value.slice(0,ta.selectionStart); ln=before.split('\n').length; col=before.length-before.lastIndexOf('\n'); }
@@ -4891,14 +4903,14 @@ APPS.settings={
     r.innerHTML=`
       <div class="settings-sidebar">
         <div class="settings-user-card">
-          <img loading="lazy" decoding="async" src="logo.png?v=2" alt="">
+          <img loading="lazy" decoding="async" src="assets/shard-app.svg" alt="">
           <div><b style="font-size:12.5px;display:block">${esc(CONFIG.name)}</b><span style="font-size:10.5px;color:rgba(255,255,255,.5)">${esc(CONFIG.user)}@${esc(CONFIG.host)}</span></div>
         </div>
         <button class="settings-side-item" data-tab="wp"><img loading="lazy" decoding="async" src="${ICONS.photos}" alt=""> Wallpaper</button>
         <button class="settings-side-item" data-tab="display"><img loading="lazy" decoding="async" src="${ICONS.settings}" alt=""> Display</button>
         <button class="settings-side-item" data-tab="sound"><img loading="lazy" decoding="async" src="${ICONS.music}" alt=""> Sound</button>
         <button class="settings-side-item" data-tab="storage"><img loading="lazy" decoding="async" src="${ICONS.finder}" alt=""> Storage</button>
-        <button class="settings-side-item" data-tab="about"><img loading="lazy" decoding="async" src="logo.png?v=2" alt=""> About</button>
+        <button class="settings-side-item" data-tab="about"><img loading="lazy" decoding="async" src="assets/shard-app.svg" alt=""> About</button>
       </div>
       <div class="settings-pane" id="settings-pane"></div>`;
     const pane=r.querySelector('#settings-pane');
@@ -4925,16 +4937,18 @@ APPS.settings={
         FS.list(HOME+'/Projects').forEach(e=>{ if(e.node.synced) mirrored++; });
         const trashN=FS.node(TRASH), inTrash=trashN?Object.keys(trashN.c).length:0;
         const row=(k,v)=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08)"><span style="color:rgba(255,255,255,.65)">${k}</span><b>${v}</b></div>`;
-        pane.innerHTML=H('Storage')+P('DevilOS keeps its files in this browser\'s local storage. Project folders mirror GitHub on demand and only cache their file lists.')
+        pane.innerHTML=H('Storage')+P('Shard keeps its files in this browser\'s local storage. Project folders mirror GitHub on demand and only cache their file lists.')
           +`<div style="margin-top:14px;font-size:13px">${row('Files',files)}${row('Folders',folders)}${row('Content size',fmtSize(bytes))}${row('Saved in browser',fmtSize(FS.bytesUsed()))}${row('Repos mirrored from GitHub',`${mirrored} of ${CONFIG.work.length}`)}${row('Items in Trash',inTrash)}</div>`
-          +btn('st-trash','Empty Trash')+btn('st-reset','Reset DevilOS…',true);
+          +btn('st-trash','Empty Trash')+btn('st-reset','Reset Shard…',true);
         pane.querySelector('#st-trash').onclick=emptyTrashFlow;
-        pane.querySelector('#st-reset').onclick=()=>askConfirm('Reset DevilOS?','Every file you created or edited is deleted and the original files come back. Settings are kept.','Reset').then(ok=>{ if(ok){ FS.reset(); toast('DevilOS files reset'); } });
+        pane.querySelector('#st-reset').onclick=()=>askConfirm('Reset Shard?','Every file you created or edited is deleted and the original files come back. Settings are kept.','Reset').then(ok=>{ if(ok){ FS.reset(); toast('Shard files reset'); } });
       },
       about:()=>{
-        pane.innerHTML=H('About DevilOS')+`<p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.78);margin-top:10px">DevilOS is the desktop mode of ${esc(CONFIG.name)}'s portfolio. It runs entirely in your browser: a window manager, a file system saved in local storage, a shell, an editor, and project folders that mirror ${esc(CONFIG.name)}'s public GitHub repositories.</p>
+        pane.innerHTML=H('About Shard')+`<p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.78);margin-top:10px">Shard is the desktop mode of ${esc(CONFIG.name)}'s portfolio. It runs entirely in your browser: a window manager, a file system saved in local storage, a shell, an editor, and project folders that mirror ${esc(CONFIG.name)}'s public GitHub repositories.</p>
           <div style="margin-top:14px;font-size:13px;line-height:1.8">
             <div><b>Built by:</b> ${esc(CONFIG.name)} (@${esc(CONFIG.handle)})</div>
+        <div><b>Why Shard?</b> ${esc(BRAND.osWhy)}</div>${BRAND.assistantWhy?`
+        <div><b>Why ${esc(BRAND.assistant)}?</b> ${esc(BRAND.assistantWhy)}</div>`:''}
             <div><b>Email:</b> ${esc(CONFIG.email)}</div>
             <div><b>Runs on:</b> ${esc(`${browserInfo().name} ${browserInfo().ver}`.trim())} · ${esc(browserInfo().platform)}</div>
           </div>`+btn('settings-open-about','Open About window')+btn('settings-resume','Open Resume');
@@ -5042,8 +5056,8 @@ APPS.mail={
     const r=document.createElement('div'); r.className='mail-app';
     const inbox=[
       {from:CONFIG.name, subject:'Open to remote internships', preview:'Backend or Agentic AI, starting now', body:`Hi, I'm ${CONFIG.name.split(' ')[0]}. I'm looking for a remote Backend or Agentic AI internship.\n\nI build agent runtimes that operate real phones, offline Android systems, and Python backends, and I've had ${CONFIG.mergedPRs} pull requests merged into other people's open-source projects.\n\nIf you're hiring, use Compose on the left. It opens your own mail app with a message addressed to ${CONFIG.email}.`},
-      {from:'DevilOS', subject:'This inbox is read-only', preview:'Compose sends through your mail app', body:`DevilOS runs entirely in your browser, so it can't send email by itself.\n\nCompose fills in a message and hands it to your default mail app through a mailto: link. Nothing is sent until you press Send there.`},
-      {from:'DevilOS', subject:'Where to find things', preview:'Resume, projects, notes', body:`Resume: ~/Desktop/Resume.md\nProjects: ~/Projects (each folder mirrors a GitHub repo)\nNotes: ~/Notes\nContact details: ~/Documents/Contact.txt\n\nIn Terminal, try: resume, repos, or ls ~/Projects`}
+      {from:'Shard', subject:'This inbox is read-only', preview:'Compose sends through your mail app', body:`Shard runs entirely in your browser, so it can't send email by itself.\n\nCompose fills in a message and hands it to your default mail app through a mailto: link. Nothing is sent until you press Send there.`},
+      {from:'Shard', subject:'Where to find things', preview:'Resume, projects, notes', body:`Resume: ~/Desktop/Resume.md\nProjects: ~/Projects (each folder mirrors a GitHub repo)\nNotes: ~/Notes\nContact details: ~/Documents/Contact.txt\n\nIn Terminal, try: resume, repos, or ls ~/Projects`}
     ];
     r.innerHTML=`
       <div class="mail-list"><div class="mail-toolbar"><button data-a="compose">✎ Compose</button></div>${inbox.map((m,i)=>`<button class="mail-item" data-i="${i}"><b>${esc(m.from)}</b><em>${esc(m.subject)}</em><span>${esc(m.preview)}</span></button>`).join('')}</div>
@@ -5181,7 +5195,7 @@ APPS.maps={
     const r=document.createElement('div'); r.className='map-app';
     const nodes=[
       ['28%','42%','3D Studio','Retro computer','3d'],
-      ['58%','30%','DevilOS','This desktop','os'],
+      ['58%','30%','Shard','This desktop','os'],
       ['72%','62%','GitHub','Devil1716','github'],
       ['40%','70%','Portfolio','Selected work','site'],
       ['18%','68%','Mail','Collaboration','mail']
@@ -5199,7 +5213,7 @@ APPS.maps={
 
 /* App Store */
 APPS.appstore={
-  appName:'App Store',title:'DevilOS Apps',icon:ICONS.appstore,w:760,h:500,
+  appName:'App Store',title:'Shard Apps',icon:ICONS.appstore,w:760,h:500,
   build:()=>{
     const apps=[
       ['finder','Files',ICONS.finder,'Browse, rename, drag, and trash files. Project folders mirror GitHub.'],
@@ -5217,7 +5231,7 @@ APPS.appstore={
       ['settings','Settings',ICONS.settings,'Wallpaper, display, sound, and storage.']
     ];
     const r=document.createElement('div'); r.className='store-app';
-    r.innerHTML=`<h3 style="font-size:20px">Installed</h3><p style="font-size:12px;color:rgba(255,255,255,.55);margin-top:4px">Everything in DevilOS is already installed.</p>
+    r.innerHTML=`<h3 style="font-size:20px">Installed</h3><p style="font-size:12px;color:rgba(255,255,255,.55);margin-top:4px">Everything in Shard is already installed.</p>
       <div class="store-grid">${apps.map(([id,name,icon,blurb])=>`
         <article class="store-card"><img loading="lazy" decoding="async" src="${icon}" alt=""><b>${name}</b><p>${blurb}</p><button data-app="${id}">Open</button></article>`).join('')}</div>`;
     r.querySelectorAll('[data-app]').forEach(b=>b.onclick=()=>openApp(b.dataset.app));
@@ -5227,7 +5241,7 @@ APPS.appstore={
 
 /* Games */
 APPS.games={
-  appName:'Games',title:'DevilOS Games',icon:ICONS.games,w:760,h:520,
+  appName:'Games',title:'Shard Games',icon:ICONS.games,w:760,h:520,
   build:()=>{
     const r=document.createElement('div'); r.className='games-app';
     r.innerHTML=`
@@ -5480,18 +5494,20 @@ APPS.games={
   }
 };
 
-/* 9. About DevilOS */
+/* 9. About Shard */
 APPS.about={
-  appName:'About DevilOS',title:'About DevilOS Trinity',icon:'logo.png?v=2',w:560,h:420,
+  appName:'About Shard',title:'About Shard',icon:'assets/shard-app.svg',w:560,h:420,
   build:()=>{
     const r=document.createElement('div');
     r.style.cssText='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;text-align:center;color:#fff;background:linear-gradient(135deg,#120e1a,#0a0812)';
     r.innerHTML=`
-      <div style="width:200px;height:200px;margin-bottom:8px;display:grid;place-items:center"><img loading="lazy" decoding="async" src="logo.png?v=2" style="width:100%;height:100%;object-fit:contain" alt=""></div>
-      <h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">Devil<span style="color:var(--devil-red)">OS</span> Trinity</h2>
+      <div style="width:200px;height:200px;margin-bottom:8px;display:grid;place-items:center"><img loading="lazy" decoding="async" src="assets/shard-app.svg" style="width:100%;height:100%;object-fit:contain" alt=""></div>
+      <h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">Shard</h2>
       <p style="font-size:12.5px;color:var(--cyan);margin-top:2px;font-weight:600">A small desktop OS that runs in your browser</p>
       <div style="margin-top:16px;font-size:12px;line-height:1.8;color:rgba(255,255,255,.85);text-align:left;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:12px 20px;border-radius:12px">
         <div><b>Built by:</b> ${esc(CONFIG.name)} (@${esc(CONFIG.handle)})</div>
+        <div><b>Why Shard?</b> ${esc(BRAND.osWhy)}</div>${BRAND.assistantWhy?`
+        <div><b>Why ${esc(BRAND.assistant)}?</b> ${esc(BRAND.assistantWhy)}</div>`:''}
         <div><b>Made of:</b> one HTML file, vanilla JavaScript, and Three.js for the studio</div>
         <div><b>Files:</b> saved in this browser's local storage</div>
         <div><b>Projects:</b> mirrored live from github.com/${esc(GH_USER)}</div>
@@ -5501,12 +5517,12 @@ APPS.about={
   }
 };
 
-/* Sable: the assistant as a first-class desktop app */
+/* The assistant as a first-class desktop app */
 APPS.assistant={
-  appName:'Sable',title:'Sable — ask about Sharan',icon:SABLE_ICON,w:760,h:600,
+  appName:BRAND.assistant,title:BRAND.assistant+' — ask about Sharan',icon:ASSISTANT_ICON,w:760,h:600,
   build:()=>{
     const host=document.createElement('div'); host.style.cssText='height:100%;width:100%';
-    whenSable(()=>Sable.mountChat(host,{variant:'compact',resume:true}));
+    whenAssistant(()=>AssistantUI.mountChat(host,{variant:'compact',resume:true}));
     return host;
   }
 };
@@ -5514,7 +5530,7 @@ APPS.assistant={
 /* 10. Trash */
 APPS.trash={appName:'Trash',title:'Trash',icon:TRASH_ICON,w:720,h:440,build:win=>buildFinder(win,TRASH)};
 
-// Portfolio is the default landing. 3D studio and DevilOS stay one click away.
+// Portfolio is the default landing. 3D studio and Shard stay one click away.
 </script>
 </body>
 </html>

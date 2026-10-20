@@ -1,4 +1,4 @@
-/* DevilOS server: static files + the Sable assistant API.
+/* Shard server: static files + the assistant API (names live in assistant/core.js BRAND).
    Run: node server.js   (see docs/ASSISTANT.md for configuration) */
 'use strict';
 const http = require('http');
@@ -191,6 +191,6 @@ const server = http.createServer((req, res) => {
 });
 
 if (require.main === module) {
-  server.listen(PORT, '0.0.0.0', () => console.log(`DevilOS on http://localhost:${PORT} · assistant: ${LLM.key ? 'live (' + LLM.model + ')' : 'offline mode (no LLM_API_KEY)'}`));
+  server.listen(PORT, '0.0.0.0', () => console.log(`${Core.BRAND.os} on http://localhost:${PORT} · assistant: ${LLM.key ? 'live (' + LLM.model + ')' : 'offline mode (no LLM_API_KEY)'}`));
 }
 module.exports = { server, validate, rateLimited, LIMITS };

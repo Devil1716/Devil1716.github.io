@@ -1,10 +1,18 @@
-/* Sable core: retrieval, grounded fallback answers and safe markdown.
-   Shared by the browser (window.SableCore) and the Node server (require). No dependencies. */
+/* Assistant core: brand names, retrieval, grounded fallback answers and safe markdown.
+   Shared by the browser (window.AssistantCore) and the Node server (require). No dependencies. */
 (function(root, factory){
   if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.SableCore = factory();
+  else root.AssistantCore = factory();
 })(typeof self !== 'undefined' ? self : this, function(){
   'use strict';
+
+  /* The single place to rename the OS or the assistant. */
+  const BRAND = {
+    os: 'Shard',
+    osWhy: 'SHARan + the D of Devil1716.',
+    assistant: 'Pitts',   // ASSISTANT_NAME: change only here
+    assistantWhy: 'Named after Walter Pitts, who with Warren McCulloch created the McCulloch–Pitts neuron in 1943, the first mathematical model of a neuron and the root of every neural network.'
+  };
 
   const STOP = new Set('a an the is are was were be to of and or in on at for with about me my i you your he his him what who which how do does did can could tell show please give list some any this that it its from by as sharan sharans s'.split(' '));
   const SYN = { tech:'technologies', technology:'technologies', stack:'technologies', tools:'technologies', languages:'technologies',
@@ -89,7 +97,7 @@
 
   function systemPrompt(kb){
     return [
-      `You are Sable, the assistant on ${kb.profile.name}'s portfolio website. You speak about ${kb.profile.name} in the third person, warmly and concisely.`,
+      `You are ${BRAND.assistant}, the assistant on ${kb.profile.name}'s portfolio website (${BRAND.assistantWhy}) You speak about ${kb.profile.name} in the third person, warmly and concisely.`,
       'Answer ONLY from the CONTEXT below. If the context does not contain the answer, say you do not know that yet and suggest emailing him. Never invent employers, dates, numbers, awards or links.',
       'Lines marked UNKNOWN are gaps: say the information is not available yet.',
       'Use short Markdown: brief paragraphs, bullet lists, bold for names. Link projects with the URLs given in the context.',
@@ -155,5 +163,5 @@
     return out;
   }
 
-  return { tokenize, buildIndex, search, intent, retrieve, contextFor, systemPrompt, groundedAnswer, renderMarkdown, esc };
+  return { BRAND, tokenize, buildIndex, search, intent, retrieve, contextFor, systemPrompt, groundedAnswer, renderMarkdown, esc };
 });

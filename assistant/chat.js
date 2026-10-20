@@ -1,11 +1,13 @@
-/* Sable chat UI. mountChat(el, {variant:'page'|'compact', nav}) — vanilla JS, no build step. */
+/* Assistant chat UI. mountChat(el, {variant:'page'|'compact', nav}) — vanilla JS, no build step. */
 (function(){
   'use strict';
-  const Core = window.SableCore;
-  const KEY = 'sable.convos.v1', THEME_KEY = 'sable.theme';
+  const Core = window.AssistantCore;
+  const KEY = 'assistant.convos.v1', THEME_KEY = 'assistant.theme';
+  // one-time migration from the previous storage keys
+  try { [['sable.convos.v1',KEY],['sable.theme',THEME_KEY]].forEach(([o,n])=>{ const v=localStorage.getItem(o); if (v!==null && localStorage.getItem(n)===null) localStorage.setItem(n,v); localStorage.removeItem(o); }); } catch {}
   const MAX_CONVOS = 30;
-  const API = (document.querySelector('meta[name="sable-api"]')?.content || '/api').replace(/\/+$/,'');
-  const NAME = 'Sable';
+  const API = ((document.querySelector('meta[name="assistant-api"]') || document.querySelector('meta[name="sable-api"]'))?.content || '/api').replace(/\/+$/,'');
+  const NAME = Core.BRAND.assistant;
   const PROMPTS = [
     ['Who am I?', 'A quick introduction to Sharan'],
     ['Explore my projects.', 'Agents, Android, backend'],
@@ -26,7 +28,7 @@
     cube:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>',
     book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg>'
   };
-  const MARK = '<svg class="sb-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--sb-text)"/><circle cx="16" cy="16" r="7.5" fill="var(--sb-accent)"/><circle cx="19.5" cy="13" r="5.5" fill="var(--sb-text)"/></svg>';
+  const MARK = '<svg class="sb-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#2c2c35"/><g transform="translate(6.4 6.4) scale(.3)"><path d="M13 16 34 32M13 32h21M13 48l21-16M40 32h12" stroke="#f4f4f6" stroke-width="4.5" stroke-linecap="round"/><circle cx="13" cy="16" r="5" fill="#f4f4f6"/><circle cx="13" cy="32" r="5" fill="#f4f4f6"/><circle cx="13" cy="48" r="5" fill="#f4f4f6"/><circle cx="54" cy="32" r="5" fill="#f4f4f6"/><circle cx="36" cy="32" r="9" fill="#f0714f"/></g></svg>';
 
   /* ---------- theme ---------- */
   const Theme = {
@@ -104,7 +106,7 @@
         <div class="sb-label" id="sb-hl">History</div>
         <nav class="sb-hist" aria-labelledby="sb-hl"></nav>
         <div class="sb-label">Explore</div>
-        ${nav.studio?`<button class="sb-studio" data-nav="studio" aria-label="Enter the 3D studio"><img src="retro_computer_closeup.png" alt="" loading="lazy" decoding="async" width="480" height="270"><span>3D studio — click the computer to boot DevilOS</span></button>`:''}
+        ${nav.studio?`<button class="sb-studio" data-nav="studio" aria-label="Enter the 3D studio"><img src="retro_computer_closeup.png" alt="" loading="lazy" decoding="async" width="480" height="270"><span>3D studio — click the computer to boot Shard</span></button>`:''}
         ${nav.os?`<button class="sb-btn" data-nav="os">${ICON.os}Desktop OS</button>`:''}
         ${nav.site?`<button class="sb-btn" data-nav="site">${ICON.book}Sketchbook portfolio</button>`:''}
       </aside>
@@ -160,7 +162,8 @@
     function welcome(){
       feed.innerHTML = '';
       const w = h(`<section class="sb-welcome">${MARK}<h2>Hi, I'm ${NAME}. Ask me anything about <em>Sharan</em>.</h2>
-        <p>Sharan S is a B.Tech AI/ML student at Amity University Bengaluru who builds agents, Android tools and backend systems. I know his projects, stack and open-source work.</p>
+        <p>Sharan S is a B.Tech AI/ML student at Amity University Bengaluru who builds agents, Android tools and backend systems. I know his projects, stack and open-source work.</p>${Core.BRAND.assistantWhy?`
+        <p class="sb-why">${Core.esc(Core.BRAND.assistantWhy)}</p>`:''}
         <div class="sb-chips"></div></section>`);
       PROMPTS.forEach(([q, sub]) => { const c = h(`<button type="button" class="sb-chip"></button>`); c.textContent = q; c.appendChild(h(`<small></small>`)).textContent = sub; c.onclick = () => submit(q); w.querySelector('.sb-chips').appendChild(c); });
       feed.appendChild(w);
@@ -249,5 +252,5 @@
     return { el: root, ask: submit, focus: () => ta.focus(), destroy(){ listeners.delete(onStore); root.remove(); } };
   }
 
-  window.Sable = { mountChat, Theme, Store, name: NAME };
+  window.AssistantUI = { mountChat, Theme, Store, name: NAME };
 })();

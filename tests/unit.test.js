@@ -62,3 +62,17 @@ test('api: health, chat stream, size limit, path traversal', async () => {
     assert.equal((await fetch(base + '/.gitignore')).status, 404);
   } finally { server.close(); require('fs').unwatchFile(require('path').join(__dirname, '..', 'assistant', 'knowledge.json')); }
 });
+
+test('no old product names in shipped files', () => {
+  const fs = require('fs'), path = require('path');
+  const root = path.join(__dirname, '..');
+  const files = ['index.html', 'manifest.webmanifest', 'README.md', 'docs/ASSISTANT.md', 'server.js', 'package.json',
+    ...fs.readdirSync(path.join(root, 'assistant')).map(f => 'assistant/' + f), ...fs.readdirSync(path.join(root, 'assets')).filter(f => f.endsWith('.svg')).map(f => 'assets/' + f)];
+  const OLD = /\b(Sable|SABLE|Arya|ARYA|Sharanix|SHARANIX|Bose|BOSE|DevilOS|DEVILOS|Devil OS|Trinity|TRINITY)\b/;
+  for (const f of files) { const m = fs.readFileSync(path.join(root, f), 'utf8').match(OLD); assert.equal(m, null, `${f} still says ${m && m[0]}`); }
+});
+test('brand names come from one constant', () => {
+  assert.equal(Core.BRAND.os, 'Shard');
+  assert.ok(Core.BRAND.assistant);
+  assert.ok(Core.systemPrompt(kb).includes(`You are ${Core.BRAND.assistant},`));
+});

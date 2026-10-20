@@ -1,10 +1,12 @@
-# Sable: the assistant, adaptive OS and how to run it
+# Shard: the assistant, adaptive OS and how to run it
+
+**Names.** The OS is **Shard** (SHARan + the D of Devil1716). The assistant is **Pitts**, named after Walter Pitts, who with Warren McCulloch created the McCulloch–Pitts neuron (1943), the first mathematical model of a neuron. Both names live in one place: `BRAND` in `assistant/core.js` (`BRAND.assistant` is the ASSISTANT_NAME; `assistantWhy` adds the one-line "Why <name>?" note). Change them there and every screen, label and the system prompt follow. Brand assets are in `assets/` (`shard.svg`, `shard-app.svg`, `favicon.svg`, `assistant.svg`, `assistant-app.svg`, PNG icons) and `manifest.webmanifest`.
 
 ## What was reused (refactor, not rebuild)
 | Existing piece | What happened to it |
 |---|---|
-| DevilOS desktop (`#desktop`, window manager, dock, Finder, Terminal, Spotlight, tiling, lock screen) | Kept as is. Sable was added as a first-class app (`APPS.assistant`), a desktop icon, a dock icon and **Alt+A**. |
-| 3D studio (`init3D`, `retro_computer.glb`, click-the-screen-to-boot) | Kept. Opened from the 3D card in Sable's sidebar or the mode pill. Now skipped on phones, without WebGL, with reduced motion and on low-power devices (≤2 cores or ≤2 GB) — those go to the OS instead. Three.js still loads only on demand. |
+| Shard desktop (`#desktop`, window manager, dock, Finder, Terminal, Spotlight, tiling, lock screen) | Kept as is. the assistant was added as a first-class app (`APPS.assistant`), a desktop icon, a dock icon and **Alt+A**. |
+| 3D studio (`init3D`, `retro_computer.glb`, click-the-screen-to-boot) | Kept. Opened from the 3D card in the assistant's sidebar or the mode pill. Now skipped on phones, without WebGL, with reduced motion and on low-power devices (≤2 cores or ≤2 GB) — those go to the OS instead. Three.js still loads only on demand. |
 | Sketchbook portfolio (`#site`) | Kept as a secondary view ("Sketchbook portfolio"). |
 | `CONFIG`, `PROJECT_DOCS`, About/Stack copy | Became the source of `assistant/knowledge.json` (no new facts were invented). |
 | Mode pill / `goMode()` | Extended with `chat` (desktop default) and `mobile` (phones). |
@@ -17,8 +19,8 @@ assistant/
   knowledge.json      the editable knowledge base (single source of truth)
   core.js             shared by browser + server: BM25 retrieval, intent routing,
                       grounded answers, system prompt, sanitizing Markdown renderer
-  chat.js / chat.css  Sable UI (page, window and phone variants), history, themes
-  mobile-os.js/.css   DevilOS Mobile: Android-inspired shell for phones/tablets
+  chat.js / chat.css  the assistant UI (page, window and phone variants), history, themes
+  mobile-os.js/.css   Shard Mobile: Android-inspired shell for phones/tablets
 server.js             static files + /api/health + /api/chat (SSE streaming)
 tests/                unit + API tests (node --test), Playwright journeys (e2e.cjs)
 ```
@@ -53,12 +55,12 @@ PLAYWRIGHT=/path/to/@playwright/test npm run e2e   # journeys + screenshots (ser
 ```
 
 ### Deploy
-GitHub Pages is static, so on `devil1716.github.io` Sable runs in **offline mode**. For AI mode, either:
+GitHub Pages is static, so on `devil1716.github.io` the assistant runs in **offline mode**. For AI mode, either:
 1. Host the whole site with `node server.js` (Render, Railway, Fly.io, a VPS) and set `LLM_API_KEY`; or
-2. Keep Pages for the site, deploy `server.js` anywhere, set `ALLOWED_ORIGINS=https://devil1716.github.io`, and change `<meta name="sable-api" content="/api">` in `index.html` to `https://<your-backend>/api`.
+2. Keep Pages for the site, deploy `server.js` anywhere, set `ALLOWED_ORIGINS=https://devil1716.github.io`, and change `<meta name="assistant-api" content="/api">` in `index.html` to `https://<your-backend>/api`.
 
 ## Editing the knowledge base
-Edit `assistant/knowledge.json`; the server reloads it automatically. Each entry: `id`, `type` (about, education, experience, skill, project, achievements, interests, goals, contact, faq), `title`, `text` (verified facts only), optional `tags`, `links` (`[label, url]`), and `todo` (what is still missing; Sable says it doesn't know).
+Edit `assistant/knowledge.json`; the server reloads it automatically. Each entry: `id`, `type` (about, education, experience, skill, project, achievements, interests, goals, contact, faq), `title`, `text` (verified facts only), optional `tags`, `links` (`[label, url]`), and `todo` (what is still missing; the assistant says it doesn't know).
 
 **Open TODOs for Sharan**
 - Quickoo: dates, what the product does, what you own there.
@@ -70,16 +72,16 @@ Edit `assistant/knowledge.json`; the server reloads it automatically. Each entry
 ## Path to fine-tuning (not done; documented only)
 No model has been fine-tuned. Retrieval over a small, editable knowledge base is the right tool at this size: it stays correct when facts change and needs no training data. Fine-tuning would only be worth it for *tone/style*, never for facts. If you want it later:
 1. Log anonymised questions (opt-in, no personal data) to see what visitors actually ask.
-2. Write 200–500 reviewed Q/A pairs in Sable's voice, grounded in `knowledge.json` (JSONL `{"messages":[system,user,assistant]}`).
+2. Write 200–500 reviewed Q/A pairs in the assistant's voice, grounded in `knowledge.json` (JSONL `{"messages":[system,user,assistant]}`).
 3. Fine-tune a small model (OpenAI fine-tuning, or LoRA on an open model) and keep retrieval in front of it.
 4. Evaluate against a held-out set for hallucinations before switching `LLM_MODEL`.
 
 ## Accessibility & performance notes
-- Keyboard: every control is a real button; visible focus rings; Enter sends, Shift+Enter newlines; Esc closes the drawer / goes back on mobile; Alt+A opens Sable in the desktop OS; Alt+H returns to the chat from the OS, 3D or sketchbook.
+- Keyboard: every control is a real button; visible focus rings; Enter sends, Shift+Enter newlines; Esc closes the drawer / goes back on mobile; Alt+A opens the assistant in the desktop OS; Alt+H returns to the chat from the OS, 3D or sketchbook.
 - Reduced motion turns off message, typing and shell animations and skips the 3D studio.
 - Touch targets in the chat and the mobile shell are ≥ 44–48px; safe-area insets are respected; the composer stays above the on-screen keyboard (`100dvh`, `scrollIntoView`).
 - Markdown is escaped first, then a small allow-list of tags is added; links are limited to http(s), mailto and in-page anchors and open with `rel="noopener noreferrer"`.
 - The assistant scripts are `defer`red and tiny; Three.js and the 3D model load only when the studio is opened.
 
-## DevilOS Mobile (One UI-inspired)
-Original design and icons, no vendor assets. Large centred titles that collapse into the toolbar as you scroll; grouped 26px cards; squircle icons in solid colours; two home pages with dots, a dock and a bottom "Ask Sable" pill; swipe down (or tap the status bar) for the quick panel (dark mode, less motion, recents, email, brightness); swipe up for the app drawer with search; swipe up from the handle to go home, or swipe up and hold for recents; swipe from the left edge or press Esc to go back. Checked with `tests/oneui-shots.cjs`, which measures WCAG AA contrast and ≥48px targets on every screen.
+## Shard Mobile (One UI-inspired)
+Original design and icons, no vendor assets. Large centred titles that collapse into the toolbar as you scroll; grouped 26px cards; squircle icons in solid colours; two home pages with dots, a dock and a bottom "Ask the assistant" pill; swipe down (or tap the status bar) for the quick panel (dark mode, less motion, recents, email, brightness); swipe up for the app drawer with search; swipe up from the handle to go home, or swipe up and hold for recents; swipe from the left edge or press Esc to go back. Checked with `tests/oneui-shots.cjs`, which measures WCAG AA contrast and ≥48px targets on every screen.

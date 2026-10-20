@@ -22,7 +22,7 @@ const AUDIT = () => {
   for (const theme of ['light','dark']) {
     const ctx = await b.newContext({ viewport:{width:390,height:844}, isMobile:true, hasTouch:true, deviceScaleFactor:2, colorScheme:theme });
     const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
-    await p.addInitScript(t => localStorage.setItem('sable.theme', t), theme);
+    await p.addInitScript(t => localStorage.setItem('assistant.theme', t), theme);
     await p.goto(BASE + '/?mode=home'); await p.waitForSelector('#mobile-os.on .ou-home'); await p.waitForTimeout(600);
     const shot = async (n) => { await p.waitForTimeout(650); await p.screenshot({ path:`${OUT}/${theme}-${n}.png` }); const a = await p.evaluate(AUDIT); if (a.bad.length || a.small.length) { issues++; console.log(theme, n, JSON.stringify(a)); } };
     await shot('01-home');
@@ -40,10 +40,10 @@ const AUDIT = () => {
       if (id === 'projects') { await p.evaluate(() => document.querySelector('.ou-scroll').scrollTo({ top:0 })); await p.locator('#mobile-os .ou-win [data-sub]').nth(1).click(); await shot('07b-project-detail'); await p.keyboard.press('Escape'); await p.waitForTimeout(300); }
       await p.keyboard.press('Escape'); await p.waitForTimeout(350);
     }
-    await p.locator('#mobile-os .ou-ask').click(); await p.waitForSelector('#mobile-os .ou-win.on .sb-welcome'); await shot('20-sable-empty');
-    await p.locator('#mobile-os .sb-chip').nth(1).click(); await p.waitForSelector('#mobile-os .sb-msg.bot .sb-meta', { timeout:15000 }); await shot('21-sable-answer');
+    await p.locator('#mobile-os .ou-ask').click(); await p.waitForSelector('#mobile-os .ou-win.on .sb-welcome'); await shot('20-assistant-empty');
+    await p.locator('#mobile-os .sb-chip').nth(1).click(); await p.waitForSelector('#mobile-os .sb-msg.bot .sb-meta', { timeout:15000 }); await shot('21-assistant-answer');
     await p.route('**/api/chat', r => r.fulfill({ status:429, contentType:'application/json', body:'{"error":"Too many questions. Try again in 60s."}' }));
-    await p.locator('#mobile-os textarea').fill('What are my skills?'); await p.keyboard.press('Enter'); await p.waitForSelector('#mobile-os .sb-error'); await shot('22-sable-error');
+    await p.locator('#mobile-os textarea').fill('What are my skills?'); await p.keyboard.press('Enter'); await p.waitForSelector('#mobile-os .sb-error'); await shot('22-assistant-error');
     await p.keyboard.press('Escape'); await p.waitForTimeout(300);
     await p.evaluate(() => MobileOS.openRecents()); await shot('23-recents');
     if (errs.length) { issues++; console.log('page errors', errs); }

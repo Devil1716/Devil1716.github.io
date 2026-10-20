@@ -10,6 +10,12 @@
 <meta property="og:image" content="https://devil1716.github.io/retro_computer_closeup.png">
 <meta property="og:type" content="website">
 <link rel="icon" href="logo.png?v=2">
+<meta name="sable-api" content="/api">
+<link rel="stylesheet" href="assistant/chat.css">
+<link rel="stylesheet" href="assistant/mobile-os.css">
+<script src="assistant/core.js" defer></script>
+<script src="assistant/chat.js" defer></script>
+<script src="assistant/mobile-os.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Gochi+Hand&family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -160,6 +166,11 @@ a{color:inherit}
 /* ============ MODE PILL ============ */
 .mode-pill{position:fixed;right:18px;bottom:18px;z-index:1200;display:none;background:rgba(20,20,30,.8);border:1px solid rgba(255,255,255,.18);border-radius:999px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.5);backdrop-filter:blur(24px) saturate(1.8)}
 .mode-pill.on{display:flex}
+#chat-home{position:fixed;inset:0;z-index:850;display:none}
+#chat-home.on{display:block}
+body.m-mobile .mode-pill{display:none!important}
+.mode-pill button{min-height:44px}
+.mode-pill button:focus-visible{outline:2px solid #fff;outline-offset:-3px}
 .mode-pill button{background:transparent;border:0;color:rgba(255,255,255,.7);font-family:var(--sys-font);font-size:11px;letter-spacing:.05em;padding:8px 16px;transition:.2s;font-weight:500}
 .mode-pill button.on{background:#007AFF;color:#FFF;font-weight:700}
 .mode-pill button:hover:not(.on){color:#FFF;background:rgba(255,255,255,.1)}
@@ -994,6 +1005,7 @@ a{color:inherit}
 /* Toast Hint */
 #hint{position:fixed;left:50%;bottom:24px;transform:translate(-50%,180%);z-index:9990;background:rgba(24,24,34,.95);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:10px 24px;font-size:12.5px;box-shadow:0 12px 35px rgba(0,0,0,.6);backdrop-filter:blur(20px);transition:transform .4s var(--mac-ease);pointer-events:none}
 #hint.show{transform:translate(-50%,0)}
+#hint:not(.show){opacity:0}
 #hint b{color:#38BDF8}
 </style>
 </head>
@@ -1045,11 +1057,17 @@ a{color:inherit}
 <div id="flash"></div>
 
 <!-- ============ MODE PILL SWITCHER ============ -->
-<div class="mode-pill on" id="mode-pill">
+<div class="mode-pill on" id="mode-pill" role="group" aria-label="Switch view">
+  <button data-mode="chat">ASK SABLE</button>
   <button data-mode="3d">3D STUDIO</button>
   <button data-mode="os">DEVILOS</button>
   <button class="on" data-mode="site">PORTFOLIO</button>
 </div>
+
+<!-- ============ SABLE: chatbot-first home (desktop) ============ -->
+<div id="chat-home" aria-label="Sable, Sharan's assistant"></div>
+<!-- ============ DEVILOS MOBILE (phones) ============ -->
+<div id="mobile-os" aria-hidden="true"></div>
 
 <!-- ============ SKETCHBOOK PORTFOLIO ============ -->
 <div id="site" class="on">
@@ -1325,6 +1343,10 @@ a{color:inherit}
         <span class="dock-tooltip">DevilOS Start Menu</span>
       </button>
       <div class="dock-sep"></div>
+      <button class="dock-btn" data-app="assistant">
+        <img class="dock-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23161619'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='%23f0714f'/%3E%3Ccircle cx='19.5' cy='13' r='5.5' fill='%23161619'/%3E%3C/svg%3E" alt="Sable assistant">
+        <span class="dock-tooltip">Sable — ask about Sharan (Alt+A)</span>
+      </button>
       <!-- 2. Finder -->
       <button class="dock-btn running" data-app="finder">
         <img class="dock-icon" src="https://cdn.jsdelivr.net/gh/PuruVJ/macos-web/public/app-icons/finder/256.png" alt="Finder">
@@ -1518,8 +1540,53 @@ function toast(m,ms=3600){
 
 /* ---------- Mode Switching ---------- */
 let mode='site', sceneVisible=false, siteStarted=false;
+/* ---------- Adaptive shell: phones get DevilOS Mobile, larger screens get Sable + the desktop OS ---------- */
+const DEVICE={
+  // Capability-based: a small viewport, or a touch-first device whose narrow side is tablet-sized and held in portrait.
+  isPhoneLike(){
+    const coarse=matchMedia('(pointer:coarse)').matches && !matchMedia('(any-pointer:fine)').matches;
+    const w=innerWidth, h=innerHeight;
+    return w<700 || (coarse && w<1024 && h>w);
+  },
+  // 3D is skipped on phones, without WebGL, with reduced motion, or on low-power hardware.
+  canRun3D(){
+    if(this.isPhoneLike()) return false;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+    if((navigator.deviceMemory&&navigator.deviceMemory<=2)||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=2)) return false;
+    try{ const c=document.createElement('canvas'); return !!(c.getContext('webgl2')||c.getContext('webgl')); }catch(e){ return false; }
+  }
+};
+const SABLE_ICON="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23161619'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='%23f0714f'/%3E%3Ccircle cx='19.5' cy='13' r='5.5' fill='%23161619'/%3E%3C/svg%3E";
+function whenSable(fn){ if(window.Sable&&window.MobileOS) fn(); else document.addEventListener('DOMContentLoaded',fn,{once:true}); }
+let chatHome=null;
+function mountChatHome(){
+  if(chatHome) return;
+  chatHome=Sable.mountChat($('#chat-home'),{variant:'page',nav:{
+    studio:()=>DEVICE.canRun3D()?goMode('3d'):goMode('os'),
+    os:()=>startBootAnimation(()=>goMode('os')),
+    site:()=>goMode('site')
+  }});
+}
+let adaptTimer=0;
+function adaptShell(){
+  clearTimeout(adaptTimer);
+  adaptTimer=setTimeout(()=>{
+    const phone=DEVICE.isPhoneLike();
+    if(phone && ['chat','os','3d'].includes(mode)) goMode('mobile',{flash:false});
+    else if(!phone && mode==='mobile') goMode('chat',{flash:false});
+  },180);
+}
+addEventListener('resize',adaptShell);
+addEventListener('keydown',e=>{
+  if(!e.altKey||e.ctrlKey||e.metaKey) return;
+  const k=e.key.toLowerCase();
+  if(k==='a' && mode==='os'){ e.preventDefault(); openApp('assistant'); }
+  if(k==='h' && (mode==='os'||mode==='site'||mode==='3d')){ e.preventDefault(); goMode('chat'); }
+});
+matchMedia('(orientation: portrait)').addEventListener?.('change',adaptShell);
 function setPill(m){ document.querySelectorAll('.mode-pill button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m)); }
 function goMode(m, opts){
+  if(m==='3d' && !DEVICE.canRun3D()) m=DEVICE.isPhoneLike()?'mobile':'os';
   const useFlash=!opts || opts.flash!==false;
   const swap=()=>{
     mode=m;
@@ -1527,8 +1594,12 @@ function goMode(m, opts){
     $('#stage3d').classList.toggle('entering-os', false);
     $('#site').classList.toggle('on',m==='site');
     $('#desktop').classList.toggle('on',m==='os');
-    $('#mode-pill').classList.toggle('on',true);
+    $('#chat-home').classList.toggle('on',m==='chat');
+    document.body.classList.toggle('m-mobile',m==='mobile');
+    $('#mode-pill').classList.toggle('on',m!=='chat' && m!=='mobile');
     sceneVisible=(m==='3d');
+    if(m==='chat') whenSable(mountChatHome);
+    whenSable(()=>{ if(m==='mobile') MobileOS.show({openChat:!!(opts&&opts.openChat), onSite:()=>goMode('site')}); else MobileOS.hide(); });
     if(m==='site') startSite();
     if(m==='os') seedOS();
     if(m==='3d') init3D();
@@ -1544,13 +1615,14 @@ document.querySelectorAll('.mode-pill button').forEach(b=>b.addEventListener('cl
 
 const urlParams=new URLSearchParams(window.location.search);
 const initMode=urlParams.get('mode');
-if(initMode && ['3d','os'].includes(initMode)){
+{
   const b=$('#boot'); if(b){ b.classList.add('off'); b.classList.remove('on'); }
-  if(initMode==='3d'){ $('#stage3d').classList.add('on'); mode='3d'; sceneVisible=true; init3D(); setPill('3d'); }
-  else { goMode(initMode, {flash:false}); }
-} else {
-  const b=$('#boot'); if(b){ b.classList.add('off'); b.classList.remove('on'); }
-  goMode('site', {flash:false});
+  const phone=DEVICE.isPhoneLike();
+  if(initMode==='site') goMode('site',{flash:false});
+  else if(phone) goMode('mobile',{flash:false,openChat:initMode!=='home'});
+  else if(initMode==='3d' && DEVICE.canRun3D()){ $('#stage3d').classList.add('on'); mode='3d'; sceneVisible=true; init3D(); setPill('3d'); }
+  else if(initMode==='os'||initMode==='3d') goMode('os',{flash:false});
+  else goMode('chat',{flash:false});
 }
 
 /* ---------- Boot Screen Controls ---------- */
@@ -2615,6 +2687,7 @@ const isDeskBg=t=>t===$('#wallpaper')||t===$('#star-canvas')||t===$('#desktop-ic
 function renderDesktop(){
   const box=$('#desktop-icons'), dir=HOME+'/Desktop';
   const shortcuts=[
+    {label:'Ask Sable',icon:SABLE_ICON,open:()=>openApp('assistant')},
     {label:'Home',icon:ICONS.finder,open:()=>openApp('finder',HOME),drop:HOME},
     {label:'Projects',icon:REPO_FOLDER_ICON,open:()=>openApp('finder',HOME+'/Projects'),drop:HOME+'/Projects'},
     {label:'Terminal',icon:ICONS.terminal,open:()=>openApp('terminal')},
@@ -5423,6 +5496,16 @@ APPS.about={
       </div>
     `;
     return r;
+  }
+};
+
+/* Sable: the assistant as a first-class desktop app */
+APPS.assistant={
+  appName:'Sable',title:'Sable — ask about Sharan',icon:SABLE_ICON,w:760,h:600,
+  build:()=>{
+    const host=document.createElement('div'); host.style.cssText='height:100%;width:100%';
+    whenSable(()=>Sable.mountChat(host,{variant:'compact',resume:true}));
+    return host;
   }
 };
 

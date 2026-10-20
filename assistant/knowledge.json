@@ -1,0 +1,405 @@
+{
+  "version": 1,
+  "updated": "2026-10-20",
+  "_readme": "Edit this file to change what the assistant knows. Every fact here must be true. Entries with a \"todo\" field are gaps for Sharan to fill; the assistant says it does not know them.",
+  "profile": {
+    "name": "Sharan S",
+    "handle": "Devil1716",
+    "role": "Agentic systems · Android · Backend",
+    "location": "Bengaluru, India",
+    "email": "sharan071718@gmail.com",
+    "github": "https://github.com/Devil1716",
+    "linkedin": "https://www.linkedin.com/in/sharan-s-171816s/",
+    "summary": "B.Tech AI/ML student at Amity University Bengaluru (7th semester, graduating May 2027) and Technical Lead at Quickoo. Builds agents that do real work on real hardware, Android tooling, and deterministic backend pipelines that put an LLM behind validation.",
+    "lookingFor": "A remote Backend or Agentic AI internship."
+  },
+  "entries": [
+    {
+      "id": "bio",
+      "type": "about",
+      "title": "About Sharan",
+      "text": "Sharan S is a B.Tech AI/ML student at Amity University Bengaluru, graduating in May 2027, and Technical Lead at Quickoo. He cares most about agents that do real work on real hardware: an Android agent powered by Gemma that taps through actual apps, and a Bluetooth mesh that keeps phones talking with no internet. On the backend he builds with Python and FastAPI and designs deterministic pipelines that put an LLM behind validation instead of trusting it blindly. He learns codebases by fixing them: 27 of his pull requests have been merged into 14 open-source projects, including NVIDIA Megatron-LM and moto.",
+      "tags": [
+        "who",
+        "about",
+        "bio",
+        "introduction"
+      ]
+    },
+    {
+      "id": "education",
+      "type": "education",
+      "title": "Education",
+      "text": "B.Tech in Artificial Intelligence & Machine Learning at Amity University Bengaluru. Currently in the 7th semester; expected graduation May 2027.",
+      "tags": [
+        "education",
+        "college",
+        "university",
+        "degree",
+        "study",
+        "amity"
+      ]
+    },
+    {
+      "id": "exp-quickoo",
+      "type": "experience",
+      "title": "Technical Lead, Quickoo",
+      "text": "Sharan is Technical Lead at Quickoo.",
+      "tags": [
+        "experience",
+        "work",
+        "job",
+        "role",
+        "quickoo"
+      ],
+      "todo": "Add Quickoo dates, what the product does, and what Sharan owns there."
+    },
+    {
+      "id": "exp-oss",
+      "type": "experience",
+      "title": "Open-source contributor",
+      "text": "27 merged pull requests to projects he does not own, across 14 projects. Highlights: NVIDIA/Megatron-LM: Fixed the elastification unwrap_model import; getmoto/moto: CloudTrail: resolve trails by ARN in Start/StopLogging; resilient-tech/india-compliance: Show Supplier GSTIN in the purchase reconciliation view; Ishannaik/warp: 9 merged PRs: signaling config, deep links, accessibility, reduced motion; hubfly-space/hubcdn: Healthcheck env alignment, template error logging, deploy cleanup; KlaatAI/klaatcode: Added vim-mode p/P paste for the last delete.",
+      "tags": [
+        "experience",
+        "open source",
+        "contributions",
+        "pull requests",
+        "oss"
+      ],
+      "links": [
+        [
+          "All merged PRs",
+          "https://github.com/pulls?q=is%3Apr+author%3ADevil1716+is%3Amerged+-user%3ADevil1716"
+        ],
+        [
+          "NVIDIA/Megatron-LM",
+          "https://github.com/NVIDIA/Megatron-LM/pulls?q=is%3Apr+author%3ADevil1716"
+        ],
+        [
+          "getmoto/moto",
+          "https://github.com/getmoto/moto/pulls?q=is%3Apr+author%3ADevil1716"
+        ],
+        [
+          "resilient-tech/india-compliance",
+          "https://github.com/resilient-tech/india-compliance/pulls?q=is%3Apr+author%3ADevil1716"
+        ],
+        [
+          "Ishannaik/warp",
+          "https://github.com/Ishannaik/warp/pulls?q=is%3Apr+author%3ADevil1716"
+        ],
+        [
+          "hubfly-space/hubcdn",
+          "https://github.com/hubfly-space/hubcdn/pulls?q=is%3Apr+author%3ADevil1716"
+        ],
+        [
+          "KlaatAI/klaatcode",
+          "https://github.com/KlaatAI/klaatcode/pulls?q=is%3Apr+author%3ADevil1716"
+        ]
+      ]
+    },
+    {
+      "id": "skill-0",
+      "type": "skill",
+      "title": "Agents & AI",
+      "text": "Agents & AI: LLM agents, MCP, Gemma on-device, PyTorch, TensorRT, ONNX.",
+      "tags": [
+        "skills",
+        "technologies",
+        "stack",
+        "tech"
+      ]
+    },
+    {
+      "id": "skill-1",
+      "type": "skill",
+      "title": "Android",
+      "text": "Android: Kotlin, Java, Jetpack Compose, Bluetooth LE and RFCOMM, Accessibility services.",
+      "tags": [
+        "skills",
+        "technologies",
+        "stack",
+        "tech"
+      ]
+    },
+    {
+      "id": "skill-2",
+      "type": "skill",
+      "title": "Backend",
+      "text": "Backend: Python, FastAPI, gRPC, Docker, Polars, Firebase.",
+      "tags": [
+        "skills",
+        "technologies",
+        "stack",
+        "tech"
+      ]
+    },
+    {
+      "id": "skill-3",
+      "type": "skill",
+      "title": "Web & apps",
+      "text": "Web & apps: TypeScript, React, Next.js, Flutter / Dart, Three.js, Capacitor.",
+      "tags": [
+        "skills",
+        "technologies",
+        "stack",
+        "tech"
+      ]
+    },
+    {
+      "id": "proj-agent-phone-app",
+      "type": "project",
+      "title": "agent-phone-app",
+      "text": "A Gemma-first Android agent that operates ordinary phone apps, browser flows, and system screens. Stack: Kotlin · Android · Gemma. Highlights: Visible execution trace for every step the agent takes; Safety checks and confirmations before sensitive actions; Hybrid inference: on-device Gemma plus an optional laptop relay; Targets Android 12–14; PR-only delivery into main with required CI, emulator, and dependency-scan checks.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/agent-phone-app"
+        ]
+      ]
+    },
+    {
+      "id": "proj-bluetooth-manet-android",
+      "type": "project",
+      "title": "bluetooth-manet-android",
+      "text": "Nearby phone chat over Bluetooth. No internet, no pairing, no account. Stack: Kotlin · Java · Jetpack Compose · Bluetooth LE / RFCOMM. Highlights: BitChat-style BLE mesh between Android phones; a Windows laptop can join over classic Bluetooth; Multi-hop relaying with TTL forwarding: A reaches C through B automatically; Messages and files are signed so relays cannot undetectably tamper with them (they are not end-to-end encrypted); Current release v1.4.4 · min SDK 21 · target SDK 34.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/bluetooth-manet-android"
+        ]
+      ]
+    },
+    {
+      "id": "proj-kosh",
+      "type": "project",
+      "title": "kosh",
+      "text": "Offline-first personal finance and bill splitting. Stack: Flutter · Dart · Firebase. Highlights: Private ledger with budgets, insights, goals, and forecasts; Friends and groups with equal, exact, percentage, and item splits in paise; Deterministic balances and min-cash-flow settlements; Settle up through UPI / Google Pay; a client UPI response is never treated as proof of payment; Firebase Auth with email, Google Sign-In, and guest mode.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/kosh"
+        ]
+      ]
+    },
+    {
+      "id": "proj-swarm-coder-universal",
+      "type": "project",
+      "title": "swarm-coder-universal",
+      "text": "A leaderless, verifiable, fault-tolerant coding swarm. No central orchestrator. Stack: TypeScript · Docker. Highlights: 5 agents in a full mesh; every decision is signed with Ed25519; 3 of 5 signatures required, so it survives 2 simultaneous agent failures; Recovers in under 5 seconds; about 45 tasks per minute; Task owner is computed independently by every agent: hash(task_id + vertex_seq) % alive_agents; Switch domains (coding, medical, education) by editing prompts, not code.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/swarm-coder-universal"
+        ]
+      ]
+    },
+    {
+      "id": "proj-HackerRank-Orchestrator",
+      "type": "project",
+      "title": "HackerRank-Orchestrator",
+      "text": "Cortex Notify: a deterministic, memory-aware WhatsApp notification router. Stack: Python 3.12 · Polars · Docker. Highlights: Decides notify, digest, or mute for every message, with type, explanation, confidence, and evidence IDs; Pipeline: repositories → context → personalization → retrieval → features → priority & risk → decision packet → router agent → validation → CSV; The router agent only ever sees an immutable DecisionPacket, never raw data; Every decision is validated, with a safe fallback.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/HackerRank-Orchestrator"
+        ]
+      ]
+    },
+    {
+      "id": "proj-isro-bah-challenge9-shwfs",
+      "type": "project",
+      "title": "isro-bah-challenge9-shwfs",
+      "text": "Shack-Hartmann wavefront reconstruction pipeline for ISRO BAH Challenge 9. Stack: Python · PyTorch · ONNX · TensorRT. Highlights: Simulates noisy Shack-Hartmann focal-spot images; OPD-Net style Zernike coefficient reconstruction; ONNX export and a TensorRT FP16 engine for deployment.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/isro-bah-challenge9-shwfs"
+        ]
+      ]
+    },
+    {
+      "id": "proj-CognyxOS",
+      "type": "project",
+      "title": "CognyxOS",
+      "text": "An AI agent runtime and desktop environment that runs on top of Linux, Windows, or macOS. It is not a bootable OS. Stack: Python · React · TypeScript · gRPC · QEMU/KVM. Highlights: Framework for building and orchestrating AI agents; React desktop for monitoring and controlling agents; Python wrappers for QEMU/KVM virtual machine management; Capability layer over Protocol Buffers / gRPC, configured with YAML.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/CognyxOS"
+        ]
+      ]
+    },
+    {
+      "id": "proj-drapesense",
+      "type": "project",
+      "title": "drapesense",
+      "text": "Scan a fabric swatch with your phone camera and see its fabric type, drape, garment previews, yardage, and cutting diagrams. Stack: JavaScript · Groq API. Highlights: Mobile-first single-page web app; Fabric analysis through the Groq API; Garment flats and cutting diagrams for a shirt, trousers, and a wrap dress.",
+      "tags": [
+        "project",
+        "projects"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/drapesense"
+        ]
+      ]
+    },
+    {
+      "id": "proj-plot-ledger",
+      "type": "project",
+      "title": "plot-ledger",
+      "text": "A shared ownership ledger: several people record what they paid toward a shared purchase, and each contributor share is their payments divided by all contributors payments, using integer paise and largest-remainder rounding. Google sign-in with admin approval, role-based access in Firestore rules, gesture navigation, and an Android app built with Capacitor that updates itself over the air from GitHub releases with checksum verification and rollback. Stack: Next.js, TypeScript, Tailwind, Firebase Auth and Firestore, Capacitor, GitHub Actions CI/CD with Playwright and rules tests.",
+      "tags": [
+        "project",
+        "projects",
+        "firebase",
+        "nextjs",
+        "android"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/plot-ledger"
+        ]
+      ]
+    },
+    {
+      "id": "proj-portfolio",
+      "type": "project",
+      "title": "DevilOS (this portfolio)",
+      "text": "This website: a chatbot-first portfolio with a browser desktop OS (windows, dock, terminal, file system mirrored from GitHub), an Android-inspired phone OS, and a Three.js 3D retro computer you can click to enter the OS. Vanilla JavaScript, no build step.",
+      "tags": [
+        "project",
+        "portfolio",
+        "website",
+        "devilos",
+        "three.js"
+      ],
+      "links": [
+        [
+          "Source on GitHub",
+          "https://github.com/Devil1716/Devil1716.github.io"
+        ]
+      ]
+    },
+    {
+      "id": "contact",
+      "type": "contact",
+      "title": "Contact",
+      "text": "Email: sharan071718@gmail.com. GitHub: https://github.com/Devil1716. LinkedIn: https://www.linkedin.com/in/sharan-s-171816s/. Open to a remote Backend or Agentic AI internship.",
+      "tags": [
+        "contact",
+        "email",
+        "hire",
+        "reach",
+        "linkedin",
+        "internship"
+      ],
+      "links": [
+        [
+          "Email",
+          "mailto:sharan071718@gmail.com"
+        ],
+        [
+          "GitHub",
+          "https://github.com/Devil1716"
+        ],
+        [
+          "LinkedIn",
+          "https://www.linkedin.com/in/sharan-s-171816s/"
+        ]
+      ]
+    },
+    {
+      "id": "goals",
+      "type": "goals",
+      "title": "What he is looking for",
+      "text": "A remote Backend or Agentic AI internship, working on agents, Android tooling, or backend systems.",
+      "tags": [
+        "goals",
+        "looking",
+        "internship",
+        "hire",
+        "available"
+      ]
+    },
+    {
+      "id": "belief",
+      "type": "interests",
+      "title": "How he thinks about agents",
+      "text": "The portfolio tagline is \"Agents should feel honest\": visible execution traces, explicit confirmation before sensitive actions, and saying plainly what a system does not guarantee (for example, the Bluetooth mesh signs messages but does not claim end-to-end encryption).",
+      "tags": [
+        "interests",
+        "philosophy",
+        "agents",
+        "safety"
+      ]
+    },
+    {
+      "id": "todo-achievements",
+      "type": "achievements",
+      "title": "Achievements",
+      "text": "",
+      "tags": [
+        "achievements",
+        "awards",
+        "hackathons",
+        "certifications",
+        "rank"
+      ],
+      "todo": "Add awards, hackathons, competitive-programming ratings, certifications."
+    },
+    {
+      "id": "todo-interests",
+      "type": "interests",
+      "title": "Interests outside work",
+      "text": "",
+      "tags": [
+        "hobbies",
+        "interests",
+        "free time"
+      ],
+      "todo": "Add hobbies and interests outside engineering."
+    },
+    {
+      "id": "faq-resume",
+      "type": "faq",
+      "title": "Resume",
+      "text": "The resume lives on the DevilOS desktop as Resume.md (open the Desktop OS). A PDF resume is not published on this site yet.",
+      "tags": [
+        "resume",
+        "cv"
+      ],
+      "todo": "Add a link to a PDF resume if you want one downloadable."
+    }
+  ]
+}

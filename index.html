@@ -2364,7 +2364,7 @@ function toggleTiling(force){
     applyTilingLayout();
     toast('Linux Tiling WM Active (<b>Hyprland Gaps Layout</b>)');
   }else{
-    Object.values(WM.wins).forEach(w=>{ if(w.preTile){ w.el.style.left=w.preTile.left; w.el.style.top=w.preTile.top; w.el.style.width=w.preTile.width; w.el.style.height=w.preTile.height; delete w.preTile; } }); toast('Floating Windows Mode Activated');
+    Object.values(WM.wins).forEach(w=>{ if(w.preTile){ w.el.classList.add('tiling-anim'); setTimeout(()=>w.el.classList.remove('tiling-anim'),300); w.el.style.left=w.preTile.left; w.el.style.top=w.preTile.top; w.el.style.width=w.preTile.width; w.el.style.height=w.preTile.height; delete w.preTile; } }); toast('Floating Windows Mode Activated');
   }
 }
 
@@ -2372,7 +2372,7 @@ function applyTilingLayout(){
   const openWins=Object.values(WM.wins).filter(w=>w.el.style.display!=='none');
   const count=openWins.length;
   if(count===0) return;
-  openWins.forEach(w=>{ if(!w.preTile){ w.preTile={ left:w.el.style.left, top:w.el.style.top, width:w.el.style.width, height:w.el.style.height }; } }); const topOffset=38, bottomOffset=74, gap=10;
+  openWins.forEach(w=>{ w.el.classList.add('tiling-anim'); setTimeout(()=>w.el.classList.remove('tiling-anim'),300); if(!w.preTile){ w.preTile={ left:w.el.style.left, top:w.el.style.top, width:w.el.style.width, height:w.el.style.height }; } }); const topOffset=38, bottomOffset=74, gap=10;
   const availW=innerWidth-gap*2, availH=innerHeight-topOffset-bottomOffset-gap;
 
   if(count===1){
@@ -2456,7 +2456,7 @@ function focusWin(id){
 function closeWin(id){
   const w=WM.wins[id]; if(!w) return;
   if(w.el.onClose) try{ w.el.onClose(); }catch(e){}
-  w.el.remove(); delete WM.wins[id];
+  delete WM.wins[id]; w.el.classList.add('win-closing'); setTimeout(()=>w.el.remove(),165);
   updateDockStatus();
   if(tilingMode) applyTilingLayout();
   const rem=Object.keys(WM.wins);
@@ -2569,12 +2569,12 @@ function openApp(id,param){
     focusWin(id);
     if(el.classList.contains('maximized')) return;
     const r=el.getBoundingClientRect(), dx=e.clientX-r.left, dy=e.clientY-r.top;
-    tb.setPointerCapture(e.pointerId);
+    tb.setPointerCapture(e.pointerId); el.classList.add('dragging');
     const mv=ev=>{
       el.style.left=clamp(ev.clientX-dx,-r.width+120,innerWidth-80)+'px';
       el.style.top=clamp(ev.clientY-dy,30,innerHeight-40)+'px';
     };
-    const up=()=>{tb.removeEventListener('pointermove',mv);tb.removeEventListener('pointerup',up);};
+    const up=()=>{el.classList.remove('dragging');tb.removeEventListener('pointermove',mv);tb.removeEventListener('pointerup',up);};
     tb.addEventListener('pointermove',mv); tb.addEventListener('pointerup',up);
   });
   tb.addEventListener('dblclick',e=>{
@@ -2596,7 +2596,7 @@ function initWinResize(el,id){
       const type=Array.from(h.classList).find(c=>['n','s','e','w','nw','ne','sw','se'].includes(c));
       const startX=e.clientX, startY=e.clientY;
       const r=el.getBoundingClientRect();
-      h.setPointerCapture(e.pointerId);
+      h.setPointerCapture(e.pointerId); el.classList.add('resizing');
       const mv=ev=>{
         const dx=ev.clientX-startX, dy=ev.clientY-startY;
         if(type.includes('e')) el.style.width=Math.max(320,r.width+dx)+'px';
@@ -2610,7 +2610,7 @@ function initWinResize(el,id){
           el.style.height=nh+'px'; el.style.top=nt+'px';
         }
       };
-      const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);};
+      const up=()=>{el.classList.remove('resizing');h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);};
       h.addEventListener('pointermove',mv); h.addEventListener('pointerup',up);
     });
   });

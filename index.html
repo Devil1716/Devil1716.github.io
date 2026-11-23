@@ -1536,7 +1536,7 @@ function goMode(m, opts){
     $('#site').classList.toggle('on',m==='site');
     $('#desktop').classList.toggle('on',m==='os');
     $('#mode-pill').classList.toggle('on',true);
-    sceneVisible=(m==='3d');
+    sceneVisible==(m==='3d');
     if(m==='site') startSite();
     if(m==='os') seedOS();
     if(m==='3d') init3D();
@@ -1547,7 +1547,7 @@ function goMode(m, opts){
     $('#flash').classList.add('on');
     setTimeout(swap, 240);
   } else swap();
-}
+} window.goMode=goMode;
 document.querySelectorAll('.mode-pill button').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.mode!==mode) goMode(b.dataset.mode); }));
 
 const urlParams=new URLSearchParams(window.location.search);

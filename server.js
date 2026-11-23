@@ -20,8 +20,21 @@ const MIME = {
 };
 
 const server = http.createServer((req, res) => {
-  let reqPath = decodeURIComponent(req.url.split('?')[0]);
-  let file = path.join(__dirname, reqPath === '/' ? 'index.html' : reqPath);
+  let reqPath;
+  try {
+    reqPath = decodeURIComponent(req.url.split('?')[0]);
+    } catch (e) {
+    res.writeHead(400, { 'Content-Type': 'text/plain' });
+    res.end('Bad Request');
+    return;
+  }
+  const rootDir = path.resolve(__dirname);
+  const file = path.resolve(path.join(rootDir, reqPath === '/' ? 'index.html' : reqPath));
+  if (file !== rootDir && !file.startsWith(rootDir + path.sep)) {
+    res.writeHead(403, { 'Content-Type': 'text/plain' });
+    res.end('Forbidden');
+    return;
+  }
   fs.readFile(file, (err, data) => {
     if (err) {
       res.writeHead(404, { 'Content-Type': 'text/plain' });

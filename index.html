@@ -128,7 +128,7 @@ a{color:inherit}
 #stage3d:active{cursor:grabbing}
 #stage3d.on{display:block}
 #stage3d.monitor-ready{cursor:pointer}
-#stage3d.entering-os .stage-caption{opacity:0;transition:opacity .45s ease;pointer-events:none}
+#stage3d.entering-os .stage-caption,#stage3d.entering-os .stage-hud{opacity:0;transition:opacity .45s ease;pointer-events:none} .stage-hud{position:absolute;left:20px;bottom:20px;z-index:500;display:flex;flex-direction:column;gap:8px;padding:10px 12px;border-radius:14px;background:rgba(12,14,20,.68);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px);box-shadow:0 12px 32px rgba(0,0,0,.38);font-family:var(--sys-font)} .stage-hud-hint{font-size:11px;letter-spacing:.02em;color:rgba(255,255,255,.72);white-space:nowrap} .stage-hud-btns{display:flex;flex-wrap:wrap;gap:6px} .stage-hud-btn{appearance:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:rgba(255,255,255,.88);font:500 11px/1 var(--sys-font);padding:6px 10px;border-radius:999px;cursor:pointer;transition:background .15s,border-color .15s,color .15s} .stage-hud-btn:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28)} .stage-hud-btn.on{background:rgba(56,189,248,.22);border-color:rgba(56,189,248,.55);color:#e0f2fe} .stage-hud-btn.primary{background:linear-gradient(135deg,#38bdf8,#6366f1);border-color:transparent;color:#fff;font-weight:600}
 .stage-caption{
   position:absolute;left:50%;bottom:64px;transform:translateX(-50%);
   z-index:500;pointer-events:none;white-space:nowrap;
@@ -518,16 +518,16 @@ a{color:inherit}
 
 /* Desktop Icons Layer with Refined Subtle Highlight */
 #desktop-icons{
-  position:absolute;top:44px;right:18px;bottom:90px;
-  display:flex;flex-direction:column;flex-wrap:wrap-reverse;
+  position:absolute;inset:0;pointer-events:none;z-index:100;overflow:hidden;
+  /* freeform desktop */
   align-content:flex-start;gap:18px;z-index:100;
 }
 .desk-item{
-  width:92px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  position:absolute;width:92px;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:auto;touch-action:none;user-select:none;
   background:transparent;border:1px solid transparent;color:#fff;cursor:default;outline:0;
-  padding:5px 4px;border-radius:8px;transition:background .15s, border-color .15s;
+  padding:5px 4px;border-radius:8px;transition:background .15s, border-color .15s, left .28s cubic-bezier(.22,1,.36,1), top .28s cubic-bezier(.22,1,.36,1), transform .15s;
 }
-.desk-item:hover{background:rgba(255,255,255,.06)}
+.desk-item:hover{background:rgba(255,255,255,.06)} .desk-item.dragging{z-index:500;transform:scale(1.04);transition:none;opacity:.92;}
 .desk-item.selected{background:rgba(10,132,255,0.35);border-color:rgba(10,132,255,0.75);border-radius:8px}
 .desk-item-icon{width:52px;height:52px;display:grid;place-items:center;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
 .desk-item-icon img{width:100%;height:100%;object-fit:contain}
@@ -1043,7 +1043,7 @@ a{color:inherit}
     <div class="load-bar"><i></i></div>
   </div>
 
-  <div class="stage-caption">Drag to orbit · Scroll to zoom · Click the computer to enter DevilOS</div>
+  <div class="stage-hud" id="stage-hud"><div class="stage-hud-hint">Drag to orbit · Scroll to zoom · Click PC to boot</div><div class="stage-hud-btns"><button type="button" class="stage-hud-btn on" data-hud-cam="front">Front</button><button type="button" class="stage-hud-btn" data-hud-cam="closeup">Close-up</button><button type="button" class="stage-hud-btn" data-hud-cam="side">Side</button><button type="button" class="stage-hud-btn on" id="hud-autospin">Auto-Spin</button><button type="button" class="stage-hud-btn primary" id="hud-boot">Boot DevilOS</button></div></div>
 </div>
 <div id="flash"></div>
 
@@ -1762,7 +1762,7 @@ async function init3D(){
     const SCREEN={yaw:0.18, pitch:0.06};
     let yaw=HOME.yaw, pitch=HOME.pitch, radius=homeRadius;
     let targetYaw=yaw, targetPitch=pitch, targetRadius=radius;
-    let camFocus='room';
+    let camFocus='room'; let autoSpin=true;
     let isNight=true;
     let isDragging=false, dragged=false, dragStartX=0, dragStartY=0;
     let idleHold=1.2;
@@ -1999,7 +1999,7 @@ async function init3D(){
       renderer.setSize(innerWidth, innerHeight, false);
     });
     renderer.setSize(innerWidth, innerHeight, false);
-    if(loadingEl) loadingEl.classList.add('hide');
+    if(loadingEl) loadingEl.classList.add('hide'); canvas.addEventListener('dblclick',()=>{ if(mode==='3d'){ focusCamera('room'); $$('[data-hud-cam]').forEach(b=>b.classList.toggle('on',b.dataset.hudCam==='front')); } }); $$('[data-hud-cam]').forEach(btn=>{ btn.addEventListener('click',()=>{ const c=btn.dataset.hudCam; $$('[data-hud-cam]').forEach(b=>b.classList.toggle('on',b===btn)); if(c==='front'){ focusCamera('room'); } else if(c==='closeup'){ focusCamera('screen'); } else if(c==='side'){ camFocus='side'; targetYaw=nearestYaw(HOME.yaw+0.95); targetPitch=HOME.pitch+0.08; targetRadius=homeRadius*0.92; } }); }); const spinBtn=$('#hud-autospin'); if(spinBtn){ spinBtn.addEventListener('click',()=>{ autoSpin=!autoSpin; spinBtn.classList.toggle('on',autoSpin); }); } const bootBtn=$('#hud-boot'); if(bootBtn){ bootBtn.addEventListener('click',()=>{ if(mode==='3d') enterDevilOSGlide(); }); }
 
     let last=performance.now();
     (function loop(now){
@@ -2027,7 +2027,7 @@ async function init3D(){
           openBootFromScreen();
         }
       } else {
-        if(camFocus==='room' && !isDragging){
+        if(camFocus==='room' && !isDragging && autoSpin){
           idleHold=Math.max(0, idleHold-dt);
           if(idleHold<=0) targetYaw+=dt*0.16;
         }
@@ -2618,7 +2618,7 @@ function initWinResize(el,id){
 
 /* Desktop icons: app shortcuts plus the real contents of ~/Desktop */
 const isDeskBg=t=>t===$('#wallpaper')||t===$('#star-canvas')||t===$('#desktop-icons');
-function renderDesktop(){
+const DESK_POS_KEY='devilos.deskpos.v1'; function loadDeskPos(){try{return JSON.parse(localStorage.getItem(DESK_POS_KEY)||'{}')||{};}catch{return {};}} function saveDeskPos(m){try{localStorage.setItem(DESK_POS_KEY,JSON.stringify(m));}catch{}} function clampDeskPos(x,y){const maxX=Math.max(8,innerWidth-100),maxY=Math.max(36,innerHeight-96-96);return {x:Math.max(8,Math.min(maxX,x)),y:Math.max(36,Math.min(maxY,y))};} function defaultDeskPos(idx){const usableH=Math.max(200,innerHeight-96-46),rows=Math.max(1,Math.floor(usableH/104));const col=Math.floor(idx/rows),row=idx%rows;return clampDeskPos(innerWidth-104-col*96,46+row*104);} window.cleanUpDesktop=function(){try{localStorage.removeItem(DESK_POS_KEY);}catch{} renderDesktop();}; function renderDesktop(){ const _deskPosMap=loadDeskPos();
   const box=$('#desktop-icons'), dir=HOME+'/Desktop';
   const shortcuts=[
     {label:'Home',icon:ICONS.finder,open:()=>openApp('finder',HOME),drop:HOME},
@@ -2630,15 +2630,15 @@ function renderDesktop(){
   box.innerHTML=shortcuts.map((s,i)=>`<button class="desk-item" data-s="${i}"><div class="desk-item-icon"><img src="${s.icon}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('')
     +files.map((e,i)=>`<button class="desk-item" data-f="${i}" draggable="true"><div class="desk-item-icon"><img class="fs-ico" src="${fileIcon(e.path,e.node)}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('');
   const select=b=>{ box.querySelectorAll('.desk-item').forEach(d=>d.classList.toggle('selected',d===b)); };
-  box.querySelectorAll('.desk-item').forEach(b=>{
+  box.querySelectorAll('.desk-item').forEach((b,idx)=>{
     const s=b.dataset.s!==undefined?shortcuts[b.dataset.s]:null, e=s?null:files[b.dataset.f];
     b.querySelector('.desk-item-lbl').textContent=s?s.label:e.name;
     b.title=s?s.label:FS.pretty(e.path);
-    b.addEventListener('click',ev=>{
+    const posKey=s?('shortcut:'+s.label):(e?e.path:('idx:'+idx)); const _p=_deskPosMap[posKey]?clampDeskPos(_deskPosMap[posKey].x,_deskPosMap[posKey].y):defaultDeskPos(idx); b.style.left=_p.x+'px'; b.style.top=_p.y+'px'; b.removeAttribute('draggable'); b.addEventListener('pointerdown',ev=>{if(ev.button!==0)return;const sx=ev.clientX,sy=ev.clientY,ol=parseFloat(b.style.left)||0,ot=parseFloat(b.style.top)||0;let moved=false;const mv=e2=>{if(!moved&&Math.hypot(e2.clientX-sx,e2.clientY-sy)>5){moved=true;b.classList.add('dragging');b.setPointerCapture?.(e2.pointerId);}if(moved){const c=clampDeskPos(ol+(e2.clientX-sx),ot+(e2.clientY-sy));b.style.left=c.x+'px';b.style.top=c.y+'px';}};const up=()=>{b.removeEventListener('pointermove',mv);b.removeEventListener('pointerup',up);b.removeEventListener('pointercancel',up);if(moved){b.classList.remove('dragging');const m=loadDeskPos();m[posKey]={x:Math.round(parseFloat(b.style.left)||0),y:Math.round(parseFloat(b.style.top)||0)};saveDeskPos(m);b._justDragged=true;setTimeout(()=>b._justDragged=false,60);}};b.addEventListener('pointermove',mv);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);}); b.addEventListener('click',ev=>{if(b._justDragged)return;
       ev.stopPropagation();
       if(ev.ctrlKey||ev.metaKey) b.classList.toggle('selected'); else select(b);
     });
-    b.addEventListener('dblclick',()=>s?s.open():openPath(e.path));
+    b.addEventListener('dblclick',()={if(b._justDragged)return;>s?s.open():openPath(e.path);});
     b.addEventListener('keydown',ev=>{
       if(ev.key==='Enter') s?s.open():openPath(e.path);
       else if(e&&(ev.key==='Delete'||ev.key==='Backspace')) trashPaths(selectedDeskPaths());
@@ -2687,6 +2687,7 @@ function initDesktop(){
       {label:'Open Desktop in Files',run:()=>openApp('finder',dir)},
       {label:'Open in Terminal',run:()=>openTerminalAt(dir)},
       '-',
+      {label:'Clean Up Desktop', run:()=>cleanUpDesktop()},
       {label:'Change Wallpaper…',run:()=>openApp('settings','wp')}
     ]);
   });

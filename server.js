@@ -68,9 +68,9 @@ function validate(body) {
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
-    let size = 0; const chunks = [];
-    req.on('data', c => { size += c.length; if (size > LIMITS.bodyBytes) { reject(Object.assign(new Error('too large'), { code: 413 })); req.destroy(); } else chunks.push(c); });
-    req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+    let size = 0; let oversized = false; const chunks = [];
+    req.on('data', c => { if (oversized) return; size += c.length; if (size > LIMITS.bodyBytes) {  oversized = true; chunks.length = 0;reject(Object.assign(new Error('too large'), { code: 413 })); } else chunks.push(c); });
+    req.on('end', () => { if (!oversized) resolve(Buffer.concat(chunks).toString('utf8')); });
     req.on('error', reject);
   });
 }

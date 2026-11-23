@@ -9,6 +9,7 @@
 <meta property="og:description" content="On-device agents, Android, and backends. 27 merged open-source PRs, including NVIDIA Megatron-LM. Open to remote internships.">
 <meta property="og:image" content="https://devil1716.github.io/retro_computer_closeup.png">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="logo.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +32,8 @@ a{color:inherit}
 ::selection{background:rgba(56,189,248,0.35);color:#fff}
 *:focus{outline:none}
 *:focus-visible{outline:1.5px solid rgba(255,255,255,0.35);outline-offset:2px}
+#site p, #site li, #site h1, #site h2, #site h3, #site a, #site span { user-select: text; -webkit-user-select: text; }
+#site :focus-visible { outline: 2px solid #E11D48; outline-offset: 2px; }
 
 :root{
   --devil-red:#E11D48;
@@ -1106,8 +1109,8 @@ a{color:inherit}
     </div>
     <main class="s-main">
       <section class="s-sec s-paper" id="about"><h2><span class="count">01</span>About</h2>
-        <div class="about-copy"><p>I'm Sharan S, a B.Tech AI/ML student at Amity University Bengaluru, graduating in May 2027, and Technical Lead at Quickoo. I care most about agents that do real work on real hardware: an Android agent powered by Gemma that taps through actual apps, and a Bluetooth mesh that keeps phones talking with no internet.</p>
-        <p>On the backend I build with Python and FastAPI and design deterministic pipelines that put an LLM behind validation instead of trusting it blindly. I learn codebases by fixing them: 27 of my pull requests have been merged into 14 open-source projects, including NVIDIA Megatron-LM and moto.</p></div>
+        <div class="about-copy"><p>I'm Sharan S, a B.Tech AI/ML student at Amity University Bengaluru, graduating in May 2027, and Technical Lead at Quickoo, where I lead an engineering team shipping an agentic microservices architecture for LLM-driven workflows in production. I care most about agents that do real work on real hardware: an Android agent powered by Gemma that taps through actual apps, and a Bluetooth mesh that keeps phones talking with no internet.</p>
+        <p>On the backend I build with Python and FastAPI and design deterministic pipelines that put an LLM behind validation instead of trusting it blindly. I learn codebases by fixing them: 27 of my pull requests have been merged into 14 open-source projects, including NVIDIA Megatron-LM and moto.</p><p><strong>Achievements &amp; Publications:</strong> IEEE-format research paper on a patient-centric knowledge graph framework (2026); 2nd Place at Atria Hackathon Cicada 2024; 3rd Place at Amity Ideathon 3.0 2023.</p></div>
         <div class="s-stats"><div class="s-stat"><b id="s-pr-count">27</b><span>Merged upstream PRs</span></div><div class="s-stat"><b>14</b><span>Projects contributed to</span></div><div class="s-stat"><b>30+</b><span>Original repos</span></div></div>
       </section>
       <section class="s-sec s-paper" id="work"><h2><span class="count">02</span>Projects</h2><div id="s-work"></div></section>
@@ -1426,12 +1429,15 @@ const CONFIG = {
     ['HackerRank-Orchestrator', 'Python · Cortex Notify: deterministic, memory-aware WhatsApp router that decides notify / digest / mute with evidence', 'https://github.com/Devil1716/HackerRank-Orchestrator'],
     ['isro-bah-challenge9-shwfs', 'Python · ISRO BAH Challenge 9: Shack-Hartmann wavefront simulation and Zernike reconstruction with TensorRT export', 'https://github.com/Devil1716/isro-bah-challenge9-shwfs'],
     ['CognyxOS', 'Python + React · AI agent runtime and desktop environment with QEMU/KVM VM management and a gRPC capability layer', 'https://github.com/Devil1716/CognyxOS'],
-    ['drapesense', 'JavaScript · Point a phone camera at fabric to get its type, drape, garment previews, yardage, and cutting diagrams', 'https://github.com/Devil1716/drapesense']
+    ['drapesense', 'JavaScript · Point a phone camera at fabric to get its type, drape, garment previews, yardage, and cutting diagrams', 'https://github.com/Devil1716/drapesense'],
+    ['AgentIDE', 'TypeScript + Electron + Python · Autonomous coding agent IDE forked from VS Code with sandboxed execution, 10-problem benchmark runner, SQLite episode memory, and local LLMs', 'https://github.com/Devil1716/AgentIDE'],
+    ['ARBOR', 'Python + Raspberry Pi + React · Autonomous person-following robot with TFLite SSD MobileNet, SORT tracking, WebSocket API, and Capacitor Android dashboard', 'https://github.com/Devil1716/ARBOR']
   ],
   contributions: [
     ['NVIDIA/Megatron-LM', 'Fixed the elastification unwrap_model import', 'https://github.com/NVIDIA/Megatron-LM/pulls?q=is%3Apr+author%3ADevil1716'],
     ['getmoto/moto', 'CloudTrail: resolve trails by ARN in Start/StopLogging', 'https://github.com/getmoto/moto/pulls?q=is%3Apr+author%3ADevil1716'],
     ['resilient-tech/india-compliance', 'Show Supplier GSTIN in the purchase reconciliation view', 'https://github.com/resilient-tech/india-compliance/pulls?q=is%3Apr+author%3ADevil1716'],
+    ['bubblelabai/BubbleLab', 'PR #252: fixed Promise.all visualization for dynamic maps and structured JSON parsing of assistant outputs', 'https://github.com/bubblelabai/BubbleLab/pull/252'],
     ['Ishannaik/warp', '9 merged PRs: signaling config, deep links, accessibility, reduced motion', 'https://github.com/Ishannaik/warp/pulls?q=is%3Apr+author%3ADevil1716'],
     ['hubfly-space/hubcdn', 'Healthcheck env alignment, template error logging, deploy cleanup', 'https://github.com/hubfly-space/hubcdn/pulls?q=is%3Apr+author%3ADevil1716'],
     ['KlaatAI/klaatcode', 'Added vim-mode p/P paste for the last delete', 'https://github.com/KlaatAI/klaatcode/pulls?q=is%3Apr+author%3ADevil1716']

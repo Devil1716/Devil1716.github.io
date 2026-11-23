@@ -44,21 +44,20 @@
       "id": "exp-quickoo",
       "type": "experience",
       "title": "Technical Lead, Quickoo",
-      "text": "Sharan is Technical Lead at Quickoo.",
+      "text": "Technical Lead at Quickoo (2026-Present), leading a small engineering team designing and shipping an agentic microservices architecture running LLM-driven AI agent workflows in production. Orchestrated multi-agent workflows across independent services with REST APIs and owned technical direction and deployment end-to-end.",
       "tags": [
         "experience",
         "work",
         "job",
         "role",
         "quickoo"
-      ],
-      "todo": "Add Quickoo dates, what the product does, and what Sharan owns there."
+      ]
     },
     {
       "id": "exp-oss",
       "type": "experience",
       "title": "Open-source contributor",
-      "text": "27 merged pull requests to projects he does not own, across 14 projects. Highlights: NVIDIA/Megatron-LM: Fixed the elastification unwrap_model import; getmoto/moto: CloudTrail: resolve trails by ARN in Start/StopLogging; resilient-tech/india-compliance: Show Supplier GSTIN in the purchase reconciliation view; Ishannaik/warp: 9 merged PRs: signaling config, deep links, accessibility, reduced motion; hubfly-space/hubcdn: Healthcheck env alignment, template error logging, deploy cleanup; KlaatAI/klaatcode: Added vim-mode p/P paste for the last delete.",
+      "text": "27 merged pull requests to projects he does not own, across 14 projects. Highlights: NVIDIA/Megatron-LM PR #4972: Fixed the elastification unwrap_model import path in distributed training; BubbleLab PR #252: Fixed Promise.all visualization for dynamic maps and structured JSON parsing of assistant outputs in a 1,100+ star TypeScript AI workflow platform; getmoto/moto: CloudTrail: resolve trails by ARN in Start/StopLogging; resilient-tech/india-compliance: Show Supplier GSTIN in the purchase reconciliation view; Ishannaik/warp: 9 merged PRs: signaling config, deep links, accessibility, reduced motion; hubfly-space/hubcdn: Healthcheck env alignment, template error logging, deploy cleanup; KlaatAI/klaatcode: Added vim-mode p/P paste for the last delete.",
       "tags": [
         "experience",
         "open source",
@@ -311,6 +310,9 @@
         ]
       ]
     },
+    {"id": "proj-agentide", "type": "project", "title": "AgentIDE", "text": "Autonomous AI coding agent IDE forked from VS Code, built with Electron, TypeScript, and Python. Features sandboxed execution, a 10-problem benchmark runner, SQLite episode memory, and local inference via Ollama, llama.cpp, and vLLM.", "tags": ["project", "projects", "agentide", "ide", "vscode", "electron", "typescript", "python", "agents", "ollama", "vllm", "sqlite"]},
+    {"id": "proj-arbor", "type": "project", "title": "ARBOR", "text": "Autonomous person-following robot on Raspberry Pi with TFLite SSD MobileNet, SORT tracking with color-histogram re-ID, a Python WebSocket JSON API, and a React/TypeScript Capacitor Android dashboard.", "tags": ["project", "projects", "arbor", "robotics", "raspberry pi", "tflite", "computer vision", "python", "websocket", "react", "typescript", "android"]},
+    {"id": "proj-bmtc-bus-tracker", "type": "project", "title": "BMTC Bus Tracker", "text": "Kotlin Android app for live route 401-AM tracking with osmdroid OpenStreetMap, departure and approach alarms, and SHA-256 verified OTA updates.", "tags": ["project", "projects", "bmtc", "android", "kotlin", "osmdroid", "openstreetmap", "maps"]},
     {
       "id": "contact",
       "type": "contact",
@@ -365,18 +367,17 @@
       ]
     },
     {
-      "id": "todo-achievements",
+      "id": "achievements",
       "type": "achievements",
-      "title": "Achievements",
-      "text": "",
+      "title": "Publications & Achievements",
+      "text": "Author of an IEEE-format research paper on a patient-centric knowledge graph framework (2026). 2nd Place at Atria Hackathon Cicada (2024). 3rd Place at Amity Ideathon 3.0 (2023).",
       "tags": [
-        "achievements",
+        "publications", "research", "ieee", "knowledge graph", "achievements",
         "awards",
         "hackathons",
         "certifications",
         "rank"
-      ],
-      "todo": "Add awards, hackathons, competitive-programming ratings, certifications."
+      ]
     },
     {
       "id": "todo-interests",

@@ -2640,7 +2640,7 @@ const DESK_POS_KEY='devilos.deskpos.v1'; function loadDeskPos(){try{return JSON.
       ev.stopPropagation();
       if(ev.ctrlKey||ev.metaKey) b.classList.toggle('selected'); else select(b);
     });
-    b.addEventListener('dblclick',()={if(b._justDragged)return;>s?s.open():openPath(e.path);});
+    b.addEventListener('dblclick',()={if(b._justDragged)return;s?s.open():openPath(e.path);});
     b.addEventListener('keydown',ev=>{
       if(ev.key==='Enter') s?s.open():openPath(e.path);
       else if(e&&(ev.key==='Delete'||ev.key==='Backspace')) trashPaths(selectedDeskPaths());

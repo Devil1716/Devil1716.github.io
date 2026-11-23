@@ -2364,7 +2364,7 @@ function toggleTiling(force){
     applyTilingLayout();
     toast('Linux Tiling WM Active (<b>Hyprland Gaps Layout</b>)');
   }else{
-    toast('Floating Windows Mode Activated');
+    Object.values(WM.wins).forEach(w=>{ if(w.preTile){ w.el.style.left=w.preTile.left; w.el.style.top=w.preTile.top; w.el.style.width=w.preTile.width; w.el.style.height=w.preTile.height; delete w.preTile; } }); toast('Floating Windows Mode Activated');
   }
 }
 
@@ -2372,7 +2372,7 @@ function applyTilingLayout(){
   const openWins=Object.values(WM.wins).filter(w=>w.el.style.display!=='none');
   const count=openWins.length;
   if(count===0) return;
-  const topOffset=38, bottomOffset=74, gap=10;
+  openWins.forEach(w=>{ if(!w.preTile){ w.preTile={ left:w.el.style.left, top:w.el.style.top, width:w.el.style.width, height:w.el.style.height }; } }); const topOffset=38, bottomOffset=74, gap=10;
   const availW=innerWidth-gap*2, availH=innerHeight-topOffset-bottomOffset-gap;
 
   if(count===1){
@@ -2398,9 +2398,9 @@ function applyTilingLayout(){
     openWins[2].el.style.left=(gap+mainW+gap)+'px'; openWins[2].el.style.top=(topOffset+gap+halfH+gap)+'px';
     openWins[2].el.style.width=stackW+'px'; openWins[2].el.style.height=halfH+'px';
   }else{
-    const halfW=(availW-gap)/2, halfH=(availH-gap)/2;
+    const cols=Math.ceil(Math.sqrt(count)), rows=Math.ceil(count/cols), halfW=(availW-gap*(cols-1))/cols, halfH=(availH-gap*(rows-1))/rows;
     openWins.forEach((w,i)=>{
-      const col=i%2, row=Math.floor(i/2)%2;
+      const col=i%cols, row=Math.floor(i/cols);
       w.el.style.left=(gap+col*(halfW+gap))+'px';
       w.el.style.top=(topOffset+gap+row*(halfH+gap))+'px';
       w.el.style.width=halfW+'px'; w.el.style.height=halfH+'px';
@@ -2446,7 +2446,7 @@ const winLayer=$('#windows');
 
 function focusWin(id){
   const w=WM.wins[id]; if(!w) return;
-  WM.z++; w.el.style.zIndex=WM.z;
+  if(w.el.style.display==='none'){ w.el.style.display='flex'; updateDockStatus(); } WM.z++; w.el.style.zIndex=WM.z;
   WM.activeId=id;
   Object.entries(WM.wins).forEach(([k,v])=>v.el.classList.toggle('focused',k===id));
   const A=APPS[id];
@@ -2467,7 +2467,7 @@ function closeWin(id){
 function updateDockStatus(){
   document.querySelectorAll('.dock-btn').forEach(b=>{
     const id=b.dataset.app;
-    const open=!!WM.wins[id]&&WM.wins[id].el.style.display!=='none';
+    const open=!!WM.wins[id];
     b.classList.toggle('running',open);
   });
 }
@@ -2606,8 +2606,8 @@ function initWinResize(el,id){
           if(nw>320){ el.style.width=nw+'px'; el.style.left=r.left+dx+'px'; }
         }
         if(type.includes('n')){
-          const nh=Math.max(200,r.height-dy);
-          if(nh>200){ el.style.height=nh+'px'; el.style.top=r.top+dy+'px'; }
+          const nt=Math.max(30,Math.min(r.bottom-200,r.top+dy)), nh=Math.max(200,r.bottom-nt);
+          el.style.height=nh+'px'; el.style.top=nt+'px';
         }
       };
       const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);};
@@ -2813,7 +2813,7 @@ function closeAllMenus(except){
   if(except!=='task') toggleTaskView(false);
 }
 function openWindowIds(){
-  return Object.keys(WM.wins).filter(id=>WM.wins[id].el.style.display!=='none');
+  return Object.keys(WM.wins);
 }
 function cycleWindows(dir){
   const ids=openWindowIds();
@@ -2860,9 +2860,9 @@ function initSpotlight(){
     }
   });
 
-  spotIn.addEventListener('input',()=>renderSpot(spotIn.value.trim()));
+  let spotIdx=0; function updateSpotActive(){ const items=spotRes.querySelectorAll('.spot-item'); if(!items.length){ spotIdx=0; return; } spotIdx=(spotIdx%items.length+items.length)%items.length; items.forEach((el,i)=>el.classList.toggle('active',i===spotIdx)); items[spotIdx]?.scrollIntoView({block:'nearest'}); } spotIn.addEventListener('input',()=>renderSpot(spotIn.value.trim())); spotIn.addEventListener('keydown',e=>{ const items=spotRes.querySelectorAll('.spot-item'); if(!items.length) return; if(e.key==='ArrowDown'){ e.preventDefault(); spotIdx=(spotIdx+1)%items.length; updateSpotActive(); } else if(e.key==='ArrowUp'){ e.preventDefault(); spotIdx=(spotIdx-1+items.length)%items.length; updateSpotActive(); } else if(e.key==='Enter'){ e.preventDefault(); items[spotIdx]?.click(); } });
 
-  function renderSpot(q){
+  function renderSpot(q){ spotIdx=0; queueMicrotask(updateSpotActive);
     const catalog=[
       ['terminal','Terminal','Shell with ls, cd, grep, pipes',ICONS.terminal],
       ['code','VS Code','Edit and save files',ICONS.vscode],
@@ -2937,7 +2937,7 @@ function toggleSpotlight(force){
   spot.classList.toggle('on',on);
   btn.classList.toggle('open',on);
   if(on){
-    spotIn.value=''; spotIn.focus();
+    spotIn.value=''; spotIn.focus(); spotIn.dispatchEvent(new Event('input'));
   }
 }
 

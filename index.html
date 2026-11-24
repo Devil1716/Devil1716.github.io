@@ -128,7 +128,7 @@ a{color:inherit}
 #stage3d:active{cursor:grabbing}
 #stage3d.on{display:block}
 #stage3d.monitor-ready{cursor:pointer}
-#stage3d.entering-os .stage-caption,#stage3d.entering-os .stage-hud{opacity:0;transition:opacity .45s ease;pointer-events:none} .stage-hud{position:absolute;left:20px;bottom:20px;z-index:500;display:flex;flex-direction:column;gap:8px;padding:10px 12px;border-radius:14px;background:rgba(12,14,20,.68);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px);box-shadow:0 12px 32px rgba(0,0,0,.38);font-family:var(--sys-font)} .stage-hud-hint{font-size:11px;letter-spacing:.02em;color:rgba(255,255,255,.72);white-space:nowrap} .stage-hud-btns{display:flex;flex-wrap:wrap;gap:6px} .stage-hud-btn{appearance:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:rgba(255,255,255,.88);font:500 11px/1 var(--sys-font);padding:6px 10px;border-radius:999px;cursor:pointer;transition:background .15s,border-color .15s,color .15s} .stage-hud-btn:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28)} .stage-hud-btn.on{background:rgba(56,189,248,.22);border-color:rgba(56,189,248,.55);color:#e0f2fe} .stage-hud-btn.primary{background:linear-gradient(135deg,#38bdf8,#6366f1);border-color:transparent;color:#fff;font-weight:600}
+#stage3d.entering-os .stage-caption{opacity:0;transition:opacity .45s ease;pointer-events:none}
 .stage-caption{
   position:absolute;left:50%;bottom:64px;transform:translateX(-50%);
   z-index:500;pointer-events:none;white-space:nowrap;
@@ -233,8 +233,7 @@ a{color:inherit}
 .oss-tag{font-size:9px;font-weight:700;letter-spacing:.14em;color:#2f7a4a;background:rgba(52,140,90,.12);padding:4px 8px;border-radius:999px}
 .oss-card h3{font-weight:700;font-size:1.02rem;margin:12px 0 6px;color:#2A1F1A;word-break:break-word}
 .oss-card p{font-size:13px;line-height:1.55;color:#6b5348}
-.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center} .hero-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.03em;text-decoration:none;cursor:pointer;border:1.5px solid #1C1917;background:rgba(255,255,255,.65);color:#1C1917;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease,color .18s ease} .hero-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(28,25,23,.12);border-color:#E11D48;color:#E11D48;background:#fff} .hero-btn.primary{background:#1C1917;color:#FFFBF5;border-color:#1C1917} .hero-btn.primary:hover{background:#E11D48;border-color:#E11D48;color:#fff;box-shadow:0 8px 22px rgba(225,29,72,.28)} .hero-btn.accent{border-color:#E11D48;color:#E11D48;background:rgba(225,29,72,.06)} .hero-btn.accent:hover{background:#E11D48;color:#fff;box-shadow:0 8px 22px rgba(225,29,72,.24)} .exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px} .exp-card{display:flex;flex-direction:column;gap:8px;padding:18px 20px;background:rgba(255,255,255,.55);border:1.5px solid rgba(28,25,23,.14);border-top:3px solid #E11D48;border-radius:14px;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease} .exp-card:hover{transform:translateY(-3px);border-color:#E11D48;box-shadow:0 12px 28px rgba(28,25,23,.09)} .exp-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap} .exp-badge{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#E11D48;background:rgba(225,29,72,.09);padding:3px 9px;border-radius:999px} .exp-date{font-size:11px;font-weight:600;color:#6b5348;letter-spacing:.04em} .exp-card h3{font-family:'Outfit',sans-serif;font-size:1.02rem;font-weight:700;color:#1C1917;line-height:1.35} .exp-card p{font-size:13.5px;line-height:1.6;color:#5c463c} .w-row{border-color:rgba(28,25,23,.14);background:rgba(255,255,255,.55);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease} .w-row:hover{border-color:#E11D48;transform:translateY(-3px);box-shadow:0 12px 28px rgba(28,25,23,.1)} .w-desc{font-size:13px;line-height:1.55;color:#5c463c;margin-top:4px} .w-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px} .w-tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#1C1917;background:rgba(28,25,23,.06);border:1px solid rgba(28,25,23,.12);padding:3px 9px;border-radius:999px} .oss-grid{gap:14px} .oss-card{background:rgba(255,255,255,.55);border-color:rgba(28,25,23,.14);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease} .oss-card:hover{border-color:#E11D48;transform:translateY(-3px);box-shadow:0 12px 28px rgba(28,25,23,.1)} @media (max-width:860px){.exp-grid,.oss-grid{grid-template-columns:1fr}} @media (max-width:720px){.w-row{grid-template-columns:36px 1fr;gap:12px}.w-row .m{grid-column:2;justify-self:start}.hero-btn{padding:8px 13px;font-size:12px}}
-  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .stack-col{padding:18px 20px;background:rgba(255,255,255,.42);border:1.5px solid rgba(226,90,58,.32);border-top:3px solid #E25A3A;border-radius:14px}
 .stack-col b{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#C4452D;margin-bottom:10px}
 .stack-col span{font-size:14px;line-height:1.7;color:#3a2c26}
@@ -519,17 +518,17 @@ a{color:inherit}
 
 /* Desktop Icons Layer with Refined Subtle Highlight */
 #desktop-icons{
-  position:absolute;inset:0;pointer-events:none;z-index:100;overflow:hidden;
-  /* freeform desktop */
+  position:absolute;top:44px;right:18px;bottom:90px;
+  display:flex;flex-direction:column;flex-wrap:wrap-reverse;
   align-content:flex-start;gap:18px;z-index:100;
 }
 .desk-item{
-  position:absolute;width:92px;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:auto;touch-action:none;user-select:none;
+  width:92px;display:flex;flex-direction:column;align-items:center;gap:6px;
   background:transparent;border:1px solid transparent;color:#fff;cursor:default;outline:0;
-  padding:5px 4px;border-radius:8px;transition:background .15s, border-color .15s, left .28s cubic-bezier(.22,1,.36,1), top .28s cubic-bezier(.22,1,.36,1), transform .15s;
+  padding:5px 4px;border-radius:8px;transition:background .15s, border-color .15s;
 }
-.desk-item:hover{background:rgba(255,255,255,.06)} .desk-item.dragging{z-index:500;transform:scale(1.04);transition:none;opacity:.92;}
-.desk-item.selected{background:rgba(10,132,255,0.35);border-color:rgba(10,132,255,0.75);border-radius:8px}
+.desk-item:hover{background:rgba(255,255,255,.06)}
+.desk-item.selected{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.25)}
 .desk-item-icon{width:52px;height:52px;display:grid;place-items:center;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
 .desk-item-icon img{width:100%;height:100%;object-fit:contain}
 .desk-item-lbl{
@@ -999,7 +998,7 @@ a{color:inherit}
 #hint{position:fixed;left:50%;bottom:24px;transform:translate(-50%,180%);z-index:9990;background:rgba(24,24,34,.95);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:10px 24px;font-size:12.5px;box-shadow:0 12px 35px rgba(0,0,0,.6);backdrop-filter:blur(20px);transition:transform .4s var(--mac-ease);pointer-events:none}
 #hint.show{transform:translate(-50%,0)}
 #hint b{color:#38BDF8}
-  /* Fluid OS & Portfolio Animations */   @keyframes winOpen{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}   .win{animation:winOpen 220ms cubic-bezier(.22,1,.36,1) both;transition:box-shadow .22s ease,border-color .22s ease}   .win.win-closing{pointer-events:none;transform:scale(.85) translateY(24px) !important;opacity:0 !important;transition:transform 160ms cubic-bezier(.22,1,.36,1),opacity 160ms ease !important}   .win.dragging,.win.resizing{transition:none !important}   .win.tiling-anim:not(.dragging):not(.resizing){transition:left 280ms cubic-bezier(.22,1,.36,1),top 280ms cubic-bezier(.22,1,.36,1),width 280ms cubic-bezier(.22,1,.36,1),height 280ms cubic-bezier(.22,1,.36,1),box-shadow .22s ease,border-color .22s ease}   .win.focused{border-color:rgba(255,255,255,.32);box-shadow:0 30px 90px rgba(0,0,0,.75),0 8px 24px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.16),inset 0 1px 0 rgba(255,255,255,.22)}   .win:not(.focused){box-shadow:0 14px 40px rgba(0,0,0,.42),0 2px 8px rgba(0,0,0,.28);border-color:rgba(255,255,255,.1)}   #dock .dock-btn,#dock .dock-item{transition:transform 220ms cubic-bezier(.22,1,.36,1),background .18s ease,box-shadow .22s ease;transform-origin:bottom center}   #dock .dock-btn:hover,#dock .dock-item:hover{transform:scale(1.24) translateY(-8px)}   #dock .dock-btn:has(+ .dock-btn:hover),#dock .dock-btn:hover + .dock-btn,#dock .dock-item:has(+ .dock-item:hover),#dock .dock-item:hover + .dock-item{transform:scale(1.1) translateY(-3px)}   @keyframes dockBounce{0%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-16px) scale(1.12)}55%{transform:translateY(0) scale(.98)}75%{transform:translateY(-8px) scale(1.05)}}   #dock .dock-btn.bouncing,#dock .dock-item.bouncing{animation:dockBounce 650ms cubic-bezier(.22,1,.36,1)}   #dock{backdrop-filter:blur(44px) saturate(210%);-webkit-backdrop-filter:blur(44px) saturate(210%);border-top:1px solid rgba(255,255,255,.28);box-shadow:0 16px 48px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.22)}   #topbar{backdrop-filter:blur(40px) saturate(210%);-webkit-backdrop-filter:blur(40px) saturate(210%);border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}   @keyframes overlayIn{from{opacity:0;transform:scale(.95) translateY(-6px)}to{opacity:1;transform:scale(1) translateY(0)}}   @keyframes spotlightIn{from{opacity:0;transform:translateX(-50%) scale(.95)}to{opacity:1;transform:translateX(-50%) scale(1)}}   #spotlight.on{display:block;animation:spotlightIn 180ms cubic-bezier(.22,1,.36,1) both}   #start-menu.on,#start-menu.open,#control-center.on,#control-center.open,.snap-flyout.show{animation:overlayIn 180ms cubic-bezier(.22,1,.36,1) both}   #launchpad.on{display:flex;animation:overlayIn 220ms cubic-bezier(.22,1,.36,1) both}   .spot-item,.tb-item,.tb-btn,#mode-pill,.mode-pill button{transition:background 160ms cubic-bezier(.22,1,.36,1),color 160ms ease,transform 160ms cubic-bezier(.22,1,.36,1),box-shadow 160ms ease}   .spot-item:hover,.tb-item:hover,.tb-btn:hover{transform:translateY(-1px)}   .spot-item:active,.tb-item:active,.tb-btn:active,#mode-pill:active,.mode-pill button:active{transform:scale(.96)}   #site .card,#site .project-card,#site article,#site [class*="card"]{transition:transform 220ms cubic-bezier(.22,1,.36,1),box-shadow 220ms cubic-bezier(.22,1,.36,1),border-color 220ms ease}   #site .card:hover,#site .project-card:hover,#site article:hover,#site [class*="card"]:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.1);border-color:rgba(225,29,72,.35)}   #site a{transition:color 180ms ease,opacity 180ms ease,transform 180ms cubic-bezier(.22,1,.36,1)}   #site a:hover{opacity:.85}   @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}} .desk-item-lbl{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.85),0 0 8px rgba(0,0,0,0.45)}.win{border-radius:13px;box-shadow:inset 0 0 0 0.5px rgba(255,255,255,0.22),0 24px 64px rgba(0,0,0,0.58),0 2px 8px rgba(0,0,0,0.35)}.win-tbar{backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%)}.win.win-minimizing{transform:translateY(140px) scale(0.18)!important;opacity:0!important;transition:transform 200ms cubic-bezier(0.32,0.72,0,1),opacity 200ms cubic-bezier(0.32,0.72,0,1)!important;pointer-events:none}.dock-btn{transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1)}.dock-tooltip{transition:opacity 0.16s ease,transform 0.16s cubic-bezier(0.34,1.56,0.64,1);transform:translateX(-50%) translateY(4px)}.dock-btn:hover .dock-tooltip{opacity:1;transform:translateX(-50%) translateY(-4px)}#btn-tour{font-size:12px;font-weight:600;padding:0 8px;gap:4px;border-radius:6px;background:rgba(10,132,255,0.18);border:1px solid rgba(10,132,255,0.35);color:#fff}#btn-tour:hover{background:rgba(10,132,255,0.32)}.tour-highlight{position:fixed;z-index:10004;pointer-events:none;border-radius:12px;border:2px solid #0A84FF;box-shadow:0 0 0 4px rgba(10,132,255,0.35),0 0 24px rgba(10,132,255,0.65);animation:tourPulse 1.6s ease-in-out infinite;transition:all 0.28s cubic-bezier(0.32,0.72,0,1)}@keyframes tourPulse{0%,100%{box-shadow:0 0 0 3px rgba(10,132,255,0.35),0 0 18px rgba(10,132,255,0.55)}50%{box-shadow:0 0 0 7px rgba(10,132,255,0.18),0 0 30px rgba(10,132,255,0.85)}}#os-tour{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);width:min(440px,calc(100vw - 32px));z-index:10005;background:rgba(28,28,34,0.82);backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);border:1px solid rgba(255,255,255,0.18);box-shadow:inset 0 0 0 0.5px rgba(255,255,255,0.2),0 24px 60px rgba(0,0,0,0.65);border-radius:16px;padding:18px 20px;color:#F5F5F7;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;display:none}#os-tour.show{display:block;animation:tourIn 0.24s cubic-bezier(0.32,0.72,0,1)}@keyframes tourIn{from{opacity:0;transform:translateX(-50%) translateY(12px) scale(0.97)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}.tour-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:12px;color:rgba(255,255,255,0.6);font-weight:600}.tour-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}.tour-desc{font-size:13px;line-height:1.5;color:rgba(245,245,247,0.86);margin-bottom:14px}.tour-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}.tour-actions{display:flex;align-items:center;gap:8px}.tour-btn{border:0;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;background:rgba(255,255,255,0.12);color:#fff;transition:background 0.15s}.tour-btn:hover{background:rgba(255,255,255,0.2)}.tour-btn-primary{background:#0A84FF;color:#fff}.tour-btn-primary:hover{background:#0071E3}.tour-btn-try{background:rgba(10,132,255,0.2);color:#60A5FA;border:1px solid rgba(10,132,255,0.4)}.tour-btn-try:hover{background:rgba(10,132,255,0.32)}</style>
+  /* Fluid OS & Portfolio Animations */   @keyframes winOpen{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}   .win{animation:winOpen 220ms cubic-bezier(.22,1,.36,1) both;transition:box-shadow .22s ease,border-color .22s ease}   .win.win-closing{pointer-events:none;transform:scale(.85) translateY(24px) !important;opacity:0 !important;transition:transform 160ms cubic-bezier(.22,1,.36,1),opacity 160ms ease !important}   .win.dragging,.win.resizing{transition:none !important}   .win.tiling-anim:not(.dragging):not(.resizing){transition:left 280ms cubic-bezier(.22,1,.36,1),top 280ms cubic-bezier(.22,1,.36,1),width 280ms cubic-bezier(.22,1,.36,1),height 280ms cubic-bezier(.22,1,.36,1),box-shadow .22s ease,border-color .22s ease}   .win.focused{border-color:rgba(255,255,255,.32);box-shadow:0 30px 90px rgba(0,0,0,.75),0 8px 24px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.16),inset 0 1px 0 rgba(255,255,255,.22)}   .win:not(.focused){box-shadow:0 14px 40px rgba(0,0,0,.42),0 2px 8px rgba(0,0,0,.28);border-color:rgba(255,255,255,.1)}   #dock .dock-btn,#dock .dock-item{transition:transform 220ms cubic-bezier(.22,1,.36,1),background .18s ease,box-shadow .22s ease;transform-origin:bottom center}   #dock .dock-btn:hover,#dock .dock-item:hover{transform:scale(1.24) translateY(-8px)}   #dock .dock-btn:has(+ .dock-btn:hover),#dock .dock-btn:hover + .dock-btn,#dock .dock-item:has(+ .dock-item:hover),#dock .dock-item:hover + .dock-item{transform:scale(1.1) translateY(-3px)}   @keyframes dockBounce{0%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-16px) scale(1.12)}55%{transform:translateY(0) scale(.98)}75%{transform:translateY(-8px) scale(1.05)}}   #dock .dock-btn.bouncing,#dock .dock-item.bouncing{animation:dockBounce 650ms cubic-bezier(.22,1,.36,1)}   #dock{backdrop-filter:blur(44px) saturate(210%);-webkit-backdrop-filter:blur(44px) saturate(210%);border-top:1px solid rgba(255,255,255,.28);box-shadow:0 16px 48px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.22)}   #topbar{backdrop-filter:blur(40px) saturate(210%);-webkit-backdrop-filter:blur(40px) saturate(210%);border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}   @keyframes overlayIn{from{opacity:0;transform:scale(.95) translateY(-6px)}to{opacity:1;transform:scale(1) translateY(0)}}   @keyframes spotlightIn{from{opacity:0;transform:translateX(-50%) scale(.95)}to{opacity:1;transform:translateX(-50%) scale(1)}}   #spotlight.on{display:block;animation:spotlightIn 180ms cubic-bezier(.22,1,.36,1) both}   #start-menu.on,#start-menu.open,#control-center.on,#control-center.open,.snap-flyout.show{animation:overlayIn 180ms cubic-bezier(.22,1,.36,1) both}   #launchpad.on{display:flex;animation:overlayIn 220ms cubic-bezier(.22,1,.36,1) both}   .spot-item,.tb-item,.tb-btn,#mode-pill,.mode-pill button{transition:background 160ms cubic-bezier(.22,1,.36,1),color 160ms ease,transform 160ms cubic-bezier(.22,1,.36,1),box-shadow 160ms ease}   .spot-item:hover,.tb-item:hover,.tb-btn:hover{transform:translateY(-1px)}   .spot-item:active,.tb-item:active,.tb-btn:active,#mode-pill:active,.mode-pill button:active{transform:scale(.96)}   #site .card,#site .project-card,#site article,#site [class*="card"]{transition:transform 220ms cubic-bezier(.22,1,.36,1),box-shadow 220ms cubic-bezier(.22,1,.36,1),border-color 220ms ease}   #site .card:hover,#site .project-card:hover,#site article:hover,#site [class*="card"]:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.1);border-color:rgba(225,29,72,.35)}   #site a{transition:color 180ms ease,opacity 180ms ease,transform 180ms cubic-bezier(.22,1,.36,1)}   #site a:hover{opacity:.85}   @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}} </style>
 </head>
 <body>
 
@@ -1044,7 +1043,7 @@ a{color:inherit}
     <div class="load-bar"><i></i></div>
   </div>
 
-  <div class="stage-hud" id="stage-hud"><div class="stage-hud-hint">Drag to orbit · Scroll to zoom · Click PC to boot</div><div class="stage-hud-btns"><button type="button" class="stage-hud-btn on" data-hud-cam="front">Front</button><button type="button" class="stage-hud-btn" data-hud-cam="closeup">Close-up</button><button type="button" class="stage-hud-btn" data-hud-cam="side">Side</button><button type="button" class="stage-hud-btn on" id="hud-autospin">Auto-Spin</button><button type="button" class="stage-hud-btn primary" id="hud-boot">Boot DevilOS</button></div></div>
+  <div class="stage-caption">Drag to orbit · Scroll to zoom · Click the computer to enter DevilOS</div>
 </div>
 <div id="flash"></div>
 
@@ -1086,8 +1085,7 @@ a{color:inherit}
                     <p class="s-role">AI / ML student</p>
                     <h1>Agents should<br>feel <span class="s-cycle" id="s-cycle">honest</span></h1>
                     <p class="s-meta">Bengaluru · IST</p>
-                  <div class="hero-cta"><button type="button" class="hero-btn primary" onclick="goMode('os')">Launch DevilOS</button><button type="button" class="hero-btn accent" onclick="goMode('3d')">Explore 3D Studio</button><a class="hero-btn" href="https://github.com/Devil1716" target="_blank" rel="noopener">GitHub</a><a class="hero-btn" href="mailto:sharan071718@gmail.com">Email Me</a></div>
-                    </div>
+                  </div>
                   <div class="s-note-art">
                     <img src="sketch-scene.jpg" alt="Sketch of Sharan at a laptop among plants">
                   </div>
@@ -1113,7 +1111,7 @@ a{color:inherit}
       <section class="s-sec s-paper" id="about"><h2><span class="count">01</span>About</h2>
         <div class="about-copy"><p>I'm Sharan S, a B.Tech AI/ML student at Amity University Bengaluru, graduating in May 2027, and Technical Lead at Quickoo, where I lead an engineering team shipping an agentic microservices architecture for LLM-driven workflows in production. I care most about agents that do real work on real hardware: an Android agent powered by Gemma that taps through actual apps, and a Bluetooth mesh that keeps phones talking with no internet.</p>
         <p>On the backend I build with Python and FastAPI and design deterministic pipelines that put an LLM behind validation instead of trusting it blindly. I learn codebases by fixing them: 27 of my pull requests have been merged into 14 open-source projects, including NVIDIA Megatron-LM and moto.</p><p><strong>Achievements &amp; Publications:</strong> IEEE-format research paper on a patient-centric knowledge graph framework (2026); 2nd Place at Atria Hackathon Cicada 2024; 3rd Place at Amity Ideathon 3.0 2023.</p></div>
-        <div class="exp-grid"><article class="exp-card"><div class="exp-head"><span class="exp-badge">Experience</span><span class="exp-date">2026 – Present</span></div><h3>Technical Lead · Quickoo</h3><p>Leading an engineering team shipping agentic microservices for production LLM workflows.</p></article><article class="exp-card"><div class="exp-head"><span class="exp-badge">Open Source</span><span class="exp-date">NVIDIA &amp; BubbleLab</span></div><h3>Open-Source Contributor · NVIDIA Megatron-LM &amp; BubbleLab</h3><p>Merged PR #4972 (Megatron-LM) and PR #252 (BubbleLab, 1,100+ stars).</p></article><article class="exp-card"><div class="exp-head"><span class="exp-badge">Highlights</span><span class="exp-date">2023 – 2026</span></div><h3>Publications &amp; Awards</h3><p>IEEE-format research paper on a patient-centric knowledge graph framework (2026); 2nd Place Atria Hackathon Cicada (2024); 3rd Place Amity Ideathon 3.0 (2023).</p></article></div><div class="s-stats"><div class="s-stat"><b id="s-pr-count">27</b><span>Merged upstream PRs</span></div><div class="s-stat"><b>14</b><span>Projects contributed to</span></div><div class="s-stat"><b>30+</b><span>Original repos</span></div></div>
+        <div class="s-stats"><div class="s-stat"><b id="s-pr-count">27</b><span>Merged upstream PRs</span></div><div class="s-stat"><b>14</b><span>Projects contributed to</span></div><div class="s-stat"><b>30+</b><span>Original repos</span></div></div>
       </section>
       <section class="s-sec s-paper" id="work"><h2><span class="count">02</span>Projects</h2><div id="s-work"></div></section>
       <section class="s-sec s-paper" id="oss"><h2><span class="count">03</span>Open source</h2>
@@ -1187,7 +1185,7 @@ a{color:inherit}
       <div class="tb-stat-btn" id="btn-task-switch" title="Task View / Windows Switcher (Alt+Tab)">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
       </div>
-      <div class="tb-stat-btn" id="btn-tour" title="Interactive Portfolio Tour">? Tour</div><div class="tb-stat-btn" id="btn-spotlight" title="Spotlight / Rofi Search (⌘Space / Ctrl+Space)">
+      <div class="tb-stat-btn" id="btn-spotlight" title="Spotlight / Rofi Search (⌘Space / Ctrl+Space)">
         <svg viewBox="0 0 24 24"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </div>
       <div class="tb-stat-btn" id="btn-control-center" title="Control Center & Quick Settings">
@@ -1515,7 +1513,7 @@ function playStartupChime(){
   } catch(e){}
 }
 
-const $ = s => document.querySelector(s); const $$=s=>Array.from(document.querySelectorAll(s));
+const $ = s => document.querySelector(s);
 const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 let toastT;
@@ -1536,7 +1534,7 @@ function goMode(m, opts){
     $('#site').classList.toggle('on',m==='site');
     $('#desktop').classList.toggle('on',m==='os');
     $('#mode-pill').classList.toggle('on',true);
-    sceneVisible==(m==='3d');
+    sceneVisible=(m==='3d');
     if(m==='site') startSite();
     if(m==='os') seedOS();
     if(m==='3d') init3D();
@@ -1547,7 +1545,7 @@ function goMode(m, opts){
     $('#flash').classList.add('on');
     setTimeout(swap, 240);
   } else swap();
-} window.goMode=goMode;
+}
 document.querySelectorAll('.mode-pill button').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.mode!==mode) goMode(b.dataset.mode); }));
 
 const urlParams=new URLSearchParams(window.location.search);
@@ -1764,7 +1762,7 @@ async function init3D(){
     const SCREEN={yaw:0.18, pitch:0.06};
     let yaw=HOME.yaw, pitch=HOME.pitch, radius=homeRadius;
     let targetYaw=yaw, targetPitch=pitch, targetRadius=radius;
-    let camFocus='room'; let autoSpin=true;
+    let camFocus='room';
     let isNight=true;
     let isDragging=false, dragged=false, dragStartX=0, dragStartY=0;
     let idleHold=1.2;
@@ -2001,7 +1999,7 @@ async function init3D(){
       renderer.setSize(innerWidth, innerHeight, false);
     });
     renderer.setSize(innerWidth, innerHeight, false);
-    if(loadingEl) loadingEl.classList.add('hide'); canvas.addEventListener('dblclick',()=>{ if(mode==='3d'){ focusCamera('room'); $$('[data-hud-cam]').forEach(b=>b.classList.toggle('on',b.dataset.hudCam==='front')); } }); $$('[data-hud-cam]').forEach(btn=>{ btn.addEventListener('click',()=>{ const c=btn.dataset.hudCam; $$('[data-hud-cam]').forEach(b=>b.classList.toggle('on',b===btn)); if(c==='front'){ focusCamera('room'); } else if(c==='closeup'){ focusCamera('screen'); } else if(c==='side'){ camFocus='side'; targetYaw=nearestYaw(HOME.yaw+0.95); targetPitch=HOME.pitch+0.08; targetRadius=homeRadius*0.92; } }); }); const spinBtn=$('#hud-autospin'); if(spinBtn){ spinBtn.addEventListener('click',()=>{ autoSpin=!autoSpin; spinBtn.classList.toggle('on',autoSpin); }); } const bootBtn=$('#hud-boot'); if(bootBtn){ bootBtn.addEventListener('click',()=>{ if(mode==='3d') enterDevilOSGlide(); }); }
+    if(loadingEl) loadingEl.classList.add('hide');
 
     let last=performance.now();
     (function loop(now){
@@ -2029,7 +2027,7 @@ async function init3D(){
           openBootFromScreen();
         }
       } else {
-        if(camFocus==='room' && !isDragging && autoSpin){
+        if(camFocus==='room' && !isDragging){
           idleHold=Math.max(0, idleHold-dt);
           if(idleHold<=0) targetYaw+=dt*0.16;
         }
@@ -2197,7 +2195,7 @@ function startSite(){
   $('#s-work').innerHTML=CONFIG.work.map(([t,d,link],i)=>`
     <a class="w-row" href="${link}" ${link.startsWith('#')?'':'target="_blank" rel="noopener"'} ${link==='#3d-studio'?'data-enter-studio="1"':''}>
       <span class="w-no">${String(i+1).padStart(2,'0')}</span>
-      <div><h3>${t}</h3><p class="w-desc">${d.includes(' · ')?d.split(' · ').slice(1).join(' · '):d}</p>${d.includes(' · ')?`<div class="w-tags">${d.split(' · ')[0].split(/\s*\+\s*/).map(tg=>`<span class="w-tag">${tg}</span>`).join('')}</div>`:''}</div>
+      <div><h3>${t}</h3><p style="font-size:12.5px;color:#6b5348;margin-top:4px">${d}</p></div>
       <span class="m">${link==='#3d-studio'?'OPEN 3D STUDIO →':'GITHUB REPO →'}</span>
     </a>`).join('');
   const enterStudio=()=>{ goMode('3d'); toast('Entering the <b>retro computer</b> 🖥️'); };
@@ -2272,7 +2270,7 @@ function seedOS(){
     initLockScreen();
     initTilingMode();
     initSystemTelemetry();
-    initDesktop();window.maybeStartTour&&window.maybeStartTour();
+    initDesktop();
     setWallpaper(PREFS.get('wallpaper','wp-space-orion'));
     setVolume(PREFS.get('volume',85));
     setBrightness(PREFS.get('brightness',100));
@@ -2527,7 +2525,7 @@ function openApp(id,param){
 
   // Traffic Light Controls
   el.querySelector('.traffic-close').onclick=()=>closeWin(id);
-  el.querySelector('.traffic-min').onclick=()=>{el.classList.add('win-minimizing');setTimeout(()=>{el.style.display='none';el.classList.remove('win-minimizing');updateDockStatus();if(tilingMode)applyTilingLayout();},200);};
+  el.querySelector('.traffic-min').onclick=()=>{el.style.display='none';updateDockStatus();if(tilingMode)applyTilingLayout();};
   
   // Windows Snap Hover & Zoom
   const maxBtn=el.querySelector('.traffic-max'), snapFlyout=el.querySelector('.snap-flyout');
@@ -2620,7 +2618,7 @@ function initWinResize(el,id){
 
 /* Desktop icons: app shortcuts plus the real contents of ~/Desktop */
 const isDeskBg=t=>t===$('#wallpaper')||t===$('#star-canvas')||t===$('#desktop-icons');
-const DESK_POS_KEY='devilos.deskpos.v1'; function loadDeskPos(){try{return JSON.parse(localStorage.getItem(DESK_POS_KEY)||'{}')||{};}catch{return {};}} function saveDeskPos(m){try{localStorage.setItem(DESK_POS_KEY,JSON.stringify(m));}catch{}} function clampDeskPos(x,y){const maxX=Math.max(8,innerWidth-100),maxY=Math.max(36,innerHeight-96-96);return {x:Math.max(8,Math.min(maxX,x)),y:Math.max(36,Math.min(maxY,y))};} function defaultDeskPos(idx){const usableH=Math.max(200,innerHeight-96-46),rows=Math.max(1,Math.floor(usableH/104));const col=Math.floor(idx/rows),row=idx%rows;return clampDeskPos(innerWidth-104-col*96,46+row*104);} window.cleanUpDesktop=function(){try{localStorage.removeItem(DESK_POS_KEY);}catch{} renderDesktop();}; function renderDesktop(){ const _deskPosMap=loadDeskPos();
+function renderDesktop(){
   const box=$('#desktop-icons'), dir=HOME+'/Desktop';
   const shortcuts=[
     {label:'Home',icon:ICONS.finder,open:()=>openApp('finder',HOME),drop:HOME},
@@ -2632,15 +2630,15 @@ const DESK_POS_KEY='devilos.deskpos.v1'; function loadDeskPos(){try{return JSON.
   box.innerHTML=shortcuts.map((s,i)=>`<button class="desk-item" data-s="${i}"><div class="desk-item-icon"><img src="${s.icon}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('')
     +files.map((e,i)=>`<button class="desk-item" data-f="${i}" draggable="true"><div class="desk-item-icon"><img class="fs-ico" src="${fileIcon(e.path,e.node)}" alt=""></div><span class="desk-item-lbl"></span></button>`).join('');
   const select=b=>{ box.querySelectorAll('.desk-item').forEach(d=>d.classList.toggle('selected',d===b)); };
-  box.querySelectorAll('.desk-item').forEach((b,idx)=>{
+  box.querySelectorAll('.desk-item').forEach(b=>{
     const s=b.dataset.s!==undefined?shortcuts[b.dataset.s]:null, e=s?null:files[b.dataset.f];
     b.querySelector('.desk-item-lbl').textContent=s?s.label:e.name;
     b.title=s?s.label:FS.pretty(e.path);
-    const posKey=s?('shortcut:'+s.label):(e?e.path:('idx:'+idx)); const _p=_deskPosMap[posKey]?clampDeskPos(_deskPosMap[posKey].x,_deskPosMap[posKey].y):defaultDeskPos(idx); b.style.left=_p.x+'px'; b.style.top=_p.y+'px'; b.removeAttribute('draggable'); b.addEventListener('pointerdown',ev=>{if(ev.button!==0)return;const sx=ev.clientX,sy=ev.clientY,ol=parseFloat(b.style.left)||0,ot=parseFloat(b.style.top)||0;let moved=false;const mv=e2=>{if(!moved&&Math.hypot(e2.clientX-sx,e2.clientY-sy)>5){moved=true;b.classList.add('dragging');b.setPointerCapture?.(e2.pointerId);}if(moved){const c=clampDeskPos(ol+(e2.clientX-sx),ot+(e2.clientY-sy));b.style.left=c.x+'px';b.style.top=c.y+'px';}};const up=()=>{b.removeEventListener('pointermove',mv);b.removeEventListener('pointerup',up);b.removeEventListener('pointercancel',up);if(moved){b.classList.remove('dragging');const m=loadDeskPos();m[posKey]={x:Math.round(parseFloat(b.style.left)||0),y:Math.round(parseFloat(b.style.top)||0)};saveDeskPos(m);b._justDragged=true;setTimeout(()=>b._justDragged=false,60);}};b.addEventListener('pointermove',mv);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);}); b.addEventListener('click',ev=>{if(b._justDragged)return;
+    b.addEventListener('click',ev=>{
       ev.stopPropagation();
       if(ev.ctrlKey||ev.metaKey) b.classList.toggle('selected'); else select(b);
     });
-    b.addEventListener('dblclick',()={if(b._justDragged)return;s?s.open():openPath(e.path);});
+    b.addEventListener('dblclick',()=>s?s.open():openPath(e.path));
     b.addEventListener('keydown',ev=>{
       if(ev.key==='Enter') s?s.open():openPath(e.path);
       else if(e&&(ev.key==='Delete'||ev.key==='Backspace')) trashPaths(selectedDeskPaths());
@@ -2689,7 +2687,6 @@ function initDesktop(){
       {label:'Open Desktop in Files',run:()=>openApp('finder',dir)},
       {label:'Open in Terminal',run:()=>openTerminalAt(dir)},
       '-',
-      {label:'Clean Up Desktop', run:()=>cleanUpDesktop()},
       {label:'Change Wallpaper…',run:()=>openApp('settings','wp')}
     ]);
   });
@@ -5440,5 +5437,5 @@ APPS.trash={appName:'Trash',title:'Trash',icon:TRASH_ICON,w:720,h:440,build:win=
 
 // Portfolio is the default landing. 3D studio and DevilOS stay one click away.
 </script>
-<div id="tour-highlight" class="tour-highlight" style="display:none"></div><div id="os-tour" role="dialog" aria-label="Explore Sharan's OS"><div class="tour-head"><span>Explore Sharan's OS</span><span id="tour-counter">1/5</span></div><div class="tour-title" id="tour-title"></div><div class="tour-desc" id="tour-desc"></div><div class="tour-foot"><button class="tour-btn" id="tour-skip">Skip</button><div class="tour-actions"><button class="tour-btn tour-btn-try" id="tour-try"></button><button class="tour-btn" id="tour-back">Back</button><button class="tour-btn tour-btn-primary" id="tour-next">Next</button></div></div></div><script>(function(){const KEY='devilos.tour.v1';let idx=0;const steps=[{title:"Welcome to Sharan's Interactive Portfolio OS",desc:"Explore Sharan's projects, Quickoo Technical Lead experience, open-source PRs, and resume right inside this macOS-style desktop.",target:'#desktop-icons',tryLabel:'About DevilOS',tryFn:()=>{try{openApp('about')}catch(e){}}},{title:'Desktop Folders & Finder (right side)',desc:"Browse right-aligned macOS folders (Projects, Documents, Notes, Welcome.md) on the desktop to explore Sharan's work.",target:'#desktop-icons',tryLabel:'Open Finder',tryFn:()=>{try{openApp('finder')}catch(e){}}},{title:'Spotlight Search (⌘/Ctrl + Space)',desc:'Instantly search projects like CognyxOS, AgentIDE, ARBOR, or Megatron-LM from Spotlight.',target:'#btn-spotlight',tryLabel:'Open Spotlight',tryFn:()=>{document.getElementById('btn-spotlight')?.click()}},{title:'Interactive Terminal',desc:'Run portfolio commands directly in Terminal: whoami, resume, repos, oss, skills, neofetch.',target:'.dock-btn[data-app="terminal"]',tryLabel:'Launch Terminal',tryFn:()=>{try{openApp('terminal')}catch(e){}}},{title:'Dock Apps, Auto-Tiling & Modes',desc:'Launch apps from the Dock, auto-tile windows with Tile Windows (Alt+T), or switch modes (Portfolio / DevilOS / 3D Studio) in the bottom-right.',target:'#dock',tryLabel:'Start Exploring',tryFn:()=>closeTour()}];const el=document.getElementById('os-tour'),hl=document.getElementById('tour-highlight'),tTitle=document.getElementById('tour-title'),tDesc=document.getElementById('tour-desc'),tCount=document.getElementById('tour-counter'),bBack=document.getElementById('tour-back'),bNext=document.getElementById('tour-next'),bSkip=document.getElementById('tour-skip'),bTry=document.getElementById('tour-try');function posHL(sel){const t=sel?document.querySelector(sel):null;if(!t){hl.style.display='none';return}const r=t.getBoundingClientRect();if(!r.width&&!r.height){hl.style.display='none';return}hl.style.display='block';hl.style.left=(r.left-6)+'px';hl.style.top=(r.top-6)+'px';hl.style.width=(r.width+12)+'px';hl.style.height=(r.height+12)+'px'}function render(){const s=steps[idx];tCount.textContent=(idx+1)+'/'+steps.length;tTitle.textContent=s.title;tDesc.textContent=s.desc;bTry.textContent=s.tryLabel;bBack.style.display=idx===0?'none':'inline-block';bNext.style.display=idx===steps.length-1?'none':'inline-block';posHL(s.target)}function closeTour(){el.classList.remove('show');hl.style.display='none';try{localStorage.setItem(KEY,'1')}catch(e){}}function startTour(){idx=0;el.classList.add('show');render()}bBack.onclick=()=>{if(idx>0){idx--;render()}};bNext.onclick=()=>{if(idx<steps.length-1){idx++;render()}else closeTour()};bSkip.onclick=closeTour;bTry.onclick=()=>steps[idx].tryFn();document.getElementById('btn-tour')?.addEventListener('click',startTour);window.addEventListener('resize',()=>{if(el.classList.contains('show'))posHL(steps[idx].target)});window.startPortfolioTour=startTour;window.maybeStartTour=function(){try{if(!localStorage.getItem(KEY))setTimeout(startTour,650)}catch(e){}}})();</script></body>
+</body>
 </html>
